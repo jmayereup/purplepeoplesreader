@@ -6,8 +6,16 @@
         Title: {{item.title}} <button class="standard" type="button" (click)="showDetails(item.id)">Details</button>
       </p>
     }
-    @if (itemDetails) {
-      Details: {{itemDetails | async | json}}
+    @if (itemDetails()) {
+      Details: 
+      <p>{{itemDetails().title}}</p>
+      <p>{{itemDetails().content}}</p>
+      <pre>
+        Tag Details:
+        @for (tag of itemDetails().expand?.tags; track $index) {
+          {{tag.tag}}
+        }
+      </pre>
     }
   </section>
   

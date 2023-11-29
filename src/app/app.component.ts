@@ -2,8 +2,8 @@ import { Component, Signal, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { PocketbaseService } from './pocketbase.service';
-import { Observable, from, map } from 'rxjs';
-import { PostItem } from './shared/posts';
+import { Observable, from, map, startWith } from 'rxjs';
+import { INIT_POST_ITEM, PostItem } from './shared/posts';
 import { LoginComponent } from "./login/login.component";
 import { AuthService } from './auth.service';
 
@@ -22,11 +22,11 @@ export class AppComponent {
   db = inject(PocketbaseService);
   auth = inject(AuthService);
   authStore = this.auth.authStore;
-  itemDetails: Observable<PostItem> | undefined;
+  itemDetails = this.db.itemDetails;
   
   resultList = this.db.fetchResults();
   showDetails(itemId: string) {
-    return this.itemDetails = this.db.fetchDetails(itemId);
+    return this.db.fetchDetails(itemId);
   } 
 
   constructor() {

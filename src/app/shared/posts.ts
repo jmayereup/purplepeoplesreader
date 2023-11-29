@@ -14,6 +14,11 @@ export interface PostItem {
     id: string;
     title: string;
     updated: string;
+    expand: {
+        tags: Tag[];
+    }
+    tags: string[];
+
 }
 
 export interface PostResponseData {
@@ -21,4 +26,27 @@ export interface PostResponseData {
     items: PostItem[];
 }
 
+export interface Tag {
+    collectionId: string;
+    collectionName: string;
+    created: string;
+    id: string;
+    tag: string;
+    updated: string;
+  }
 
+
+export const INIT_POST_ITEM: PostItem = {
+    collectionId:  "",
+    collectionName:  "",
+    content:  "",
+    created:  "",
+    creatorEmail:  "",
+    id:  "",
+    title:  "",
+    updated:  "",
+    expand: {
+        tags: []
+    },
+    tags:  []
+}
