@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 
 import  PocketBase  from 'pocketbase';
-import { INIT_POST_ITEM, PostItem, PostResponseData, Pagination } from './shared/posts';
+import { TypedPocketBase, LessonsResponse } from './shared/pocketbase-types';
 import { Observable, from, map } from 'rxjs';
 
 @Injectable({
@@ -9,19 +9,22 @@ import { Observable, from, map } from 'rxjs';
 })
 export class PocketbaseService {
 
-  pb = new PocketBase('https://blog.teacherjake.com');
-  itemDetails = signal<PostItem>(INIT_POST_ITEM);
+  pb = new PocketBase('https://blog.teacherjake.com') as TypedPocketBase;
+  itemDetails = signal<any>("");
   
   constructor() {}
 
   fetchResults() {
-    return from(this.pb.collection('posts').getList(1,50)).pipe(
+    return from(this.pb.collection('lessons').getList(1,50)).pipe(
       map((res) => res.items)
-    ) as Observable<PostItem[]>;
+    ) as Observable<LessonsResponse[]>;
   }
 
   fetchDetails(itemId: string) {
-    return this.pb.collection('posts').getOne(itemId, { expand: "tags",}).then((res) => this.itemDetails.set(res as PostItem));
+    const res = this.pb.collection('lessons')
+      .getOne<LessonsResponse>(itemId).then(
+         res => this.itemDetails.set(res as LessonsResponse)
+      );
   }
   
 

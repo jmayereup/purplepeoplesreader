@@ -1,26 +1,30 @@
+<router-outlet></router-outlet>
+
 @if (authStore.isValid) {
-  <section class="h-screen bg-slate-200">
-    <h1>App Component</h1>
+  <section class="p-2 m-2 card bg-slate-200">
+    <h1 class="text-2xl text-center">Lessons Available</h1>
     @for (item of resultList | async; track $index) {
-      <p>
-        Title: {{item.title}} <button class="standard" type="button" (click)="showDetails(item.id)">Details</button>
+      <p class="flex items-center justify-between p-1 border border-gray-100">
+        Title: {{item.title}} <button class="standard" type="button" (click)="showDetails(item.id)">Open</button>
       </p>
     }
     @if (itemDetails()) {
-      Details: 
-      <p>{{itemDetails().title}}</p>
-      <p>{{itemDetails().content}}</p>
-      <pre>
-        Tag Details:
-        @for (tag of itemDetails().expand?.tags; track $index) {
-          {{tag.tag}}
-        }
-      </pre>
+      <div>
+        <h2>Lesson:</h2>
+        <p>{{itemDetails().title}}</p>
+        <p>{{itemDetails().content}}</p>
+        <p>
+          Tags:
+          {{itemDetails().tags}}
+        </p>
+        <hr>
+        <app-lesson [id]="itemDetails().id"></app-lesson>
+      </div>
     }
   </section>
-  
-  
   <app-login></app-login>
+  
+  
 } @else {
   <app-login></app-login>
 }

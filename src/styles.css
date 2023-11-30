@@ -11,7 +11,7 @@
  }
 
  .card {
-  @apply w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800
+  @apply w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-200
  }
 
  a {
