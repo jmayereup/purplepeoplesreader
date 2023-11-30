@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LessonsResponse } from '../shared/pocketbase-types';
 
 @Component({
   selector: 'app-lesson-details',
@@ -9,5 +10,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './lesson-details.component.css'
 })
 export class LessonDetailsComponent {
+
+  @Input() itemDetails: LessonsResponse | null = null;
 
 }
