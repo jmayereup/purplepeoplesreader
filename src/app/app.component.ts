@@ -6,6 +6,7 @@ import { LoginComponent } from "./login/login.component";
 import { AuthService } from './auth.service';
 import { LessonComponent } from "./lesson/lesson.component";
 import { RouterLink } from '@angular/router';
+import { NavBarComponent } from "./nav-bar/nav-bar.component";
 
 
 @Component({
@@ -13,7 +14,7 @@ import { RouterLink } from '@angular/router';
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [CommonModule, RouterOutlet, LoginComponent, LessonComponent, RouterLink]
+    imports: [CommonModule, RouterOutlet, LoginComponent, LessonComponent, RouterLink, NavBarComponent]
 })
 
 
@@ -27,9 +28,9 @@ export class AppComponent {
   db = inject(PocketbaseService);
   auth = inject(AuthService);
   // router = inject(Router);
-  itemDetails = this.db.itemDetails;
+  // itemDetails = this.db.itemDetails;
   // itemID = signal("");
-  resultList = this.db.fetchResults();
+  // resultList = this.db.fetchResults();
 
 
 

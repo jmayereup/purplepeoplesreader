@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { LessonsResponse } from '../shared/pocketbase-types';
 import { LessonDetailsComponent } from "../lesson-details/lesson-details.component";
 import { PocketbaseService } from '../pocketbase.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-lesson',
   standalone: true,
   templateUrl: './lesson.component.html',
   styleUrl: './lesson.component.css',
-  imports: [CommonModule, LessonDetailsComponent]
+  imports: [CommonModule, LessonDetailsComponent, RouterLink]
 })
 export class LessonComponent implements OnChanges {
 

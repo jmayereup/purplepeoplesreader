@@ -1,8 +1,11 @@
 import { Routes } from '@angular/router';
 import { LessonComponent } from './lesson/lesson.component';
-import { AppComponent } from './app.component';
+import { LessonListComponent } from './lesson-list/lesson-list.component';
+import { LessonLevelChooserComponent } from './lesson-level-chooser/lesson-level-chooser.component';
 
 export const routes: Routes = [
     { path: 'lesson/:id', component: LessonComponent },
-    { path: '**', component: AppComponent},
+    { path: 'all', component: LessonListComponent},
+    { path: 'difficulty', component: LessonLevelChooserComponent},
+    { path: '**', component: LessonLevelChooserComponent},
 ];
