@@ -21,12 +21,23 @@ import { NavBarComponent } from "./nav-bar/nav-bar.component";
 
 export class AppComponent {
  
-  constructor() {    
-  }
-
   title = 'Level Up:LBL';
   db = inject(PocketbaseService);
   auth = inject(AuthService);
+  username = "";
+
+  constructor() {    
+
+  }
+
+  ngOnInit() {
+    this.getUsername();
+  }
+
+  async getUsername() {
+    this.username = await this.auth.getUsername();
+  }
+
   // router = inject(Router);
   // itemDetails = this.db.itemDetails;
   // itemID = signal("");

@@ -1,16 +1,3 @@
-<section class="p-2 m-2 card bg-slate-200">
-    <h1 class="text-2xl text-center">Lessons Available - {{itemDetails().id}}</h1>
-    @for (item of resultList | async; track $index) {
-    <p class="flex items-center justify-between p-1 border border-gray-100">
-        Title: {{item.title}} - {{item.id}}
-        <a [routerLink]="['/lesson', item.id]">
-            <button class="standard" type="button">
-                Open</button>
-        </a>
-    </p>
-    }
-    <hr>
-</section>
 <section class="container px-4 mx-auto">
     <div class="flex items-center gap-x-3">
         <h2 class="text-lg font-medium text-gray-800 dark:text-white">Lessons</h2>
@@ -82,13 +69,14 @@
                                 </td>
                                 <td>
                                     <div class="flex items-center gap-x-2" [routerLink]="['/lesson', item.id]">
-                                        <img class="object-cover w-10 h-10 rounded-md"
+                                        <img class="object-cover w-40 max-h-40 rounded-md"
                                             src="{{item.imageUrl || defaultImage}}"
                                             alt="">
                                         <div>
                                             <h2 class="font-medium text-gray-800 dark:text-white ">{{item.title}}</h2>
-                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">
-                                                {{item.content | slice:30}}
+                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400 overflow-clip"
+                                            [innerHTML]="item.content.slice(0,50)">
+                                               
                                             </p>
                                         </div>
                                     </div>

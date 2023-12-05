@@ -1,9 +1,16 @@
-<p>lesson works!</p>
-<pre>
-    {{id || "none"}}
-</pre>
-<app-lesson-details [itemDetails]="itemDetails()"></app-lesson-details>
-<a [routerLink]="['/all']">
-    <button class="standard" type="button">
-      Back</button>
-    </a>
+<button class="flex standard mt-4 justify-center" (click)="showEdit = !showEdit" type="button">Edit</button>
+@if (showEdit) {
+  <div class="m-2 p-2">
+    <app-form-lesson [itemDetails]="itemDetails()"></app-form-lesson>
+  </div>
+}
+<div class="m-2 p-2">
+  <app-lesson-full-text [itemDetails]="itemDetails()"></app-lesson-full-text>
+</div>
+<div class="grid grid-cols-2 items-center">
+  <p>
+    Lesson: {{id || "none"}}
+  </p>
+  <button class="standard w-20 mt-4 justify-center place-self-end" [routerLink]="['/list']" type="button">Back</button>
+</div>
+

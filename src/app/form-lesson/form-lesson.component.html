@@ -1,0 +1,69 @@
+<div>
+
+    <section class="max-w-4xl mt-4 p-6 mx-auto bg-slate-300 rounded-md shadow-md dark:bg-gray-800">
+        <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">CREATE/EDIT</h2>
+        <p>Lesson ID: {{itemDetails?.id || 'New Lesson'}}</p>
+        <form [formGroup]="lessonForm">
+            <div class="grid grid-cols-1 gap-6 mt-4">
+                <div>
+                    <label class="form-label" for="title">Title</label>
+                    <input id="title" formControlName="title" type="text" class="form-input">
+                </div>
+                <div>
+                    <label class="form-label" for="content">Body</label>
+                    <textarea height="20" id="content" formControlName="content" type="text"
+                        class="form-input h-60"></textarea>
+                </div>
+                <div>
+                    <label class="form-label" for="vocabulary">Vocabulary</label>
+                    <input id="vocabulary" formControlName="vocabulary" type="text" class="form-input"
+                        placeholder="cat, dog, mouse">
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-6 mt-4">
+                <div>
+                    <label class="form-label" for="tags">Tags</label>
+                    <select id="tags" formControlName="tags" type="dropdown" size='3' class="form-input" multiple>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="B1">B1</option>
+                        <option value="CONVERSATION">Conversation</option>
+                        <option value="STORY">Story</option>
+                        <option value="SCHOOL">School</option>
+                        <option value="GRAMMAR">Grammar</option>
+                        <option value="NEWS">News</option>
+                        <option value="SCIENCE">Science</option>
+                        <option value="OTHER">Other</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label" for="lang" required>Language</label>
+                    <select id="lang" formControlName="language" size="3" type="text" class="form-input">
+                        <option value="English">English</option>
+                        <option value="German">German</option>
+                        <option value="Thai">Thai</option>
+                    </select>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                <div>
+                    <label class="form-label" for="share">Share</label>
+                    <select id="share" formControlName="share" class="form-input">
+                        <option value=true>YES</option>
+                        <option value=false>NO</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label" for="imageUrl">Image URL</label>
+                    <input id="imageUrl" formControlName="imageUrl" type="text" class="form-input"
+                        placeholder="https://unsplash.com/cat">
+                </div>
+            </div>
+        </form>
+        <app-form-files (filePath)="setFilePath($event)"></app-form-files>
+        <div class="flex justify-end mt-6">
+            <button type="button" class="form-button disabled:bg-red-200"
+            (click)="onSubmit()">Save</button>
+        </div>
+    </section>
+</div>

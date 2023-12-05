@@ -6,18 +6,21 @@ import { PocketbaseService } from './pocketbase.service';
 })
 export class AuthService {
 
-  pbService = inject(PocketbaseService);
-  pb = this.pbService.pb;
-  authStore = this.pb.authStore;
+  dbService = inject(PocketbaseService);
+  db = this.dbService.db;
+  authStore = this.db.authStore;
 
   constructor() {
-    
   }
   
   async loginWithEmail(username: string, password: string) {
-    await this.pb.collection('users').authWithPassword(username, password);
+    await this.db.collection('users').authWithPassword(username, password);
   } 
 
+  getUsername() {
+    return this.db.authStore.model?.['username'] || "";
+  }
+ 
 
 
   

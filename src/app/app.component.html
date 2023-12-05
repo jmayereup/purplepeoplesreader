@@ -1,3 +1,5 @@
-<app-nav-bar></app-nav-bar>
-<router-outlet></router-outlet>
-<app-login></app-login>
+<div class="flex flex-col flex-wrap lg:w-2/3 lg:justify-center">
+    <app-nav-bar [username]="username"></app-nav-bar>
+    <router-outlet></router-outlet>
+    <app-login></app-login>
+</div>

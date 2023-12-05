@@ -1,0 +1,11 @@
+.image-caption {
+    @apply flex mt-4 text-base lg:text-lg  bg-gray-200 rounded-lg dark:bg-gray-700 p-1 w-full h-16 md:h-24 text-center items-center justify-center;
+}
+
+.img-container {
+    @apply h-48 grid rounded-lg shadow-lg;
+}
+
+.img-svg {
+    @apply h-48 px-2 justify-self-center;
+}
