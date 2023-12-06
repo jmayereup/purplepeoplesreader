@@ -1,16 +1,18 @@
-<button class="flex standard mt-4 justify-center" (click)="showEdit = !showEdit" type="button">Edit</button>
+<button class="flex justify-center mt-4 standard" (click)="showEdit = !showEdit" type="button">Edit</button>
 @if (showEdit) {
-  <div class="m-2 p-2">
+  <div class="p-2 m-2">
     <app-form-lesson [itemDetails]="itemDetails()"></app-form-lesson>
   </div>
 }
-<div class="m-2 p-2">
+<div class="p-2 m-2">
   <app-lesson-full-text [itemDetails]="itemDetails()"></app-lesson-full-text>
 </div>
-<div class="grid grid-cols-2 items-center">
+<div class="grid items-center grid-cols-2">
   <p>
     Lesson: {{id || "none"}}
   </p>
-  <button class="standard w-20 mt-4 justify-center place-self-end" [routerLink]="['/list']" type="button">Back</button>
+  <a [routerLink]="['/list']" queryParamsHandling="preserve">
+    <button class="justify-center w-20 mt-4 standard place-self-end" type="button">Back</button>
+  </a>
 </div>
 

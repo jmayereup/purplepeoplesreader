@@ -68,8 +68,8 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="flex items-center gap-x-2" [routerLink]="['/lesson', item.id]">
-                                        <img class="object-cover w-40 max-h-40 rounded-md"
+                                    <div class="flex items-center gap-x-2" [routerLink]="['/lesson', item.id]" queryParamsHandling="preserve">
+                                        <img class="object-cover w-40 rounded-md max-h-40"
                                             src="{{item.imageUrl || defaultImage}}"
                                             alt="">
                                         <div>

@@ -39,21 +39,22 @@ setFilePath(val:string) {
 }
 
 onSubmit() {
-  if (this.lessonForm.value.id)
+  const lesson = {
+    title: this.lessonForm.value.title,
+    content: this.lessonForm.value.content,
+    vocabulary: this.lessonForm.value.vocabulary,
+    language: this.lessonForm.value.language,
+    tags: this.lessonForm.value.tags,
+    share: this.lessonForm.value.share,
+    imageUrl: this.lessonForm.value.imageUrl
+  }
+  if (this.itemDetails?.id)
   {
     //update lesson
+    this.db.updateItem(this.itemDetails.id, lesson as LessonsRecord);
     console.log('update lesson called');
   } else {
     console.log('create lesson called');
-    const lesson = {
-      title: this.lessonForm.value.title,
-      content: this.lessonForm.value.content,
-      vocabulary: this.lessonForm.value.vocabulary,
-      language: this.lessonForm.value.language,
-      tags: this.lessonForm.value.tags,
-      share: this.lessonForm.value.share,
-      imageUrl: this.lessonForm.value.imageUrl
-    }
     this.db.createItem(lesson as LessonsRecord);
     console.log('lesson form submitted', lesson);
   }
