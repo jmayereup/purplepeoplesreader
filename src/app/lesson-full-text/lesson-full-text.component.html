@@ -2,8 +2,8 @@
   <button class="w-24 standard" type="button" (click)="readAll(fullText.textContent || 'none')">Listen</button>
 </div>
   <div #fullText>
-    <h2 class="text-2xl">{{itemDetails?.title}}</h2>
-    <!-- <div [innerHTML]="itemDetails?.content" (click)="readThis($event)"></div> -->
+    <h2 class="text-2xl mb-2">Title: {{itemDetails?.title}}</h2>
+    <div [innerHTML]="(itemDetails?.content || '') | markdown | async"></div>
   </div>
   <hr>
   <p>

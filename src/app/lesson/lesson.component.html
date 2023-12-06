@@ -1,4 +1,4 @@
-<button class="flex justify-center mt-4 standard" (click)="showEdit = !showEdit" type="button">Edit</button>
+<button class="flex justify-center mt-4 standard blue" (click)="showEdit = !showEdit" type="button">Edit</button>
 @if (showEdit) {
   <div class="p-2 m-2">
     <app-form-lesson [itemDetails]="itemDetails()"></app-form-lesson>
@@ -12,7 +12,7 @@
     Lesson: {{id || "none"}}
   </p>
   <a [routerLink]="['/list']" queryParamsHandling="preserve">
-    <button class="justify-center w-20 mt-4 standard place-self-end" type="button">Back</button>
+    <button class="standard blue" type="button">Back</button>
   </a>
 </div>
 

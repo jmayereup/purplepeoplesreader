@@ -75,6 +75,6 @@ setChangeDetector(cdr: ChangeDetectorRef) {
   }
 
   getItemLang() {
-    return assignLanguageCode(this.itemState().language);
+    return assignLanguageCode(this.itemState().language || 'en-CA');
   }
 }

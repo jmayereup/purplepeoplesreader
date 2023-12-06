@@ -1,9 +1,10 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormFilesComponent } from '../form-files/form-files.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PocketbaseService } from '../pocketbase.service';
-import { LessonsRecord, LessonsResponse } from '../shared/pocketbase-types';
+import { LessonsRecord, LessonsResponse, LessonsTagsOptions } from '../shared/pocketbase-types';
+import { title } from 'process';
 
 @Component({
   selector: 'app-form-lesson',
@@ -12,7 +13,7 @@ import { LessonsRecord, LessonsResponse } from '../shared/pocketbase-types';
   templateUrl: './form-lesson.component.html',
   styleUrl: './form-lesson.component.css'
 })
-export class FormLessonComponent {
+export class FormLessonComponent implements OnInit {
 
 @Input() itemDetails: LessonsResponse | null = null; 
 
@@ -25,11 +26,29 @@ lessonForm = this.fb.group({
   content: this.fb.control('', Validators.required),
   vocabulary: this.fb.control(''),
   language: this.fb.control('', Validators.required),
-  tags: this.fb.control(''),
+  tags: this.fb.control(['']),
   share: this.fb.control(false),
   imageUrl: this.fb.control('')
 
 })
+
+ngOnInit() {
+  console.log('on Init called');
+  this.loadLesson();
+}
+
+loadLesson() {
+  const lesson = this.itemDetails;
+  this.lessonForm.patchValue({
+    id: lesson?.id,
+    title: lesson?.title,
+    content: lesson?.content,
+    vocabulary: lesson?.vocabulary,
+    tags: lesson?.tags,
+    share: lesson?.shareable,
+    imageUrl: lesson?.imageUrl
+  })
+}
 
 setFilePath(val:string) {  
   this.lessonForm.patchValue({

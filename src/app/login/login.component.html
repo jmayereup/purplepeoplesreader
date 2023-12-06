@@ -23,7 +23,7 @@
             <div class="flex items-center justify-between mt-4">
                 <a href="#" class="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500">Forget Password?</a>
 
-                <button class="standard" type="button" (click)="loginWithEmail()">
+                <button class="standard blue" type="button" (click)="loginWithEmail()">
                     Sign In
                 </button>
             </div>
@@ -38,7 +38,7 @@
     <div class="centered">
         @if (authStore.isValid) {
         Logged in as: {{authStore.model!['username']}}
-        <button class="standard" type="button" (click)="logout()">
+        <button class="standard blue" type="button" (click)="logout()">
             Logout
         </button>
         } @else {Not Logged In}
