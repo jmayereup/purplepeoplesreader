@@ -1,3 +1,5 @@
+import { LessonsLanguageOptions, LessonsTagsOptions } from "./pocketbase-types";
+
 export function addLineBreaks(text: string): string {
     let result = text.replace(/(?<!Mr|Mrs|Dr|Ms)([.?!"])\s+/g, '$1\n');
     result = result.replace(/(\*|\#)/gm, '');
@@ -40,5 +42,8 @@ export function assignLanguageCode(languageName: string) {
     return language?.code || 'en-CA';
 
 }
+
+export const TAG_VALUES = Object.values(LessonsTagsOptions);
+export const LANG_VALUES = Object.values(LessonsLanguageOptions);
 
 

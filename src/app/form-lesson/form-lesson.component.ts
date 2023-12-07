@@ -1,10 +1,11 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormFilesComponent } from '../form-files/form-files.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PocketbaseService } from '../pocketbase.service';
 import { LessonsRecord, LessonsResponse, LessonsTagsOptions } from '../shared/pocketbase-types';
 import { title } from 'process';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-form-lesson',
@@ -13,11 +14,12 @@ import { title } from 'process';
   templateUrl: './form-lesson.component.html',
   styleUrl: './form-lesson.component.css'
 })
-export class FormLessonComponent implements OnInit {
+export class FormLessonComponent implements OnInit, OnChanges {
 
 @Input() itemDetails: LessonsResponse | null = null; 
 
 db = inject(PocketbaseService);
+auth = inject(AuthService);
 fb = inject(FormBuilder);
 
 lessonForm = this.fb.group({
@@ -33,6 +35,11 @@ lessonForm = this.fb.group({
 })
 
 ngOnInit() {
+  console.log('on Init called');
+  this.loadLesson();
+}
+
+ngOnChanges() {
   console.log('on Init called');
   this.loadLesson();
 }
@@ -58,6 +65,7 @@ setFilePath(val:string) {
 }
 
 onSubmit() {
+  const creatorID = this.auth.authStore?.model?.['creatorId'] || "";
   const lesson = {
     title: this.lessonForm.value.title,
     content: this.lessonForm.value.content,
@@ -70,11 +78,11 @@ onSubmit() {
   if (this.itemDetails?.id)
   {
     //update lesson
-    this.db.updateItem(this.itemDetails.id, lesson as LessonsRecord);
+    this.db.updateItem(this.itemDetails.id, lesson as LessonsRecord, creatorID);
     console.log('update lesson called');
   } else {
     console.log('create lesson called');
-    this.db.createItem(lesson as LessonsRecord);
+    this.db.createItem(lesson as LessonsRecord, creatorID);
     console.log('lesson form submitted', lesson);
   }
 

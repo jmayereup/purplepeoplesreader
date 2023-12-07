@@ -1,8 +1,8 @@
-<div class="flex flex-row flex-wrap justify-center">
-  <button class="w-24 standard" type="button" (click)="readAll(fullText.textContent || 'none')">Listen</button>
-</div>
-  <div #fullText>
-    <h2 class="text-2xl mb-2">Title: {{itemDetails?.title}}</h2>
+<div #fullText>
+  <h2 class="mb-2 text-2xl text-center">
+    Title: {{itemDetails?.title}}</h2>
+    <button class="flex justify-center w-full gap-2 mt-2 text-black bg-blue-200" type="button" (click)="readAll(fullText.textContent || 'none')">
+      <img src="../../assets/icons/headphones.svg" class="h-4 p-0">Listen</button>
     <div [innerHTML]="(itemDetails?.content || '') | markdown | async"></div>
   </div>
   <hr>

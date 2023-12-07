@@ -11,6 +11,5 @@ export const routes: Routes = [
     { path: 'difficulty', component: LessonLevelChooserComponent},
     { path: 'new', component: FormLessonComponent},
     { path: 'error', component: ErrorFindingComponent},
-    { path: 'edit/:id', component: FormLessonComponent},
     { path: '**', component: LessonLevelChooserComponent},
 ];

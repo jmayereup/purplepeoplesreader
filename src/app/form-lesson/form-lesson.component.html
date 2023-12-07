@@ -1,6 +1,6 @@
 <div>
 
-    <section class="max-w-4xl mt-4 p-6 mx-auto bg-slate-300 rounded-md shadow-md dark:bg-gray-800">
+    <section class="w-full p-6 mx-auto mt-4 rounded-md shadow-md bg-slate-300 dark:bg-gray-800">
         <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">CREATE/EDIT</h2>
         <p>Lesson ID: {{itemDetails?.id || 'New Lesson'}}</p>
         <form [formGroup]="lessonForm">
@@ -62,7 +62,7 @@
         </form>
         <app-form-files (filePath)="setFilePath($event)"></app-form-files>
         <div class="flex justify-end mt-6">
-            <button type="button" class="form-button disabled:bg-red-200"
+            <button type="button" class="bg-blue-700 disabled:bg-red-200"
             (click)="onSubmit()">Save</button>
         </div>
     </section>

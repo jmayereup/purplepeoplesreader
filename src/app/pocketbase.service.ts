@@ -1,8 +1,8 @@
 import { Injectable, WritableSignal, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import PocketBase from 'pocketbase';
-import { TypedPocketBase, LessonsResponse, LessonsRecord } from './shared/pocketbase-types';
-import { Observable, distinctUntilChanged, from, map, shareReplay, startWith } from 'rxjs';
+import { TypedPocketBase, LessonsResponse, LessonsRecord, LessonsLanguageOptions } from './shared/pocketbase-types';
+import { Observable, ObservableInput, distinctUntilChanged, from, map, shareReplay, startWith } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 
@@ -17,29 +17,39 @@ export class PocketbaseService {
 
   itemDetails = signal<any>("");
   typeParam = "";
-  fetchedResults: any;
+  showEdit = false;
+  fetchedResults = signal<LessonsResponse[] | null>(null);
+  
+  // ([{title: "none", content: "none", shareable: false, imageUrl: "", creatorEmail: "",
+  //   tags: [], language: LessonsLanguageOptions.English, vocabulary: ""}]);
 
 
   constructor() {
     this.route.queryParamMap.pipe(takeUntilDestroyed(), distinctUntilChanged(), shareReplay(1)).subscribe(params => {
       const typeParam = (params.get('tag')?.valueOf() || 'A1');
+      const editValue = params.get('edit')?.valueOf();
+      editValue === 'true' ? this.showEdit = true : this.showEdit = false;
       if (this.typeParam != typeParam) {
         this.typeParam = typeParam;
-        this.fetchedResults = this.fetchResults(this.typeParam);
+        this.fetchResults(this.typeParam);
       }
     });
 
   }
 
-  fetchResults(type: string = 'A1') {
+  async fetchResults(type: string = 'A1') {
     try {
       console.log('fetching results');
-      return from(this.db.collection('lessons').getFullList({
+      let results: LessonsResponse[];
+      this.db.collection('lessons').getFullList({
         filter: `tags~'${type}'`
-      })).pipe(
-        map((res) => res),
-        shareReplay(1)
-      ) as Observable<LessonsResponse[]>;
+      }).then(
+        res => {
+          this.fetchedResults.set(res);
+          return;
+        }
+      );
+      return;
     } catch (error: any) {
       console.log(error.response.message);
       return;
@@ -62,13 +72,13 @@ export class PocketbaseService {
     return this.itemDetails as WritableSignal<LessonsResponse>;
   }
 
-  async createItem(lesson: LessonsRecord) {
-    const record = await this.db.collection('lessons').create(lesson);
+  async createItem(lesson: LessonsRecord, creatorID: string) {
+    const record = await this.db.collection('lessons').create({...lesson, 'creatorId': creatorID});
     return record;
   }
 
-  async updateItem(id: string, lesson: LessonsRecord) {
-    const record = await this.db.collection('lessons').update(id, { ...lesson });
+  async updateItem(id: string, lesson: LessonsRecord, creatorID: string) {
+    const record = await this.db.collection('lessons').update(id, { ...lesson, 'creatorId': creatorID });
     return record;
   }
 

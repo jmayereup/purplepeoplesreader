@@ -18,7 +18,7 @@ export class LessonComponent implements OnChanges {
   db = inject(PocketbaseService);
   itemDetails = this.db.itemDetails;
 
-  showEdit = false;
+  showEdit = this.db.showEdit;
 
   constructor() {
   }
@@ -27,6 +27,7 @@ export class LessonComponent implements OnChanges {
     this.db.fetchDetails(this.id);
     console.log('fetchDetails called with:', this.id);
   }
+
 
 
 
