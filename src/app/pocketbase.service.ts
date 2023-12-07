@@ -1,8 +1,8 @@
 import { Injectable, WritableSignal, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import PocketBase from 'pocketbase';
-import { TypedPocketBase, LessonsResponse, LessonsRecord, LessonsLanguageOptions } from './shared/pocketbase-types';
-import { Observable, ObservableInput, distinctUntilChanged, from, map, shareReplay, startWith } from 'rxjs';
+import { TypedPocketBase, LessonsResponse, LessonsRecord } from './shared/pocketbase-types';
+import { distinctUntilChanged, shareReplay } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 
@@ -72,13 +72,13 @@ export class PocketbaseService {
     return this.itemDetails as WritableSignal<LessonsResponse>;
   }
 
-  async createItem(lesson: LessonsRecord, creatorID: string) {
-    const record = await this.db.collection('lessons').create({...lesson, 'creatorId': creatorID});
+  async createItem(lesson: LessonsRecord) {
+    const record = await this.db.collection('lessons').create({...lesson});
     return record;
   }
 
-  async updateItem(id: string, lesson: LessonsRecord, creatorID: string) {
-    const record = await this.db.collection('lessons').update(id, { ...lesson, 'creatorId': creatorID });
+  async updateItem(id: string, lesson: LessonsRecord) {
+    const record = await this.db.collection('lessons').update(id, { ...lesson });
     return record;
   }
 

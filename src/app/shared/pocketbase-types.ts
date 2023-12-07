@@ -46,6 +46,7 @@ export enum LessonsTagsOptions {
 	"NON-FICTION" = "NON-FICTION",
 	"SCIENCE" = "SCIENCE",
 	"NEWS" = "NEWS",
+	"OTHER" = "OTHER",
 }
 
 export enum LessonsLanguageOptions {
@@ -57,7 +58,7 @@ export enum LessonsLanguageOptions {
 }
 export type LessonsRecord = {
 	content?: HTMLString
-	creatorEmail?: string
+	creatorId?: string
 	imageUrl?: string
 	language?: LessonsLanguageOptions
 	shareable?: boolean
@@ -68,6 +69,7 @@ export type LessonsRecord = {
 
 export type UsersRecord = {
 	avatar?: string
+	linesRead?: number
 	name?: string
 }
 

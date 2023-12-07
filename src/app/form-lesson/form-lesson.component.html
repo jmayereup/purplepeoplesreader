@@ -24,17 +24,10 @@
                 <div>
                     <label class="form-label" for="tags">Tags</label>
                     <select id="tags" formControlName="tags" type="dropdown" size='3' class="form-input" multiple>
-                        <option value="A1">A1</option>
-                        <option value="A2">A2</option>
-                        <option value="B1">B1</option>
-                        <option value="CONVERSATION">Conversation</option>
-                        <option value="STORY">Story</option>
-                        <option value="SCHOOL">School</option>
-                        <option value="GRAMMAR">Grammar</option>
-                        <option value="NEWS">News</option>
-                        <option value="SCIENCE">Science</option>
-                        <option value="OTHER">Other</option>
-                    </select>
+                        @for (tag of tags; track $index) {
+                            <option value="{{tag}}">{{tag}}</option>
+                        }
+                        </select>
                 </div>
                 <div>
                     <label class="form-label" for="lang" required>Language</label>
@@ -47,10 +40,10 @@
             </div>
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                 <div>
-                    <label class="form-label" for="share">Share</label>
-                    <select id="share" formControlName="share" class="form-input">
-                        <option value=true>YES</option>
-                        <option value=false>NO</option>
+                    <label class="form-label" for="shareable">Share</label>
+                    <select id="shareable" formControlName="shareable" class="form-input">
+                        <option value='true'>YES</option>
+                        <option value='false'>NO</option>
                     </select>
                 </div>
                 <div>

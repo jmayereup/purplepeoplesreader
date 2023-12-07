@@ -2,8 +2,6 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PocketbaseService } from '../pocketbase.service';
-import { Observable } from 'rxjs';
-import { LessonsResponse } from '../shared/pocketbase-types';
 import { TagChooserComponent } from "../tag-chooser/tag-chooser.component";
 
 @Component({
@@ -21,5 +19,9 @@ export class LessonListComponent {
   type = 'A1';
 
   defaultImage = "../../assets/icons/book.svg"
+
+  ngOnInit() {
+    this.db.fetchResults();
+  }
 
 }

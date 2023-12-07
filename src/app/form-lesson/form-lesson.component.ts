@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormFilesComponent } from '../form-files/form-files.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PocketbaseService } from '../pocketbase.service';
-import { LessonsRecord, LessonsResponse, LessonsTagsOptions } from '../shared/pocketbase-types';
-import { title } from 'process';
+import { LessonsRecord, LessonsResponse } from '../shared/pocketbase-types';
 import { AuthService } from '../auth.service';
+import { TAG_VALUES } from '../shared/utils';
 
 @Component({
   selector: 'app-form-lesson',
@@ -22,6 +22,8 @@ db = inject(PocketbaseService);
 auth = inject(AuthService);
 fb = inject(FormBuilder);
 
+tags = TAG_VALUES;
+
 lessonForm = this.fb.group({
   id: this.fb.control(''),
   title: this.fb.control(''),
@@ -29,8 +31,9 @@ lessonForm = this.fb.group({
   vocabulary: this.fb.control(''),
   language: this.fb.control('', Validators.required),
   tags: this.fb.control(['']),
-  share: this.fb.control(false),
-  imageUrl: this.fb.control('')
+  shareable: this.fb.control(false),
+  imageUrl: this.fb.control(''),
+  creatorId: this.fb.control('')
 
 })
 
@@ -40,7 +43,7 @@ ngOnInit() {
 }
 
 ngOnChanges() {
-  console.log('on Init called');
+  console.log('on Changes called');
   this.loadLesson();
 }
 
@@ -52,8 +55,9 @@ loadLesson() {
     content: lesson?.content,
     vocabulary: lesson?.vocabulary,
     tags: lesson?.tags,
-    share: lesson?.shareable,
-    imageUrl: lesson?.imageUrl
+    shareable: lesson?.shareable,
+    imageUrl: lesson?.imageUrl,
+    creatorId: lesson?.creatorId
   })
 }
 
@@ -65,24 +69,25 @@ setFilePath(val:string) {
 }
 
 onSubmit() {
-  const creatorID = this.auth.authStore?.model?.['creatorId'] || "";
+  const creatorID = this.auth.authStore.model?.['id'] || "none";
   const lesson = {
     title: this.lessonForm.value.title,
     content: this.lessonForm.value.content,
     vocabulary: this.lessonForm.value.vocabulary,
     language: this.lessonForm.value.language,
     tags: this.lessonForm.value.tags,
-    share: this.lessonForm.value.share,
-    imageUrl: this.lessonForm.value.imageUrl
+    shareable: this.lessonForm.value.shareable,
+    imageUrl: this.lessonForm.value.imageUrl,
+    creatorId: creatorID || this.lessonForm.value.creatorId
   }
   if (this.itemDetails?.id)
   {
     //update lesson
-    this.db.updateItem(this.itemDetails.id, lesson as LessonsRecord, creatorID);
+    this.db.updateItem(this.itemDetails.id, lesson as LessonsRecord);
     console.log('update lesson called');
   } else {
     console.log('create lesson called');
-    this.db.createItem(lesson as LessonsRecord, creatorID);
+    this.db.createItem(lesson as LessonsRecord);
     console.log('lesson form submitted', lesson);
   }
 
