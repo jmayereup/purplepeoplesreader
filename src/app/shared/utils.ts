@@ -6,6 +6,15 @@ export function addLineBreaks(text: string): string {
     return result;
 }
 
+
+export function addLineBreaksWithDivs(text: string): string {
+    let result = text.replace(/(?<!Mr|Mrs|Dr|Ms)([.?!"])\s+/g, '$1</div><div>');
+    // Add opening and closing <div> tags
+    result = `<div>${result}</div>`;
+    return result;
+  }
+  
+
 export function removeLineBreaks(str: string): string {
     return str.replace(/(\r\n|\n|\r|\*|\#)/gm, '');
 }

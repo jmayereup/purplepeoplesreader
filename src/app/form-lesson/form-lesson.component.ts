@@ -4,7 +4,9 @@ import { FormFilesComponent } from '../form-files/form-files.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PocketbaseService } from '../pocketbase.service';
 import { LessonsRecord, LessonsResponse } from '../shared/pocketbase-types';
+import { LessonsRecord, LessonsResponse } from '../shared/pocketbase-types';
 import { AuthService } from '../auth.service';
+import { addLineBreaksWithDivs } from '../../app/shared/utils';
 import { TAG_VALUES } from '../shared/utils';
 
 @Component({
@@ -69,10 +71,10 @@ setFilePath(val:string) {
 }
 
 onSubmit() {
-  const creatorID = this.auth.authStore.model?.['id'] || "none";
+  const creatorID = this.auth.authStore?.model?.['creatorId'] || "";
   const lesson = {
     title: this.lessonForm.value.title,
-    content: this.lessonForm.value.content,
+    content: wrappedText,
     vocabulary: this.lessonForm.value.vocabulary,
     language: this.lessonForm.value.language,
     tags: this.lessonForm.value.tags,
