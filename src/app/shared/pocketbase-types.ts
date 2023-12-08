@@ -58,6 +58,7 @@ export enum LessonsLanguageOptions {
 }
 export type LessonsRecord = {
 	content?: HTMLString
+	contentLines?: string
 	creatorId?: string
 	imageUrl?: string
 	language?: LessonsLanguageOptions

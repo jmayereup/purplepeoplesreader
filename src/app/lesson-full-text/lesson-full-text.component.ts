@@ -16,6 +16,7 @@ export class LessonDetailsComponent {
   @Input() itemDetails: LessonsResponse | null = null;
 
   speak = inject(SpeakService);
+  showTranslation = true;
   
 
   readThis($event: any) {

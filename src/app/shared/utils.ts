@@ -1,19 +1,38 @@
-import { LessonsLanguageOptions, LessonsTagsOptions } from "./pocketbase-types";
+import { HTMLString, LessonsLanguageOptions, LessonsTagsOptions } from "./pocketbase-types";
+import removeMD from 'remove-markdown';
 
 export function addLineBreaks(text: string): string {
     let result = text.replace(/(?<!Mr|Mrs|Dr|Ms)([.?!"])\s+/g, '$1\n');
-    result = result.replace(/(\*|\#)/gm, '');
+    result = result.replace(/(\**|\#)/gm, '');
     return result;
 }
 
 
-export function addLineBreaksWithDivs(text: string): string {
-    let result = text.replace(/(?<!Mr|Mrs|Dr|Ms)([.?!"])\s+/g, '$1</div><div>');
-    // Add opening and closing <div> tags
-    result = `<div>${result}</div>`;
-    return result;
-  }
+export function addLineBreaksWithTranslatedDivs(text: string): string {
+    
   
+    const cleanText = removeMD(text);
+    console.log(cleanText);
+
+    let result = cleanText.replace(/(?<!Mr|Mrs|Dr|Ms)([¿¡.?!"])\s+/g, '$1\n');
+
+    // Duplicate each div and add class/attribute
+    const translatedDivs: string[] = [];
+    const originalDivs = result.split('\n');
+
+    originalDivs.forEach((line: string) => {
+        translatedDivs.push(`<div class="original" translate="no">${line}</div>`);
+        translatedDivs.push(`<div class="translated" translate="yes">${line}</div>`);
+    });
+
+    // Join the original and translated divs
+    result = translatedDivs.join('\n');
+
+    return result;
+}
+
+
+
 
 export function removeLineBreaks(str: string): string {
     return str.replace(/(\r\n|\n|\r|\*|\#)/gm, '');

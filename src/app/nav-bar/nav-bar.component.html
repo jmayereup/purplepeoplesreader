@@ -1,13 +1,13 @@
 <nav class="w-screen bg-white shadow dark:bg-gray-800">
         <div class="flex items-center justify-between">
-                <div class="flex flex-grow">
+                <div class="flex">
                     <a class="nav-link" [routerLink]="['/intro']" queryParamsHandling="preserve">
                         <img class="h-8" src="../../assets/lbl-lingo-header.png" alt="logo lbl-lingo">
                     </a>
                 </div>
                 <div class="flex justify-between">
 
-                    <div class="hidden sm:items-center sm:flex">
+                    <div class="items-center hidden sm:flex">
                         <a class="nav-link" [routerLink]="['/intro']" queryParamsHandling="preserve">
                             <p>HOME</p>
                         </a>
@@ -21,7 +21,7 @@
 
                     <!-- Mobile menu button -->
                     <div class="flex sm:hidden">
-                        <button x-cloak (click)="isOpen = !isOpen" type="button"
+                        <button (click)="isOpen = !isOpen" type="button"
                             class="text-gray-500 dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400 focus:outline-none focus:text-gray-600 dark:focus:text-gray-400 clear"
                             aria-label="toggle menu">
                             @if(!isOpen) {
@@ -41,9 +41,9 @@
             </div>
 
             <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
-            <div x-cloak [ngClass]="isOpen ? 'opened' : 'closed'"
-                class="absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-slate-200 dark:bg-gray-800 lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:bg-transparent lg:w-auto lg:opacity-100 lg:translate-x-0 lg:flex lg:items-center">
-                <div class="flex flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8"
+            <div [ngClass]="isOpen ? 'opened' : 'closed'"
+                class="absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-slate-200 dark:bg-gray-800">
+                <div class="flex flex-col -mx-6"
                 (click)="isOpen = !isOpen">
                     <a [routerLink]="['/intro']" queryParamsHandling="preserve" class="nav-link">Intro</a>
                     <a [routerLink]="['/list']" queryParamsHandling="preserve" class="nav-link">Lessons</a>

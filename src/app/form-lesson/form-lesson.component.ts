@@ -4,9 +4,8 @@ import { FormFilesComponent } from '../form-files/form-files.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PocketbaseService } from '../pocketbase.service';
 import { LessonsRecord, LessonsResponse } from '../shared/pocketbase-types';
-import { LessonsRecord, LessonsResponse } from '../shared/pocketbase-types';
 import { AuthService } from '../auth.service';
-import { addLineBreaksWithDivs } from '../../app/shared/utils';
+import { addLineBreaksWithTranslatedDivs } from '../../app/shared/utils';
 import { TAG_VALUES } from '../shared/utils';
 
 @Component({
@@ -50,6 +49,7 @@ ngOnChanges() {
 }
 
 loadLesson() {
+  const creatorID: string = this.auth.authStore.model?.['id'] || "";
   const lesson = this.itemDetails;
   this.lessonForm.patchValue({
     id: lesson?.id,
@@ -59,7 +59,7 @@ loadLesson() {
     tags: lesson?.tags,
     shareable: lesson?.shareable,
     imageUrl: lesson?.imageUrl,
-    creatorId: lesson?.creatorId
+    creatorId: creatorID
   })
 }
 
@@ -71,16 +71,18 @@ setFilePath(val:string) {
 }
 
 onSubmit() {
-  const creatorID = this.auth.authStore?.model?.['creatorId'] || "";
+  const originalText = this.lessonForm.value.content || "none";
+  const wrappedText = addLineBreaksWithTranslatedDivs(originalText);
   const lesson = {
     title: this.lessonForm.value.title,
-    content: wrappedText,
+    content: this.lessonForm.value.content,
+    contentLines: wrappedText,
     vocabulary: this.lessonForm.value.vocabulary,
     language: this.lessonForm.value.language,
     tags: this.lessonForm.value.tags,
     shareable: this.lessonForm.value.shareable,
     imageUrl: this.lessonForm.value.imageUrl,
-    creatorId: creatorID || this.lessonForm.value.creatorId
+    creatorId: this.lessonForm.value.creatorId
   }
   if (this.itemDetails?.id)
   {

@@ -21,6 +21,12 @@ button:focus, button.hover {
   font-size: medium;
 }
 
+h2 {
+  margin-bottom: .5rem;
+  font-size: 1.5rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
 .input {
  @apply block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300
 }
@@ -61,3 +67,12 @@ button:focus, button.hover {
  .pills {
   @apply p-2 px-4 shadow-md no-underline whitespace-nowrap rounded-full font-sans font-semibold text-sm focus:outline-none active:shadow-none mr-0
  }
+
+ .translated {
+  background-color: bisque;
+}
+
+.hide-translations.translated {
+  display: none;
+}
+
