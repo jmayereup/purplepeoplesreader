@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { PocketbaseService } from './pocketbase.service';
+import { PocketbaseService } from './services/pocketbase.service';
 import { LoginComponent } from "./login/login.component";
-import { AuthService } from './auth.service';
+import { AuthService } from './services/auth.service';
 import { LessonComponent } from "./lesson/lesson.component";
 import { RouterLink } from '@angular/router';
 import { NavBarComponent } from "./nav-bar/nav-bar.component";
@@ -22,7 +22,7 @@ import { NavBarComponent } from "./nav-bar/nav-bar.component";
 export class AppComponent {
  
   title = 'Level Up:LBL';
-  db = inject(PocketbaseService);
+  // db = inject(PocketbaseService);
   auth = inject(AuthService);
   username = "";
 

@@ -1,18 +1,19 @@
 import { ChangeDetectorRef, Injectable, inject, signal } from '@angular/core';
 import { PocketbaseService } from './pocketbase.service';
-import { assignLanguageCode } from './shared/utils';
+import { assignLanguageCode } from '../shared/utils';
+import { StoreService } from './store.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpeakService {
 
-db = inject(PocketbaseService);
+store = inject(StoreService);
 
 cdRef: ChangeDetectorRef | undefined;
 rate = signal<number>(1);
 selectedLanguage = signal<string | undefined>(undefined);
-itemState = this.db.getItemState(); //allows the user to override the default voice
+itemDetails = this.store.lessons.details; //allows the user to override the default voice
 currentLinesRead = signal(0);
 hasplayed = signal<boolean>(false);
 
@@ -75,6 +76,6 @@ setChangeDetector(cdr: ChangeDetectorRef) {
   }
 
   getItemLang() {
-    return assignLanguageCode(this.itemState().language || 'en-CA');
+    return assignLanguageCode(this.itemDetails()?.language || 'en-CA');
   }
 }

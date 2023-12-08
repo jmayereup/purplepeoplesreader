@@ -2,9 +2,9 @@ import { Component, Input, OnChanges, OnInit, Output, EventEmitter, inject } fro
 import { CommonModule } from '@angular/common';
 import { FormFilesComponent } from '../form-files/form-files.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PocketbaseService } from '../pocketbase.service';
+import { PocketbaseService } from '../services/pocketbase.service';
 import { LessonsRecord, LessonsResponse } from '../shared/pocketbase-types';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 import { addLineBreaksWithTranslatedDivs } from '../../app/shared/utils';
 import { TAG_VALUES } from '../shared/utils';
 
@@ -97,8 +97,8 @@ async onSubmit() {
     console.log('create lesson called');
     await this.db.createItem(lesson as LessonsRecord).then(data => {
       console.log('lesson created', data);
-      this.db.fetchDetails(data.id).then(data => {
-        this.newID.emit(data.id);
+      this.db.fetchDetails(data.id).then(id => {
+        this.newID.emit(id);
       });
 
     });

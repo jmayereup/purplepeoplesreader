@@ -1,9 +1,10 @@
 import { Component, Input, OnChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LessonDetailsComponent } from "../lesson-full-text/lesson-full-text.component";
-import { PocketbaseService } from '../pocketbase.service';
+import { PocketbaseService } from '../services/pocketbase.service';
 import { RouterLink } from '@angular/router';
 import { FormLessonComponent } from '../form-lesson/form-lesson.component';
+import { StoreService } from '../services/store.service';
 
 @Component({
   selector: 'app-lesson',
@@ -15,19 +16,22 @@ import { FormLessonComponent } from '../form-lesson/form-lesson.component';
 export class LessonComponent implements OnChanges {
 
   @Input() id = "";
-  db = inject(PocketbaseService);
-  itemDetails = this.db.itemDetails;
+  store = inject(StoreService);
+  itemDetails = this.store.lessons.details;
 
-  showEdit = this.db.showEdit;
+  showEdit = this.store.app.showEdit;
 
   constructor() {
   }
+
   ngOnChanges(): void {
     console.log('on changes called in lessons component');
-    if(this.id) this.db.fetchDetails(this.id);
-    console.log('fetchDetails called with:', this.id);
+    if(this.id) this.store.lessons.fetchDetails(this.id);
   }
 
+  removeShowEdit() {
+    //remove query params via store
+  }
 
 
 

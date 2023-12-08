@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { PocketbaseService } from '../pocketbase.service';
 import { TagChooserComponent } from "../tag-chooser/tag-chooser.component";
+import { StoreService } from '../services/store.service';
 
 @Component({
     selector: 'app-lesson-list',
@@ -13,15 +13,17 @@ import { TagChooserComponent } from "../tag-chooser/tag-chooser.component";
 })
 export class LessonListComponent {
 
-  db = inject(PocketbaseService);
-  itemDetails = this.db.itemDetails;
-  resultList = this.db.fetchedResults;
-  type = 'A1';
-
+  store = inject(StoreService);
+  
+  itemDetails = this.store.lessons.details;
+  resultList = this.store.lessons.results;
+  
   defaultImage = "../../assets/icons/book.svg"
+  // type = 'A1';
+
 
   ngOnInit() {
-    this.db.fetchResults();
+    // this.store.lessons.fetchTag(this.store.app.tag);
   }
 
 }

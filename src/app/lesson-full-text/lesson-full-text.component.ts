@@ -1,7 +1,7 @@
 import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LessonsResponse } from '../shared/pocketbase-types';
-import { SpeakService } from '../speak.service';
+import { SpeakService } from '../services/speak.service';
 import { MarkdownPipe } from 'ngx-markdown';
 
 @Component({

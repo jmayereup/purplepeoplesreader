@@ -5,5 +5,10 @@ export interface Pagination {
     totalPages: number;
 }
 
+export interface AppState {
+    showEdit: boolean;
+    tag: string;
+}
+
 
 
