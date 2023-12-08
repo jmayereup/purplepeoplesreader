@@ -24,7 +24,7 @@ export class LessonComponent implements OnChanges {
   }
   ngOnChanges(): void {
     console.log('on changes called in lessons component');
-    this.db.fetchDetails(this.id);
+    if(this.id) this.db.fetchDetails(this.id);
     console.log('fetchDetails called with:', this.id);
   }
 

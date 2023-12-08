@@ -8,9 +8,13 @@
       </svg>
        Edit</button>
     @if (showEdit) {
-    <app-form-lesson [itemDetails]="itemDetails()"></app-form-lesson>
+      @defer (on viewport) {
+        <app-form-lesson [itemDetails]="itemDetails()" (newID)="id = $event"></app-form-lesson>
+      } @placeholder {<div>Loading Form...</div>}
     }
-    <app-lesson-full-text [itemDetails]="itemDetails()"></app-lesson-full-text>
+    @if (id) {
+      <app-lesson-full-text [itemDetails]="itemDetails()"></app-lesson-full-text>
+    }
   </div>
   <div class="flex justify-center">
     <a [routerLink]="['/list']" queryParamsHandling="preserve">

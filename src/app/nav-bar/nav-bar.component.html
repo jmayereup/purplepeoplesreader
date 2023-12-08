@@ -14,7 +14,7 @@
                         <a class="nav-link" [routerLink]="['/list']" queryParamsHandling="preserve">
                             <p>LESSONS</p>
                         </a>
-                        <a class="nav-link" [routerLink]="['/new']" queryParamsHandling="preserve">
+                        <a class="nav-link" [routerLink]="['/new']" [queryParams]="{edit:'true'}" queryParamsHandling="merge">
                             <button type="button">CREATE NEW</button>
                         </a>
                     </div>
@@ -47,7 +47,7 @@
                 (click)="isOpen = !isOpen">
                     <a [routerLink]="['/intro']" queryParamsHandling="preserve" class="nav-link">Intro</a>
                     <a [routerLink]="['/list']" queryParamsHandling="preserve" class="nav-link">Lessons</a>
-                    <a [routerLink]="['/new']"  queryParamsHandling="preserve" class="nav-link">CREATE NEW</a>
+                    <a [routerLink]="['/new']" [queryParams]="{edit:'true'}" queryParamsHandling="merge" class="nav-link">CREATE NEW</a>
                 </div>
 
                 <div class="flex items-center mt-4 lg:mt-0">

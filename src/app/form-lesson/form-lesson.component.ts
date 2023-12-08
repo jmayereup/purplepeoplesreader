@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, inject } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormFilesComponent } from '../form-files/form-files.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -17,7 +17,8 @@ import { TAG_VALUES } from '../shared/utils';
 })
 export class FormLessonComponent implements OnInit, OnChanges {
 
-@Input() itemDetails: LessonsResponse | null = null; 
+@Input() itemDetails: LessonsResponse | null = null;
+@Output() newID = new EventEmitter<string>();
 
 db = inject(PocketbaseService);
 auth = inject(AuthService);
@@ -70,7 +71,7 @@ setFilePath(val:string) {
   console.log('imageURL:', val);
 }
 
-onSubmit() {
+async onSubmit() {
   const originalText = this.lessonForm.value.content || "none";
   const wrappedText = addLineBreaksWithTranslatedDivs(originalText);
   const lesson = {
@@ -87,14 +88,22 @@ onSubmit() {
   if (this.itemDetails?.id)
   {
     //update lesson
-    this.db.updateItem(this.itemDetails.id, lesson as LessonsRecord);
-    console.log('update lesson called');
+    this.db.updateItem(this.itemDetails.id, lesson as LessonsRecord).then(data => {
+      console.log('updated lesson');
+      this.db.fetchDetails(this.itemDetails?.id || "");
+    });
+    //create new lesson
   } else {
     console.log('create lesson called');
-    this.db.createItem(lesson as LessonsRecord);
-    console.log('lesson form submitted', lesson);
-  }
+    await this.db.createItem(lesson as LessonsRecord).then(data => {
+      console.log('lesson created', data);
+      this.db.fetchDetails(data.id).then(data => {
+        this.newID.emit(data.id);
+      });
 
+    });
+  }
+  
 }
  
 }

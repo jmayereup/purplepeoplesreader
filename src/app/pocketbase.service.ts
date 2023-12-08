@@ -56,10 +56,11 @@ export class PocketbaseService {
     }
   }
 
-  async fetchDetails(itemId: string): Promise<void> {
+  async fetchDetails(itemId: string) {
     try {
       const res = await this.db.collection('lessons').getOne<LessonsResponse>(itemId);
       this.itemDetails.update(details => details = res as LessonsResponse);
+      return this.itemDetails();
     } catch (error) {
       this.router.navigate(['error'], { queryParams: {}, queryParamsHandling: 'preserve' });
       // Handle the error here, such as logging it or showing an error message to the user
