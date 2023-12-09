@@ -9,10 +9,10 @@ import bootstrap from './src/main.server';
 export function app(): express.Express {
   const server = express();
   const serverDistFolder = dirname(fileURLToPath(import.meta.url));
-  console.log(serverDistFolder);
+  // console.log(serverDistFolder);
   // const serverDistFolder = 'https://blog.teacherjake.com/pb-demo'
   const browserDistFolder = resolve(serverDistFolder, '../browser');
-  console.log(browserDistFolder);
+  // console.log(browserDistFolder);
   const indexHtml = join(serverDistFolder, 'index.server.html');
 
   const commonEngine = new CommonEngine();

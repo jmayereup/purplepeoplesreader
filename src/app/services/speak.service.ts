@@ -8,17 +8,13 @@ import { StoreService } from './store.service';
 })
 export class SpeakService {
 
-store = inject(StoreService);
-
 cdRef: ChangeDetectorRef | undefined;
-rate = signal<number>(1);
-selectedLanguage = signal<string | undefined>(undefined);
-itemDetails = this.store.lessons.details; //allows the user to override the default voice
+// rate = signal<number>(1);
+// selectedLanguage = signal<string | undefined>(undefined);
 currentLinesRead = signal(0);
-hasplayed = signal<boolean>(false);
-
-isPlaying = signal<boolean>(false);
-isPaused: boolean = false;
+private hasplayed = signal<boolean>(false);
+private isPlaying = signal<boolean>(false);
+private isPaused: boolean = false;
 
 constructor() { 
 
@@ -58,13 +54,9 @@ setChangeDetector(cdr: ChangeDetectorRef) {
     else {
       
       this.isPlaying.set(true);
-      
-      if (lang)  lang = this.selectedLanguage() || lang;
-      if (!lang) lang = this.selectedLanguage() || this.getItemLang();
-      console.log(lang);
       let utterance = new SpeechSynthesisUtterance(line);
-      utterance.lang = lang;
-      utterance.rate = rate || this.rate();
+      utterance.lang = lang || "en-CA";
+      utterance.rate = rate || .8;
       window.speechSynthesis.speak(utterance);
       utterance.onend = () => {
         this.currentLinesRead.update(old => old + points)
@@ -75,7 +67,4 @@ setChangeDetector(cdr: ChangeDetectorRef) {
     }
   }
 
-  getItemLang() {
-    return assignLanguageCode(this.itemDetails()?.language || 'en-CA');
-  }
 }

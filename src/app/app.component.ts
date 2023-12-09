@@ -7,6 +7,7 @@ import { AuthService } from './services/auth.service';
 import { LessonComponent } from "./lesson/lesson.component";
 import { RouterLink } from '@angular/router';
 import { NavBarComponent } from "./nav-bar/nav-bar.component";
+import { StoreService } from './services/store.service';
 
 
 @Component({
@@ -22,10 +23,10 @@ import { NavBarComponent } from "./nav-bar/nav-bar.component";
 export class AppComponent {
  
   title = 'Level Up:LBL';
-  // db = inject(PocketbaseService);
-  auth = inject(AuthService);
+  store = inject(StoreService);
+  // auth = inject(AuthService);
   username = "";
-
+  fSize = this.store.app.fontSize;
   constructor() {    
 
   }
@@ -35,7 +36,7 @@ export class AppComponent {
   }
 
   async getUsername() {
-    this.username = await this.auth.getUsername();
+    this.username = await this.store.auth.getUsername();
   }
 
   // router = inject(Router);

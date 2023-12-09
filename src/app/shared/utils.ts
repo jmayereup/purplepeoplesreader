@@ -1,4 +1,4 @@
-import { HTMLString, LessonsLanguageOptions, LessonsTagsOptions } from "./pocketbase-types";
+import { LessonsLanguageOptions, LessonsTagsOptions } from "./pocketbase-types";
 import removeMD from 'remove-markdown';
 
 export function addLineBreaks(text: string): string {

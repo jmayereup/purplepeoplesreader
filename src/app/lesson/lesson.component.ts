@@ -1,17 +1,16 @@
 import { Component, Input, OnChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LessonDetailsComponent } from "../lesson-full-text/lesson-full-text.component";
-import { PocketbaseService } from '../services/pocketbase.service';
 import { RouterLink } from '@angular/router';
 import { FormLessonComponent } from '../form-lesson/form-lesson.component';
 import { StoreService } from '../services/store.service';
 
 @Component({
-  selector: 'app-lesson',
-  standalone: true,
-  templateUrl: './lesson.component.html',
-  styleUrl: './lesson.component.css',
-  imports: [CommonModule, LessonDetailsComponent, FormLessonComponent, RouterLink]
+    selector: 'app-lesson',
+    standalone: true,
+    templateUrl: './lesson.component.html',
+    styleUrl: './lesson.component.css',
+    imports: [CommonModule, LessonDetailsComponent, FormLessonComponent, RouterLink]
 })
 export class LessonComponent implements OnChanges {
 
@@ -20,6 +19,7 @@ export class LessonComponent implements OnChanges {
   itemDetails = this.store.lessons.details;
 
   showEdit = this.store.app.showEdit;
+  fSize = this.store.app.fontSize;
 
   constructor() {
   }
@@ -30,7 +30,7 @@ export class LessonComponent implements OnChanges {
   }
 
   removeShowEdit() {
-    //remove query params via store
+    this.store.app.removeEditTag();
   }
 
 

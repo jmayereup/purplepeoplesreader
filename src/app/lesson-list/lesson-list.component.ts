@@ -19,11 +19,5 @@ export class LessonListComponent {
   resultList = this.store.lessons.results;
   
   defaultImage = "../../assets/icons/book.svg"
-  // type = 'A1';
-
-
-  ngOnInit() {
-    // this.store.lessons.fetchTag(this.store.app.tag);
-  }
 
 }

@@ -1,20 +1,27 @@
-<div #fullText>
-  <h2 class="text-center">
-    Title: {{itemDetails?.title}}</h2>
-  <button class="flex justify-center w-full gap-2 mt-2 text-black bg-blue-200" type="button"
-    (click)="readAll(fullText.textContent || 'none')">
-    <img src="../../assets/icons/headphones.svg" class="h-4 p-0">Listen</button>
-  <div [innerHTML]="(itemDetails?.content || '') | markdown | async"></div>
+<div #fullText translate="no" class="max-h-80 overflow-y-auto">
+  <h2 class="text-center">{{itemDetails?.title}}</h2>
+  <div class="full-text" [innerHTML]="(itemDetails?.content || '') | markdown | async"></div>
 </div>
 <hr>
-<h2 class="text-center">Click to Listen Line-By-Line</h2>
-<button class="flex justify-center w-full gap-2 mt-2 text-black bg-blue-200" type="button"
-(click)="showTranslation = !showTranslation">Toggle Translations</button>
-<div [innerHTML]="(itemDetails?.contentLines || '') | markdown | async" (click)="readThis($event)"
-[ngClass]="showTranslation ? 'shown' : 'hide-translations'"
-></div>
 <p>
   Tags:
   {{itemDetails?.tags}}
 </p>
-<hr>
+<hr class="my-4">
+
+<h2 class="text-center">Line-By-Line</h2>
+
+<div class="grid grid-cols-2 gap-1 mb-1">
+  <button class="flex justify-center w-full gap-2 mt-2 text-black bg-blue-200" type="button"
+    (click)="readAll(fullText.textContent || 'none')">
+    <img src="../../assets/icons/headphones.svg" class="h-4 p-0">Listen (Full-Text)</button>
+  <button class="flex justify-center w-full gap-2 mt-2 text-black bg-blue-200" type="button"
+    (click)="showTranslation = !showTranslation">Toggle Translations</button>
+</div>
+
+<details class="bg-slate-200"><summary>Settings</summary>
+  <app-change-settings></app-change-settings>
+</details>
+
+<div [innerHTML]="(itemDetails?.contentLines || '') | markdown | async" (click)="readThis($event)"
+  [ngClass]="showTranslation ? 'shown' : 'hide-translations'"></div>
