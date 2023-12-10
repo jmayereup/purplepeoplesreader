@@ -10,6 +10,13 @@
 
         <p class="mt-1 text-center text-gray-500 dark:text-gray-400">Login or create account</p>
 
+        <p>Login with Google</p>
+        <button class="standard" (click)="loginWithGoogle()">
+            <img alt="google logo" src="../../assets/icons/google-logo.svg" />
+            <p>Login with Google</p>
+          </button>
+
+
         <form #loginForm="ngForm">
             <div class="w-full mt-4">
                 <input type="email" placeholder="Email Address" aria-label="Email Address" [(ngModel)]="loginData.email"

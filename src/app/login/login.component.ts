@@ -25,6 +25,10 @@ export class LoginComponent {
     this.auth.loginWithEmail(this.loginData.email, this.loginData.password)
   }
 
+  loginWithGoogle() {
+    this.auth.loginWithGoogle();
+  }
+
   logout() {
     this.authStore.clear();
     }

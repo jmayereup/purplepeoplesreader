@@ -29,8 +29,8 @@ export class LessonComponent implements OnChanges {
     if(this.id) this.store.lessons.fetchDetails(this.id);
   }
 
-  removeShowEdit() {
-    this.store.app.removeEditTag();
+  toggleShowEdit() {
+    this.showEdit.set(!this.showEdit());
   }
 
 

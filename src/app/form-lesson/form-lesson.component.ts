@@ -7,6 +7,7 @@ import { LessonsRecord, LessonsResponse } from '../shared/pocketbase-types';
 import { AuthService } from '../services/auth.service';
 import { addLineBreaksWithTranslatedDivs } from '../../app/shared/utils';
 import { TAG_VALUES } from '../shared/utils';
+import { StoreService } from '../services/store.service';
 
 @Component({
   selector: 'app-form-lesson',
@@ -20,8 +21,7 @@ export class FormLessonComponent implements OnInit, OnChanges {
 @Input() itemDetails: LessonsResponse | null = null;
 @Output() newID = new EventEmitter<string>();
 
-db = inject(PocketbaseService);
-auth = inject(AuthService);
+store = inject(StoreService);
 fb = inject(FormBuilder);
 
 tags = TAG_VALUES;
@@ -50,7 +50,7 @@ ngOnChanges() {
 }
 
 loadLesson() {
-  const creatorID: string = this.auth.authStore.model?.['id'] || "";
+  const creatorID: string = this.store.user.userId() || '';
   const lesson = this.itemDetails;
   this.lessonForm.patchValue({
     id: lesson?.id,
@@ -88,16 +88,16 @@ async onSubmit() {
   if (this.itemDetails?.id)
   {
     //update lesson
-    this.db.updateItem(this.itemDetails.id, lesson as LessonsRecord).then(data => {
+    this.store.lessons.update(this.itemDetails.id, lesson as LessonsRecord).then(data => {
       console.log('updated lesson');
-      this.db.fetchDetails(this.itemDetails?.id || "");
+      this.store.lessons.fetchDetails(this.itemDetails?.id || "");
     });
     //create new lesson
   } else {
     console.log('create lesson called');
-    await this.db.createItem(lesson as LessonsRecord).then(data => {
+    await this.store.lessons.create(lesson as LessonsRecord).then(data => {
       console.log('lesson created', data);
-      this.db.fetchDetails(data.id).then(id => {
+      this.store.lessons.fetchDetails(data.id).then(id => {
         this.newID.emit(id);
       });
 

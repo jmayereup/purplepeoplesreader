@@ -63,4 +63,9 @@ export class PocketbaseService {
     return record;
   }
 
+  async deleteItem(id: string) {
+    const record = await this.db.collection('lessons').delete(id);
+    return record;
+  }
+
 }
