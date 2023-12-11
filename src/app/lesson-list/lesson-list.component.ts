@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input, inject, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { TagChooserComponent } from "../tag-chooser/tag-chooser.component";
 import { StoreService } from '../services/store.service';
-import { LessonsRecord, LessonsResponse } from '../shared/pocketbase-types';
+import { LessonsResponse } from '../shared/pocketbase-types';
 
 @Component({
     selector: 'app-lesson-list',
@@ -12,15 +12,23 @@ import { LessonsRecord, LessonsResponse } from '../shared/pocketbase-types';
     styleUrl: './lesson-list.component.css',
     imports: [CommonModule, RouterLink, TagChooserComponent]
 })
-export class LessonListComponent {
+export class LessonListComponent implements OnChanges {
 
   store = inject(StoreService);
   router = inject(Router);
+
+  @Input() type = "";
   
   itemDetails = this.store.lessons.details;
   resultList = this.store.lessons.results;
   
-  defaultImage = "../../assets/icons/book.svg"
+  defaultImage = "../../assets/icons/book.svg";
+
+  constructor() {  }
+  
+  ngOnChanges() {
+        if (this.type == "user") this.resultList = this.store.lessons.userResults;
+  }
 
 deleteLesson(item: LessonsResponse) {
   let confirmed = confirm(`Are you sure you want to delete lesson: \n ${item.title}`)

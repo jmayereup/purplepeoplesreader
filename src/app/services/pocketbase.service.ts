@@ -15,6 +15,7 @@ export class PocketbaseService {
 
   private itemDetails = signal<LessonsResponse | null>(null);
   private fetchedResults = signal<LessonsResponse[] | null>(null);
+  private userCreatedLessons = signal<LessonsResponse[] | null>(null);
 
   constructor() {
   }
@@ -22,11 +23,24 @@ export class PocketbaseService {
   async fetchResults(type: string) {
     console.log('fetching results', type);
     this.db.collection('lessons').getFullList({
-      filter: `tags~'${type}'`
+      filter: `tags~'${type}' && shareable=true`
+    }).then(
+      (res: LessonsResponse[]) => {
+        this.fetchedResults.set(res);
+        return res;
+      }
+    );
+  }
+
+  async fetchUserCreatedLessons(userId: string) {
+    console.log('fetching results for', userId);
+    await this.db.collection('lessons').getFullList({
+      filter: `creatorId='${userId}'`
     }).then(
       res => {
-        this.fetchedResults.set(res);
-        return;
+        this.userCreatedLessons.set(res);
+        console.log(this.userCreatedLessons());
+        return res;
       }
     );
   }
@@ -45,12 +59,16 @@ export class PocketbaseService {
   }
 
 
-  getItemDetailsState() {
+  public getItemDetailsState() {
     return this.itemDetails;
   }
 
-  getFetchedResults() {
+  public getFetchedResults() {
     return this.fetchedResults;
+  }
+
+  public getUserCreatedLessons() {
+    return this.userCreatedLessons;
   }
 
   async createItem(lesson: LessonsRecord) {

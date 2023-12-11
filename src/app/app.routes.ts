@@ -7,6 +7,7 @@ import { ErrorFindingComponent } from './error-finding/error-finding.component';
 export const routes: Routes = [
     { path: 'lesson/:id', component: LessonComponent },
     { path: 'list', component: LessonListComponent },
+    { path: 'list/:type', component: LessonListComponent },
     { path: 'difficulty', component: LessonLevelChooserComponent},
     { path: 'new', component: LessonComponent},
     { path: 'error', component: ErrorFindingComponent},

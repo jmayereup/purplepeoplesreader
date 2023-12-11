@@ -11,16 +11,19 @@
                         <a class="nav-link" [routerLink]="['/intro']" queryParamsHandling="preserve">
                             <p>HOME</p>
                         </a>
-                        <a class="nav-link" [routerLink]="['/list']" queryParamsHandling="preserve">
-                            <p>LESSONS</p>
-                        </a>
+                            <a class="nav-link" [routerLink]="['/list']" queryParamsHandling="preserve">
+                                <p>PUBLIC</p>
+                            </a>
+                            <a class="nav-link" [routerLink]="['/list/user']" [queryParams]="{tag: 'user'}">
+                                <p>MINE</p>
+                            </a>
                         <a class="nav-link" [routerLink]="['/new']" [queryParams]="{edit:'true'}" queryParamsHandling="merge">
                             <button type="button">CREATE NEW</button>
                         </a>
                     </div>
 
                     <!-- Mobile menu button -->
-                    <div class="flex sm:hidden">
+                    <div class="flex">
                         <button (click)="isOpen = !isOpen" type="button"
                             class="text-gray-500 dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400 focus:outline-none focus:text-gray-600 dark:focus:text-gray-400 clear"
                             aria-label="toggle menu">

@@ -1,4 +1,4 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, effect, inject, signal } from '@angular/core';
 import { PocketbaseService } from './pocketbase.service';
 
 @Injectable({
@@ -10,10 +10,11 @@ export class AuthService {
   db = this.dbService.db;
   authStore = this.db.authStore;
 
-  userId = signal<string | null>(null);
-  userName = signal<string | null>(null);
+  userId: string | undefined = this.db.authStore.model?.['id'];
+  userName: string | undefined = this.db.authStore.model?.['username'];
 
   constructor() {
+
   }
   
   async loginWithEmail(username: string, password: string) {
@@ -24,12 +25,13 @@ export class AuthService {
     const authData = await this.db.collection('users').authWithOAuth2({ provider: 'google' });
   }
 
-  async getUser() {
-     const username =  await this.db.authStore.model?.['username'] || "";
-     this.userName.set(username);
-     const userId = await this.db.authStore.model?.['id'];
-     this.userId.set(userId);
-  }
+  // async getUser() {
+  //    const username =  await this.db.authStore.model?.['username'] || "";
+  //    this.userName.set(username);
+  //    const userId = await this.db.authStore.model?.['id'];
+  //    this.userId.set(userId);
+  //    return userId;
+  // }
  
 
 

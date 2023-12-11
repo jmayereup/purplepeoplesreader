@@ -50,7 +50,7 @@ ngOnChanges() {
 }
 
 loadLesson() {
-  const creatorID: string = this.store.user.userId() || '';
+  const creatorID: string = this.store.user.userId || '';
   const lesson = this.itemDetails;
   this.lessonForm.patchValue({
     id: lesson?.id,

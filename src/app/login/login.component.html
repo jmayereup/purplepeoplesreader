@@ -1,20 +1,17 @@
 <hr>
 <div class="flex flex-col max-w-sm mx-auto">
     @if (!authStore.isValid) {
-    <div class="px-6 py-4">
+    <div class="px-6 py-4 flex flex-col mx-auto text-center items-center">
         <div class="flex justify-center mx-auto">
-            <img class="w-auto h-7 sm:h-8" src="https://merakiui.com/images/logo.svg" alt="">
+            <img class="w-auto h-20" src="../../assets/lbl-lingo-logo.png" alt="">
         </div>
-
-        <h3 class="mt-3 text-xl font-medium text-center text-gray-600 dark:text-gray-200">Welcome Back</h3>
-
-        <p class="mt-1 text-center text-gray-500 dark:text-gray-400">Login or create account</p>
-
-        <p>Login with Google</p>
-        <button class="standard" (click)="loginWithGoogle()">
-            <img alt="google logo" src="../../assets/icons/google-logo.svg" />
+        <div>
+            <p class="mt-1 text-center text-gray-500 dark:text-gray-400">Login or create account</p>
+        </div>
+        <button class="standard flex flex-row gap-1 my-8" (click)="loginWithGoogle()">
+            <img class="h-5" alt="google logo" src="../../assets/icons/google-logo.svg" />
             <p>Login with Google</p>
-          </button>
+        </button>
 
 
         <form #loginForm="ngForm">
@@ -28,13 +25,14 @@
                     name="password" />
             </div>
 
-            <div class="flex items-center justify-between mt-4">
-                <a href="#" class="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500">Forget Password?</a>
-
+            <div class="flex flex-row justify-between items-center my-4">
+                <a href="#" class="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500">Forget
+                    Password?</a>
                 <button type="button" (click)="loginWithEmail()">
                     Sign In
                 </button>
             </div>
+
         </form>
     </div>
     <div class="flex items-center justify-center py-4 text-center bg-gray-50 dark:bg-gray-700">
