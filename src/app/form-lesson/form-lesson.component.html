@@ -1,6 +1,4 @@
-<div>
-
-    <section class="w-full p-6 mx-auto mt-4 rounded-md shadow-md bg-slate-300 dark:bg-gray-800">
+    <section class="w-full p-6 mx-auto m-0 rounded-lg shadow-md bg-slate-300 dark:bg-gray-800">
         <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">CREATE/EDIT</h2>
         <p>Lesson ID: {{itemDetails?.id || 'New Lesson'}}</p>
         <form [formGroup]="lessonForm">
@@ -59,4 +57,3 @@
             (click)="onSubmit()">Save</button>
         </div>
     </section>
-</div>

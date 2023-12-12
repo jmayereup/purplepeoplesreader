@@ -1,6 +1,6 @@
 <section [ngStyle]="{'font-size': fSize()}">
   <div class="flex flex-col p-2">
-    <button class="flex self-end justify-center gap-1 clear" (click)="toggleShowEdit()" type="button">
+    <button class="flex self-end justify-center mb-1 clear" (click)="toggleShowEdit()" type="button">
       <img src="../../assets/icons/edit.svg" alt="editbutton" class="w-5 h-5">Edit</button>
     @if (showEdit()) {
     <app-form-lesson [itemDetails]="itemDetails()" (newID)="id = $event"></app-form-lesson>
@@ -11,7 +11,7 @@
   </div>
   <div class="flex justify-center">
     <a [routerLink]="['/list']" queryParamsHandling="preserve">
-      <button class="standard" type="button">Back</button>
+      <button class="standard bg-blue-500 mb-2" type="button">Back</button>
     </a>
   </div>
 </section>

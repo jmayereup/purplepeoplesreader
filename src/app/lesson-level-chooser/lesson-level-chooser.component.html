@@ -1,6 +1,6 @@
-<app-welcome></app-welcome>
-<section class="mx-auto bg-white dark:bg-gray-900">
-    <div class="px-0 py-10 mx-auto ">
+<section class="mx-auto bg-amber-100 dark:bg-gray-900 px-2 sm:px-4">
+    <app-welcome></app-welcome>
+    <div class="px-0 pb-6 mx-auto ">
         <h1 class="text-2xl font-semibold text-center">
             Choose Your Level
         </h1>
@@ -9,7 +9,7 @@
             You can also create your own lessons with text from the internet.</p>
         <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 sm:grid-cols-2 md:grid-cols-3">
             <div class="grid w-full" [routerLink]="['/list']" [queryParams]="{tag: 'A1'}">
-                <div class="bg-green-200 img-container">
+                <div class="bg-green-300 img-container">
                     <img src="../../assets/easy.svg" class="img-svg" alt="easy level">
                 </div>
                     <p class="image-caption">A1 - Short texts with easy vocabulary.</p>
@@ -17,7 +17,7 @@
 
             <div class="grid w-full" [routerLink]="['/list']" [queryParams]="{tag: 'A2'}">
 
-                <div class="bg-yellow-200 img-container">
+                <div class="bg-orange-300 img-container">
                     <img src="../../assets/medium.svg" class="img-svg" alt="easy level">
                 </div>
                 <div>
@@ -27,7 +27,7 @@
             </div>
 
             <div class="grid w-full" [routerLink]="['/list']" [queryParams]="{tag: 'B1'}">
-                <div class="bg-red-200 img-container">
+                <div class="bg-red-300 img-container">
                     <img src="../../assets/hard.svg" class="img-svg" alt="easy level">
                 </div>
 

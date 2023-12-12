@@ -3,6 +3,13 @@
 @tailwind utilities;
 /* You can add global styles to this file, and also import other style files */
 
+html {
+  background-color: rgb(180, 200, 219);
+}
+
+section {
+  background-color: inherit;
+}
 
 button {
   padding: .5rem;
@@ -18,7 +25,7 @@ button.clear {
 }
 
 button:focus, button.hover {
-  font-size: medium;
+  background-color: lightcyan; 
 }
 
 h2 {
@@ -76,11 +83,12 @@ details {
 
  .translated {
   border-radius: .5rem 1rem .5rem 1rem;
-  background-color: bisque;
+  background-color: ivory;
   padding-left: 1rem;
-  padding-right: 3rem;
+  padding-right: 2rem;
   margin-top: 2px;
   margin-bottom: .5rem;
+  font-size: .8em;
 }
 
 .hide-translations>div.translated {

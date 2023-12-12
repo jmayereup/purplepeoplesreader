@@ -1,27 +1,29 @@
-<div #fullText translate="no" class="max-h-80 overflow-y-auto">
-  <h2 class="text-center">{{itemDetails?.title}}</h2>
-  <div class="full-text" [innerHTML]="(itemDetails?.content || '') | markdown | async"></div>
-</div>
-<hr>
-<p>
-  Tags:
-  {{itemDetails?.tags}}
-</p>
-<hr class="my-4">
+<section class="rounded-lg bg-amber-100 p-4 mb-4">
+  <div #fullText translate="no" class="max-h-[70vh] overflow-y-auto">
+    <h2 class="text-center">{{itemDetails?.title}}</h2>
+    <div class="full-text" [innerHTML]="(itemDetails?.content || '') | markdown | async"></div>
+  </div>
+  <p class="mt-2 text-sm">
+    Tags:
+    {{itemDetails?.tags}}
+  </p>
+</section>
 
-<h2 class="text-center">Line-By-Line</h2>
-
-<div class="grid grid-cols-2 gap-1 mb-1">
-  <button class="flex justify-center w-full gap-2 mt-2 text-black bg-blue-200" type="button"
-    (click)="readAll(fullText.textContent || 'none')">
-    <img src="../../assets/icons/headphones.svg" class="h-4 p-0">Listen (Full-Text)</button>
-  <button class="flex justify-center w-full gap-2 mt-2 text-black bg-blue-200" type="button"
-    (click)="showTranslation = !showTranslation">Toggle Translations</button>
-</div>
-
-<details class="bg-slate-200"><summary>Settings</summary>
-  <app-change-settings></app-change-settings>
-</details>
-
-<div [innerHTML]="(itemDetails?.contentLines || '') | markdown | async" (click)="readThis($event)"
-  [ngClass]="showTranslation ? 'shown' : 'hide-translations'"></div>
+<section class="rounded-lg bg-amber-100 p-4">
+  <h2 class="text-center mb-0">Line-By-Line</h2>
+  
+  <div class="grid grid-cols-2 gap-1 mb-1">
+    <button class="flex justify-center w-full gap-2 mt-2 text-black bg-amber-400" type="button"
+      (click)="readAll(fullText.textContent || 'none')">
+      <img src="../../assets/icons/headphones.svg" class="h-4 p-0">Listen (Full-Text)</button>
+    <button class="flex justify-center w-full gap-2 mt-2 text-black bg-amber-400" type="button"
+      (click)="showTranslation = !showTranslation">Toggle Translations</button>
+  </div>
+  
+  <details class="bg-slate-300 text-black mb-2"><summary>Settings</summary>
+    <app-change-settings></app-change-settings>
+  </details>
+  
+  <div [innerHTML]="(itemDetails?.contentLines || '') | markdown | async" (click)="readThis($event)"
+    [ngClass]="showTranslation ? 'shown' : 'hide-translations'"></div>
+</section>

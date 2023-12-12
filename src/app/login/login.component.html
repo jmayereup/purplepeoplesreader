@@ -3,7 +3,7 @@
     @if (!authStore.isValid) {
     <div class="px-6 py-4 flex flex-col mx-auto text-center items-center">
         <div class="flex justify-center mx-auto">
-            <img class="w-auto h-20" src="../../assets/lbl-lingo-logo.png" alt="">
+            <img class="w-auto h-20" src="../../assets/lbl-lingo-header.png" alt="">
         </div>
         <div>
             <p class="mt-1 text-center text-gray-500 dark:text-gray-400">Login or create account</p>
@@ -44,7 +44,7 @@
     <div class="flex flex-col centered">
         @if (authStore.isValid) {
         Logged in as: {{authStore.model!['username']}}
-        <button class="" type="button" (click)="logout()">
+        <button class="bg-blue-500" type="button" (click)="logout()">
             Logout
         </button>
         } @else {Not Logged In}

@@ -1,6 +1,6 @@
 <div class="flex flex-col max-w-screen-md px-2 mx-auto overflow-x-visible">
     @if (type != 'user') {
-        <app-tag-chooser class=""></app-tag-chooser>
+    <app-tag-chooser class=""></app-tag-chooser>
     }
     <!-- <div class="flex items-center gap-x-3">
         <h2 class="text-lg font-medium text-gray-800 dark:text-white">Lessons</h2>
@@ -9,12 +9,12 @@
             class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">100</span>
     </div> -->
 
-    <div class="flex flex-col">
+    <div class="flex flex-col min-w-full mt-2">
         <!-- <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8"> -->
-        <div class="p-4 pt-0">
-            <div class="flex py-2 align-middle md:px-6 lg:px-8">
-                <div class="mx-auto overflow-x-auto border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <div class="p-4 bg-amber-100 rounded-lg">
+            <!-- <div class="flex py-2 align-middle md:px-6 lg:px-8"> -->
+                <div class="rounded-lg mx-auto overflow-x-auto border bg-green-100 border-gray-200 dark:border-gray-700 md:rounded-lg">
+                    <table class="mx-auto w-full divide-y divide-gray-200 dark:divide-gray-700">
                         <thead class="bg-gray-50 dark:bg-gray-800">
                             <tr>
                                 <th scope="col"
@@ -46,15 +46,9 @@
                                         <span>Actions</span>
                                     </button>
                                 </th>
-
-
-
-                                <th scope="col" class="relative py-3.5 px-4">
-                                    <span class="sr-only">Edit</span>
-                                </th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                        <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900 w-full">
                             @if (resultList()) {
 
                             @for (item of resultList(); track item.id) {
@@ -90,13 +84,15 @@
                                     <div class="flex items-center gap-x-1">
                                         <!-- Trash Can -->
                                         <button (click)="deleteLesson(item)"
-                                            class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none clear"><img src="../../assets/icons/trash.svg" alt="trash icon"  class="w-5 h-5" />
+                                            class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none clear"><img
+                                                src="../../assets/icons/trash.svg" alt="trash icon" class="w-5 h-5" />
 
                                         </button>
                                         <!-- Edit Icon -->
-                                            <button (click)="editLesson(item)"
-                                                class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none clear"><img src="../../assets/icons/edit.svg" alt="edit icon"  class="w-5 h-5" />
-                                            </button>
+                                        <button (click)="editLesson(item)"
+                                            class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none clear"><img
+                                                src="../../assets/icons/edit.svg" alt="edit icon" class="w-5 h-5" />
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -105,11 +101,11 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            <!-- </div> -->
         </div>
     </div>
 
-    <div class="flex items-center justify-between mt-6">
+    <!-- <div class="flex items-center justify-between mt-6">
         <a href="#"
             class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -149,5 +145,5 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
             </svg>
         </a>
-    </div>
+    </div> -->
 </div>
