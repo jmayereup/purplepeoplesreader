@@ -4,13 +4,14 @@ import { LessonDetailsComponent } from "../lesson-full-text/lesson-full-text.com
 import { RouterLink } from '@angular/router';
 import { FormLessonComponent } from '../form-lesson/form-lesson.component';
 import { StoreService } from '../services/store.service';
+import { ChangeSettingsComponent } from "../change-settings/change-settings.component";
 
 @Component({
     selector: 'app-lesson',
     standalone: true,
     templateUrl: './lesson.component.html',
     styleUrl: './lesson.component.css',
-    imports: [CommonModule, LessonDetailsComponent, FormLessonComponent, RouterLink]
+    imports: [CommonModule, LessonDetailsComponent, FormLessonComponent, RouterLink, ChangeSettingsComponent]
 })
 export class LessonComponent implements OnChanges {
 

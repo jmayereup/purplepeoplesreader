@@ -1,5 +1,6 @@
-<div class="flex flex-col max-w-screen-md px-2 mx-auto overflow-x-visible">
+<div class="flex flex-col max-w-screen-md w-full mx-auto overflow-x-visible">
     @if (type != 'user') {
+    <app-lang-chooser></app-lang-chooser>
     <app-tag-chooser class=""></app-tag-chooser>
     }
     <!-- <div class="flex items-center gap-x-3">
@@ -13,94 +14,79 @@
         <!-- <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8"> -->
         <div class="p-4 bg-amber-100 rounded-lg">
             <!-- <div class="flex py-2 align-middle md:px-6 lg:px-8"> -->
-                <div class="rounded-lg mx-auto overflow-x-auto border bg-green-100 border-gray-200 dark:border-gray-700 md:rounded-lg">
-                    <table class="mx-auto w-full divide-y divide-gray-200 dark:divide-gray-700">
-                        <thead class="bg-gray-50 dark:bg-gray-800">
-                            <tr>
-                                <th scope="col"
-                                    class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    <div class="flex items-center gap-x-3">
-                                        <input type="checkbox"
-                                            class="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700">
-                                    </div>
-                                </th>
-                                <th scope="col"
-                                    class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-black dark:text-gray-400">
-                                    <div class="flex items-center gap-x-3">
-                                        <span>Title</span>
-                                    </div>
-                                </th>
+            <div
+                class="rounded-lg mx-auto overflow-x-auto border bg-green-100 border-gray-200 dark:border-gray-700 md:rounded-lg">
+                <table class="mx-auto divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead class="bg-gray-50 dark:bg-gray-800">
+                        <tr>
+                            <th scope="col"
+                                class="py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-black dark:text-gray-400">
+                                <div class="flex items-center gap-x-3">
+                                    <span>Title</span>
+                                </div>
+                            </th>
 
-                                <th scope="col"
-                                    class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    <button class="flex items-center gap-x-2 clear">
-                                        <span>Tags</span>
+                            <!-- <th scope="col"
+                                class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                <button class="flex items-center gap-x-2 clear">
+                                    <span>Tags</span>
 
-                                        <img class="h-3" fill="none" src="../../assets/icons/sort-up.svg">
+                                    <img class="h-3" fill="none" src="../../assets/icons/sort-up.svg">
+                                </button>
+                            </th> -->
+
+                            <th scope="col"
+                                class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                <button class="flex items-center gap-x-2 clear">
+                                    <span>Actions</span>
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900 w-full">
+                        @if (resultList()) {
+
+                        @for (item of resultList(); track item.id) {
+
+
+                        <tr>
+                            <td
+                                class="py-4 px-1 overflow-hidden text-sm font-medium text-gray-700 ">
+                                <div class="flex flex-row flex-nowrap items-center gap-x-1" [routerLink]="['/', item.language, item.id]"
+                                    queryParamsHandling="preserve">
+                                    <img class="object-cover w-16 rounded-md max-h-16" [src]="defaultImage" alt="">
+                                    <div class="">
+                                        <h2 class="font-semibold text-sm text-gray-800 dark:text-white p-0 m-0">
+                                            {{item.title.slice(0,50)}}</h2><p class="text-sm ">{{item.content.slice(0,60)}}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <!-- <td class="p-0 py-4 pl-1 text-sm font-medium text-gray-700 w-16 flex flex-col justify-center overflow-hidden">
+                                @for (tag of item.tags; track $index) {
+                                    <button class="pills mb-1 justify-center bg-amber-300 text-black break-before-auto">{{tag}}</button>
+                                }
+                            </td> -->
+                            <td class="px-1 py-4 text-sm whitespace-nowrap">
+                                <div class="flex flex-row justify-center gap-x-2">
+                                    <!-- Trash Can -->
+                                    <button (click)="deleteLesson(item)"
+                                        class="text-gray-500 p-0 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none clear"><img
+                                            src="../../assets/icons/trash.svg" alt="trash icon" class="w-5 h-5" />
+
                                     </button>
-                                </th>
-
-                                <th scope="col"
-                                    class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    <button class="flex items-center gap-x-2 clear">
-                                        <span>Actions</span>
+                                    <!-- Edit Icon -->
+                                    <button (click)="editLesson(item)"
+                                        class="text-gray-500 p-0 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none clear"><img
+                                            src="../../assets/icons/edit.svg" alt="edit icon" class="w-5 h-5" />
                                     </button>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900 w-full">
-                            @if (resultList()) {
-
-                            @for (item of resultList(); track item.id) {
-
-
-                            <tr>
-                                <td class="px-3.5 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                    <div class="flex items-center gap-x-3">
-                                        <input type="checkbox"
-                                            class="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700">
-                                    </div>
-                                </td>
-                                <td class="py-4 pl-2 pr-6 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                    <div class="flex items-center gap-x-1" [routerLink]="['/lesson', item.id]"
-                                        queryParamsHandling="preserve">
-                                        <img class="object-cover w-10 rounded-md max-h-40" [src]="defaultImage" alt="">
-                                        <div>
-                                            <h2 class="font-medium text-gray-800 dark:text-white ">{{item.title}}</h2>
-                                            <p class="text-sm font-normal text-gray-600 overflow-clip dark:text-gray-400"
-                                                [innerHTML]="item.content.slice(0,50)">
-                                            </p>
-
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="p-0 py-4 pl-6 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                    <div
-                                        class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                        <h2 class="text-sm font-normal text-black break-before-auto">{{item.tags}}</h2>
-                                    </div>
-                                </td>
-                                <td class="px-1 py-4 text-sm whitespace-nowrap">
-                                    <div class="flex items-center gap-x-1">
-                                        <!-- Trash Can -->
-                                        <button (click)="deleteLesson(item)"
-                                            class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none clear"><img
-                                                src="../../assets/icons/trash.svg" alt="trash icon" class="w-5 h-5" />
-
-                                        </button>
-                                        <!-- Edit Icon -->
-                                        <button (click)="editLesson(item)"
-                                            class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none clear"><img
-                                                src="../../assets/icons/edit.svg" alt="edit icon" class="w-5 h-5" />
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            }
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                        }
+                    </tbody>
+                </table>
+            </div>
             <!-- </div> -->
         </div>
     </div>

@@ -1,5 +1,5 @@
-import { Component, OnInit, Renderer2, inject } from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { StoreService } from '../services/store.service';
 import { ChangeLanguageComponent } from "../change-language/change-language.component";
@@ -14,8 +14,6 @@ import { ChangeLanguageComponent } from "../change-language/change-language.comp
 export class ChangeSettingsComponent {
 
   store = inject(StoreService);
-  // renderer = inject(Renderer2);
-  // document = inject(DOCUMENT);
   fb = inject(FormBuilder);
 
   rate: number = 1;
@@ -42,15 +40,6 @@ export class ChangeSettingsComponent {
       this.store.app.fontSize.set(value.fsize || 'large');
     });
   }
-
-  // ngOnInit() {
-  //   let script = this.renderer.createElement('script');
-  //   script.type = 'text/javascript';
-  //   script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-  //   this.renderer.appendChild(this.document.body, script);
-
-  // }
-
 
   // setBackGroundColor(color: string) {
   //   switch (color) {

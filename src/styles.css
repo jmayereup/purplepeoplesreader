@@ -78,7 +78,7 @@ details {
  }
 
  .pills {
-  @apply p-2 px-4 shadow-md no-underline whitespace-nowrap rounded-full font-sans font-semibold text-sm focus:outline-none active:shadow-none mr-0
+  @apply py-1 px-2 shadow-md no-underline whitespace-nowrap rounded-full font-sans font-semibold text-xs focus:outline-none active:shadow-none mr-0
  }
 
  .translated {

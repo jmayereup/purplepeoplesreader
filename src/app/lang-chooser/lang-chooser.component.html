@@ -1,0 +1,7 @@
+<div class="flex flex-row mx-auto mt-2 flex-wrap justify-center gap-1">
+    @for (lang of langs; track $index) {
+      <a [routerLink]="['/list']" [queryParams]="{lang: lang}" queryParamsHandling="merge" class="m-0">
+          <button class="text-white bg-blue-600 pills border-blue focus:bg-blue-700 hover:bg-blue-700 ">{{lang}}</button>
+      </a>
+    }
+  </div>

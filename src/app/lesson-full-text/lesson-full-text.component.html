@@ -1,4 +1,5 @@
-<section class="rounded-lg bg-amber-100 p-4 mb-4">
+
+<section class="rounded-lg bg-amber-100 p-4 mb-2">
   <div #fullText translate="no" class="max-h-[70vh] overflow-y-auto">
     <h2 class="text-center">{{itemDetails?.title}}</h2>
     <div class="full-text" [innerHTML]="(itemDetails?.content || '') | markdown | async"></div>
@@ -20,9 +21,6 @@
       (click)="showTranslation = !showTranslation">Toggle Translations</button>
   </div>
   
-  <details class="bg-slate-300 text-black mb-2"><summary>Settings</summary>
-    <app-change-settings></app-change-settings>
-  </details>
   
   <div [innerHTML]="(itemDetails?.contentLines || '') | markdown | async" (click)="readThis($event)"
     [ngClass]="showTranslation ? 'shown' : 'hide-translations'"></div>

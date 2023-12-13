@@ -30,9 +30,9 @@ export class StoreService {
     userResults: this.db.getUserCreatedLessons(),
     details: this.db.getItemDetailsState(),
     create: (data: LessonsRecord) => this.db.createItem(data),
-    update: (id: string, data: LessonsRecord) => this.db.updateItem(id, data).then(() => this.lessons.fetchTagResults(this.app.tag())),
-    delete: (id: string) => this.db.deleteItem(id).then(() => this.lessons.fetchTagResults(this.app.tag())),
-    fetchTagResults: (tag: string) => this.db.fetchResults(tag),
+    update: (id: string, data: LessonsRecord) => this.db.updateItem(id, data).then(() => this.lessons.fetchTagResults((this.app.tag()), (data.language?.valueOf() || this.app.lang()))),
+    delete: (id: string) => this.db.deleteItem(id).then(() => this.lessons.fetchTagResults(this.app.tag(), this.app.lang())),
+    fetchTagResults: (tag: string, lang:string) => this.db.fetchTagResults(tag, lang),
     fetchDetails: (id: string) => this.db.fetchDetails(id),
     fetchUserCreatedLessons: (userId: string) => this.db.fetchUserCreatedLessons(userId)
   }
@@ -42,6 +42,7 @@ export class StoreService {
     selectedLanguage: signal<string | null >(null),
     selectedRate: signal<number | null>(null),
     tag: signal<string>(""),
+    lang: signal<string>(""),
     fontSize: signal<string>('large')
   }
 
@@ -57,11 +58,13 @@ export class StoreService {
   constructor() {
 
     this.route.queryParamMap.pipe(takeUntilDestroyed(), distinctUntilChanged(), shareReplay(1)).subscribe(params => {
-      const tagParam = (params.get('tag')?.valueOf() || '');
-      if (this.app.tag() != tagParam) {
-        this.app.tag.update(() => tagParam);
+      const tagParam = (params.get('tag') || 'A1');
+      const langParam = (params.get('lang') || 'English');
+      if (this.app.tag() != tagParam || this.app.lang() != langParam) {
+        this.app.tag.set(tagParam);
+        this.app.lang.set(langParam);
         if(tagParam == 'user') return this.lessons.fetchUserCreatedLessons(this.user.userId);
-        return this.lessons.fetchTagResults(this.app.tag());
+        return this.lessons.fetchTagResults(this.app.tag(), this.app.lang());
       } else return console.log('no lesson found');
     });
    }

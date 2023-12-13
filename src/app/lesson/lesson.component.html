@@ -1,7 +1,13 @@
 <section [ngStyle]="{'font-size': fSize()}">
-  <div class="flex flex-col p-2">
-    <button class="flex self-end justify-center mb-1 clear" (click)="toggleShowEdit()" type="button">
-      <img src="../../assets/icons/edit.svg" alt="editbutton" class="w-5 h-5">Edit</button>
+  <div class="flex flex-col p-2 gap-2">
+    <div class="flex flex-row justify-between bg-slate-300 rounded-lg">
+      <details class="bg-transparent text-black m-1">
+        <summary>Settings</summary>
+        <app-change-settings></app-change-settings>
+      </details>
+      <button class="flex justify-center mr-1 clear focus:bg-transparent" (click)="toggleShowEdit()" type="button">
+        <img src="../../assets/icons/edit.svg" alt="editbutton" class="w-5 h-5">Edit</button>
+    </div>
     @if (showEdit()) {
     <app-form-lesson [itemDetails]="itemDetails()" (newID)="id = $event"></app-form-lesson>
     }

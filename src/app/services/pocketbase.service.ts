@@ -20,10 +20,10 @@ export class PocketbaseService {
   constructor() {
   }
 
-  async fetchResults(type: string) {
-    console.log('fetching results', type);
+  async fetchTagResults(type: string = 'A1', lang: string = 'English') {
+    console.log('fetching results', type, lang);
     this.db.collection('lessons').getFullList({
-      filter: `tags~'${type}' && shareable=true`
+      filter: `tags~'${type}' && language='${lang}' && shareable=true`,
     }).then(
       (res: LessonsResponse[]) => {
         this.fetchedResults.set(res);

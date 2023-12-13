@@ -4,13 +4,14 @@ import { Router, RouterLink } from '@angular/router';
 import { TagChooserComponent } from "../tag-chooser/tag-chooser.component";
 import { StoreService } from '../services/store.service';
 import { LessonsResponse } from '../shared/pocketbase-types';
+import { LangChooserComponent } from "../lang-chooser/lang-chooser.component";
 
 @Component({
     selector: 'app-lesson-list',
     standalone: true,
     templateUrl: './lesson-list.component.html',
     styleUrl: './lesson-list.component.css',
-    imports: [CommonModule, RouterLink, TagChooserComponent]
+    imports: [CommonModule, RouterLink, TagChooserComponent, LangChooserComponent]
 })
 export class LessonListComponent implements OnChanges {
 
