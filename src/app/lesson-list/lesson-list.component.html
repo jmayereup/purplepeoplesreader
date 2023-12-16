@@ -1,4 +1,4 @@
-<div class="flex flex-col max-w-screen-md w-full mx-auto overflow-x-visible">
+<section class="flex flex-col max-w-screen-md w-full mx-auto overflow-x-visible">
     @if (type != 'user') {
     <app-lang-chooser></app-lang-chooser>
     <app-tag-chooser class=""></app-tag-chooser>
@@ -12,19 +12,19 @@
 
     <div class="flex flex-col min-w-full mt-2">
         <!-- <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8"> -->
-        <div class="p-4 bg-amber-100 rounded-lg">
+        <div class="p-2 border-none bg-inherit rounded-lg">
             <!-- <div class="flex py-2 align-middle md:px-6 lg:px-8"> -->
             <div
-                class="rounded-lg mx-auto overflow-x-auto border bg-green-100 border-gray-200 dark:border-gray-700 md:rounded-lg">
-                <table class="mx-auto divide-y divide-gray-200 dark:divide-gray-700">
-                    <thead class="bg-gray-50 dark:bg-gray-800">
+                class="rounded-lg mx-auto overflow-x-auto border border-none dark:border-gray-700 md:rounded-lg">
+                <table class="mx-auto w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <!-- <thead class="bg-gray-50 dark:bg-gray-800">
                         <tr>
                             <th scope="col"
                                 class="py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-black dark:text-gray-400">
                                 <div class="flex items-center gap-x-3">
                                     <span>Title</span>
                                 </div>
-                            </th>
+                            </th> -->
 
                             <!-- <th scope="col"
                                 class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -35,14 +35,14 @@
                                 </button>
                             </th> -->
 
-                            <th scope="col"
+                            <!-- <th scope="col"
                                 class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                 <button class="flex items-center gap-x-2 clear">
                                     <span>Actions</span>
                                 </button>
                             </th>
-                        </tr>
-                    </thead>
+                        </tr> -->
+<!-- ?                    </thead> -->
                     <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900 w-full">
                         @if (resultList()) {
 
@@ -73,11 +73,6 @@
                                         class="text-gray-500 p-0 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none clear"><img
                                             src="../../assets/icons/trash.svg" alt="trash icon" class="w-5 h-5" />
 
-                                    </button>
-                                    <!-- Edit Icon -->
-                                    <button (click)="editLesson(item)"
-                                        class="text-gray-500 p-0 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none clear"><img
-                                            src="../../assets/icons/edit.svg" alt="edit icon" class="w-5 h-5" />
                                     </button>
                                 </div>
                             </td>
@@ -132,4 +127,4 @@
             </svg>
         </a>
     </div> -->
-</div>
+</section>

@@ -18,12 +18,12 @@ import { StoreService } from '../services/store.service';
 })
 export class FormLessonComponent implements OnInit, OnChanges {
 
-@Input() itemDetails: LessonsResponse | null = null;
-@Output() newID = new EventEmitter<string>();
-
-store = inject(StoreService);
-fb = inject(FormBuilder);
-
+  @Output() newID = new EventEmitter<string>();
+  
+  store = inject(StoreService);
+  fb = inject(FormBuilder);
+  
+itemDetails = this.store.lessons.details;
 tags = TAG_VALUES;
 
 lessonForm = this.fb.group({
@@ -32,7 +32,7 @@ lessonForm = this.fb.group({
   content: this.fb.control('', Validators.required),
   vocabulary: this.fb.control(''),
   language: this.fb.control('', Validators.required),
-  tags: this.fb.control(['']),
+  tags: this.fb.control([''], Validators.required),
   shareable: this.fb.control(false),
   imageUrl: this.fb.control(''),
   creatorId: this.fb.control('')
@@ -51,13 +51,14 @@ ngOnChanges() {
 
 loadLesson() {
   const creatorID: string = this.store.user.userId || '';
-  const lesson = this.itemDetails;
+  const lesson = this.itemDetails();
   this.lessonForm.patchValue({
     id: lesson?.id,
     title: lesson?.title,
     content: lesson?.content,
     vocabulary: lesson?.vocabulary,
     tags: lesson?.tags,
+    language: lesson?.language,
     shareable: lesson?.shareable,
     imageUrl: lesson?.imageUrl,
     creatorId: creatorID
@@ -85,12 +86,12 @@ async onSubmit() {
     imageUrl: this.lessonForm.value.imageUrl,
     creatorId: this.lessonForm.value.creatorId
   }
-  if (this.itemDetails?.id)
+  if (this.itemDetails()?.id)
   {
     //update lesson
-    this.store.lessons.update(this.itemDetails.id, lesson as LessonsRecord).then(data => {
+    this.store.lessons.update(this.itemDetails()!.id, lesson as LessonsRecord).then(data => {
       console.log('updated lesson');
-      this.store.lessons.fetchDetails(this.itemDetails?.id || "");
+      this.store.lessons.fetchDetails(this.itemDetails()!.id || "");
     });
     //create new lesson
   } else {

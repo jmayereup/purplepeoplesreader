@@ -21,8 +21,10 @@ export function addLineBreaksWithTranslatedDivs(text: string): string {
     const originalDivs = result.split('\n');
 
     originalDivs.forEach((line: string) => {
-        translatedDivs.push(`<div class="original" translate="no">${line}</div>`);
-        translatedDivs.push(`<div class="translated" translate="yes">${line}</div>`);
+        if(line.trim().length > 0) {
+            translatedDivs.push(`<div class="original" translate="no">${line}</div>`);
+            translatedDivs.push(`<div class="translated" translate="yes">${line}</div>`);
+        }
     });
 
     // Join the original and translated divs
@@ -64,11 +66,10 @@ export const languages = [
 ];
 
 export function assignLanguageCode(languageName: string) {
-    const language = languages.find(lang => {
-        return lang.name.toLowerCase() === languageName.toLowerCase()
+    const language: { name: string, code: string } | undefined = languages.find(lang => {
+        return lang.name.toLowerCase() === languageName.toLowerCase();
     });
     return language?.code || 'en-CA';
-
 }
 
 export const TAG_VALUES = Object.values(LessonsTagsOptions);

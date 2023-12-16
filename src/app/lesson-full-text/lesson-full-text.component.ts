@@ -1,10 +1,10 @@
 import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LessonsResponse } from '../shared/pocketbase-types';
-import { SpeakService } from '../services/speak.service';
 import { MarkdownPipe } from 'ngx-markdown';
 import { StoreService } from '../services/store.service';
 import { ChangeSettingsComponent } from "../change-settings/change-settings.component";
+import { assignLanguageCode } from '../shared/utils';
 
 @Component({
     selector: 'app-lesson-full-text',
@@ -14,11 +14,12 @@ import { ChangeSettingsComponent } from "../change-settings/change-settings.comp
     imports: [CommonModule, MarkdownPipe, ChangeSettingsComponent]
 })
 export class LessonDetailsComponent {
-
-  @Input() itemDetails: LessonsResponse | null = null;
-
+  
   store = inject(StoreService);
   showTranslation = true;
+  
+  itemDetails = this.store.lessons.details;
+  lang = assignLanguageCode(this.itemDetails()?.language || "English");
   
 
   readThis($event: any) {

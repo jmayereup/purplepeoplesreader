@@ -1,5 +1,5 @@
 .image-caption {
-    @apply flex mt-4 text-base lg:text-lg  bg-slate-100 rounded-lg dark:bg-gray-700 p-1 w-full h-16 md:h-24 text-center items-center justify-center;
+    @apply flex mt-4 text-base lg:text-lg bg-lbl-purple-200 rounded-lg dark:bg-gray-700 p-1 w-full h-16 md:h-24 text-center items-center justify-center;
 }
 
 .img-container {

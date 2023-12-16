@@ -2,21 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --primary: #a907bb7a;
+  --bg1: theme(colors.lbl-purple.100);
+  --bg2: #ae92cb;
+  --reader: #fffedd;
+  --primary-text1: theme(colors.lbl-purple.100);
+  --primary-text2: theme(colors.lbl-purple.800);
+  --accent: black;
+
+}
+
 
 html {
-  background-color: rgb(180, 200, 219);
+  background-color: var(--accent, blue);
+  color: var(--primary-text1, black);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 section {
-  background-color: inherit;
+  background-color: var(--bg2, lightblue);
+  color: var(--primary-text2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 button {
   padding: .5rem;
   font-size: small;
   border-radius: .25rem;
-  background-color: rgb(59 130 246);
-  color: white;
+  background-color: var(--accent);
+  color: var(--primary-text);
 }
 
 button.clear {
@@ -45,11 +60,11 @@ details {
 }
 
 .button {
- @apply px-6 py-2 m-1 text-sm tracking-wide capitalize transition-colors duration-300 transform rounded-lg  focus:outline-none focus:ring focus:ring-opacity-50
+ @apply px-6 py-2 m-1 text-sm tracking-wide capitalize transition-colors duration-300 transform rounded-lg text-lbl-purple-900 bg-blue-200 focus:outline-none focus:ring focus:ring-opacity-50 disabled:bg-red-200 hover:bg-blue-500 focus:bg-blue-500;
 }
 
 .blue {
-  @apply bg-blue-400
+background-color: theme(colors.lbl-blue.400);
  }
 
  .card {
@@ -70,28 +85,39 @@ details {
  }
 
  .form-input {
-   @apply block w-full px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring
- }
-
- .form-button {
-   @apply px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600
+   @apply block w-full px-4 py-2  bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring
  }
 
  .pills {
   @apply py-1 px-2 shadow-md no-underline whitespace-nowrap rounded-full font-sans font-semibold text-xs focus:outline-none active:shadow-none mr-0
  }
 
+ .primary {
+  background-color: var(--primary, green);
+  color: var(--primary-text1, blue);
+ }
+
  .translated {
-  border-radius: .5rem 1rem .5rem 1rem;
-  background-color: ivory;
-  padding-left: 1rem;
-  padding-right: 2rem;
-  margin-top: 2px;
-  margin-bottom: .5rem;
+  border-radius: .5rem;
+  background-color: lightgray;
+  color: black;
+  padding: .25rem .5rem;
   font-size: .8em;
+  margin-left: .5rem; 
+  width: 95%;
+}
+
+.original {
+  color: black;
+  padding: .25rem .5rem;
 }
 
 .hide-translations>div.translated {
   display: none;
+}
+
+.reading {
+  background-color: var(--reader, lightblue);
+  color: black;
 }
 

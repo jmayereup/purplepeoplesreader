@@ -1,7 +1,7 @@
 <form [formGroup]="form" class="flex flex-wrap">
     <div class="w-full">
-        <label for="image" class="block text-sm text-gray-500 dark:text-gray-300">Image</label>
-        <input type="file" id="file" formControlName="file" (change)="onFileSelected($event)" class="file-input"
+        <label for="image" class="form-label">Image</label>
+        <input type="file" id="file" formControlName="file" (change)="onFileSelected($event)" class="file-input form-input"
             #fileUpload>
     </div>
     @if (errorMessage) {

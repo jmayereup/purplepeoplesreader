@@ -1,6 +1,6 @@
-    <section class="w-full p-6 mx-auto m-0 rounded-lg shadow-md bg-slate-300 dark:bg-gray-800">
-        <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">CREATE/EDIT</h2>
-        <p>Lesson ID: {{itemDetails?.id || 'New Lesson'}}</p>
+    <section class="w-full p-6 mx-auto m-0 rounded-lg shadow-md ">
+        <h2 class="text-lg font-semibold  capitalize dark:text-white">CREATE/EDIT</h2>
+        <p class="form-label">Lesson ID: {{itemDetails()?.id || 'New Lesson'}}</p>
         <form [formGroup]="lessonForm">
             <div class="grid grid-cols-1 gap-6 mt-4">
                 <div>
@@ -20,7 +20,7 @@
             </div>
             <div class="grid grid-cols-2 gap-6 mt-4">
                 <div>
-                    <label class="form-label" for="tags">Tags</label>
+                    <label class="form-label" for="tags" required>Tags</label>
                     <select id="tags" formControlName="tags" type="dropdown" size='3' class="form-input" multiple>
                         @for (tag of tags; track $index) {
                             <option value="{{tag}}">{{tag}}</option>
@@ -40,7 +40,7 @@
                 <div>
                     <label class="form-label" for="shareable">Share</label>
                     <select id="shareable" formControlName="shareable" class="form-input">
-                        <option value=true>YES</option>
+                        <option value=true selected>YES</option>
                         <option value=false>NO</option>
                     </select>
                 </div>
@@ -53,7 +53,7 @@
         </form>
         <app-form-files (filePath)="setFilePath($event)"></app-form-files>
         <div class="flex justify-end mt-6">
-            <button type="button" class="bg-blue-700 disabled:bg-red-200"
-            (click)="onSubmit()">Save</button>
+            <button type="button" class="button disabled:bg-red-200 hover:bg-blue-500 focus:bg-blue-500 font-bold py-2 px-4 rounded"
+            (click)="onSubmit()" [disabled]="!lessonForm.valid">Save</button>
         </div>
     </section>

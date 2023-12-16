@@ -9,15 +9,15 @@
         <img src="../../assets/icons/edit.svg" alt="editbutton" class="w-5 h-5">Edit</button>
     </div>
     @if (showEdit()) {
-    <app-form-lesson [itemDetails]="itemDetails()" (newID)="id = $event"></app-form-lesson>
+    <app-form-lesson (newID)="id = $event"></app-form-lesson>
     }
     @if (itemDetails()) {
-    <app-lesson-full-text [itemDetails]="itemDetails()"></app-lesson-full-text>
+    <app-lesson-full-text></app-lesson-full-text>
     }
   </div>
   <div class="flex justify-center">
     <a [routerLink]="['/list']" queryParamsHandling="preserve">
-      <button class="standard bg-blue-500 mb-2" type="button">Back</button>
+      <button class="button mb-2" type="button">Back</button>
     </a>
   </div>
 </section>

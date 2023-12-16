@@ -8,7 +8,7 @@
         <div>
             <p class="mt-1 text-center text-gray-500 dark:text-gray-400">Login or create account</p>
         </div>
-        <button class="standard flex flex-row gap-1 my-8" (click)="loginWithGoogle()">
+        <button class="bg-white flex flex-row gap-1 my-8" (click)="loginWithGoogle()">
             <img class="h-5" alt="google logo" src="../../assets/icons/google-logo.svg" />
             <p>Login with Google</p>
         </button>
@@ -41,10 +41,10 @@
         <a href="#">Register</a>
     </div>
     }
-    <div class="flex flex-col centered">
+    <div class="flex flex-col centered ">
         @if (authStore.isValid) {
         Logged in as: {{authStore.model!['username']}}
-        <button class="bg-blue-500" type="button" (click)="logout()">
+        <button class="button" type="button" (click)="logout()">
             Logout
         </button>
         } @else {Not Logged In}

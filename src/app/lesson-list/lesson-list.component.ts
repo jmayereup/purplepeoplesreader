@@ -37,11 +37,6 @@ deleteLesson(item: LessonsResponse) {
     else return
   }
 
-editLesson(item: LessonsResponse) {
-  this.store.app.showEdit.set(true);
-  this.router.navigate(['/lesson', item.id], {queryParamsHandling: 'preserve'});
-  }
-
 }
 
 
