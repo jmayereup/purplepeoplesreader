@@ -7,11 +7,11 @@
 }
 
 .nav-link {
-    @apply px-2 py-2 mx-2 transition-colors duration-300 transform rounded-md lg:mt-0 hover:bg-lbl-green-700;
+    @apply px-2 py-2 mx-2 transition-colors duration-300 transform rounded-md lg:mt-0 hover:bg-lbl-purple-700;
     font-family: Roboto, system-ui;
     background-color: transparent;
 }
 
 .menu  {
-    @apply bg-lbl-green-800 rounded-lg;
+    @apply bg-lbl-purple-700 rounded-b-lg;
 }

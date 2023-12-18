@@ -1,7 +1,7 @@
   <div class="flex flex-row flex-wrap mx-auto my-1 gap-1 justify-center">
     @for (tag of tags; track $index) {
       <a [routerLink]="['/list']" [queryParams]="{tag: tag}" queryParamsHandling="merge" class="m-0">
-          <button class="text-white bg-blue-500 pills border-blue focus:bg-blue-600 hover:bg-blue-600 ">{{tag}}</button>
+          <button class="text-gray-200 bg-lbl-purple-500 pills border-blue focus:bg-blue-600 hover:bg-blue-600 ">{{tag}}</button>
       </a>
     }
   </div>

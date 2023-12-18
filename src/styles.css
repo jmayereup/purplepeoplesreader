@@ -6,7 +6,7 @@
   --primary: #a907bb7a;
   --bg1: theme(colors.lbl-purple.100);
   --bg2: #ae92cb;
-  --reader: #fffedd;
+  --reader: white;
   --primary-text1: theme(colors.lbl-purple.100);
   --primary-text2: theme(colors.lbl-purple.800);
   --accent: black;
@@ -99,7 +99,7 @@ background-color: theme(colors.lbl-blue.400);
 
  .translated {
   border-radius: .5rem;
-  background-color: lightgray;
+  background-color: #d9d9d9;
   color: black;
   padding: .25rem .5rem;
   font-size: .8em;
