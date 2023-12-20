@@ -1,0 +1,38 @@
+<!-- FILEPATH: /home/jmayer/apps/pb-demo/src/app/login/register/register.component.html -->
+<form #registerForm="ngForm">
+    <h2>CREATE A NEW ACCOUNT</h2>
+    <div>
+        <label class="form-label" for="username">Username:</label>
+        <input class="form-input" type="text" id="username" name="username" required
+        [(ngModel)]="registerData.username">
+        <sub>This might be used on leaderboards.</sub>
+    </div>
+    
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required
+        [(ngModel)]="registerData.email">
+    </div>
+    
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required
+        #email1>
+    </div>
+    
+    <div>
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required
+        #email2
+        [(ngModel)]="registerData.email">
+    </div>
+    @if (email1.value !== email2.value) {
+    <div>
+        <p>Passwords must match.</p>
+    </div>
+    } @else {
+        <button class="button" type="button" (click)="registerWithEmail()" [disabled]="registerForm.invalid">Register</button>
+    }
+
+
+</form>

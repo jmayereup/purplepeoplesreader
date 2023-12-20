@@ -2,11 +2,11 @@
 <div class="flex flex-col max-w-sm mx-auto">
     @if (!authStore.isValid) {
     <div class="px-6 py-4 flex flex-col mx-auto text-center items-center">
-        <div class="flex justify-center mx-auto">
+        <!-- <div class="flex justify-center mx-auto">
             <img class="w-auto h-20" src="../../assets/lbl-lingo-header.png" alt="">
-        </div>
+        </div> -->
         <div>
-            <p class="mt-1 text-center text-gray-500 dark:text-gray-400">Login or create account</p>
+            <p class="mt-1 text-center">Login or create account</p>
         </div>
         <button class="bg-white flex flex-row gap-1 my-8" (click)="loginWithGoogle()">
             <img class="h-5" alt="google logo" src="../../assets/icons/google-logo.svg" />
@@ -35,10 +35,10 @@
 
         </form>
     </div>
-    <div class="flex items-center justify-center py-4 text-center bg-gray-50 dark:bg-gray-700">
+    <div class="flex items-center justify-center py-4 text-center bg-lbl-purple-200">
         <span class="text-sm text-gray-600 dark:text-gray-200">Don't have an account? </span>
 
-        <a href="#">Register</a>
+        <a href="/register">Register</a>
     </div>
     }
     <div class="flex flex-col centered ">

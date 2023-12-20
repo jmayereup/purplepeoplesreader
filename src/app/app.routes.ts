@@ -5,6 +5,7 @@ import { LessonLevelChooserComponent } from './lesson-level-chooser/lesson-level
 import { ErrorFindingComponent } from './error-finding/error-finding.component';
 import { FormLessonComponent } from './form-lesson/form-lesson.component';
 import { GermanComponent } from './lang/german/german.component';
+import { RegisterComponent } from './login/register/register.component';
 
 export const routes: Routes = [
     { path: 'German/:id', component: GermanComponent },  
@@ -13,6 +14,7 @@ export const routes: Routes = [
     { path: 'list/:type', component: LessonListComponent },
     { path: 'difficulty', component: LessonLevelChooserComponent},
     { path: 'new', component: FormLessonComponent},
+    { path: 'register' , component: RegisterComponent},
     { path: 'error', component: ErrorFindingComponent},
     { path: '**', component: LessonLevelChooserComponent},
 ];

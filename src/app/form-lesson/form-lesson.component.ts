@@ -1,20 +1,19 @@
-import { Component, Input, OnChanges, OnInit, Output, EventEmitter, inject } from '@angular/core';
+import { Component, OnChanges, OnInit, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormFilesComponent } from '../form-files/form-files.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PocketbaseService } from '../services/pocketbase.service';
-import { LessonsRecord, LessonsResponse } from '../shared/pocketbase-types';
-import { AuthService } from '../services/auth.service';
+import { LessonsRecord } from '../shared/pocketbase-types';
 import { addLineBreaksWithTranslatedDivs } from '../../app/shared/utils';
 import { TAG_VALUES } from '../shared/utils';
 import { StoreService } from '../services/store.service';
+import { LoginComponent } from "../login/login.component";
 
 @Component({
-  selector: 'app-form-lesson',
-  standalone: true,
-  imports: [CommonModule, FormFilesComponent, ReactiveFormsModule, FormFilesComponent],
-  templateUrl: './form-lesson.component.html',
-  styleUrl: './form-lesson.component.css'
+    selector: 'app-form-lesson',
+    standalone: true,
+    templateUrl: './form-lesson.component.html',
+    styleUrl: './form-lesson.component.css',
+    imports: [CommonModule, FormFilesComponent, ReactiveFormsModule, FormFilesComponent, LoginComponent]
 })
 export class FormLessonComponent implements OnInit, OnChanges {
 
@@ -25,6 +24,7 @@ export class FormLessonComponent implements OnInit, OnChanges {
   
 itemDetails = this.store.lessons.details;
 tags = TAG_VALUES;
+creatorID: string = this.store.user.userId || '';
 
 lessonForm = this.fb.group({
   id: this.fb.control(''),
@@ -35,12 +35,13 @@ lessonForm = this.fb.group({
   tags: this.fb.control([''], Validators.required),
   shareable: this.fb.control(false),
   imageUrl: this.fb.control(''),
-  creatorId: this.fb.control('')
+  creatorId: this.fb.control(this.creatorID)
 
 })
 
 ngOnInit() {
   console.log('on Init called');
+  this.store.user.getUser();
   this.loadLesson();
 }
 

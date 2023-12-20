@@ -16,10 +16,11 @@ export class StoreService {
   private auth = inject(AuthService);
   private speak = inject(SpeakService);
   public route = inject(ActivatedRoute);
-  // private router = inject(Router);
 
   user = {
-    // getUser: () => this.getUser(),
+    getUser: () => this.auth.getUser().then(() => {
+      if (this.auth.authStore.model?.['id']) this.lessons.fetchUserCreatedLessons(this.auth.authStore.model?.['id']);
+    }),
     userId: this.auth.authStore.model?.['id'],
     userName: this.auth.authStore.model?.['username'],
     refresh: () => this.auth.db.collection('users').authRefresh()

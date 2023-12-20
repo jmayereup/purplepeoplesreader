@@ -1,3 +1,5 @@
+@if (creatorID) {
+
     <section class="w-full p-6 mx-auto m-0 rounded-lg shadow-md ">
         <h2 class="text-lg font-semibold  capitalize dark:text-white">CREATE/EDIT</h2>
         <p class="form-label">Lesson ID: {{itemDetails()?.id || 'New Lesson'}}</p>
@@ -10,50 +12,56 @@
                 <div>
                     <label class="form-label" for="content">Body</label>
                     <textarea height="20" id="content" formControlName="content" type="text"
-                        class="form-input h-60"></textarea>
+                    class="form-input h-60"></textarea>
                 </div>
                 <div>
                     <label class="form-label" for="vocabulary">Vocabulary</label>
                     <input id="vocabulary" formControlName="vocabulary" type="text" class="form-input"
-                        placeholder="cat, dog, mouse">
+                    placeholder="cat, dog, mouse">
                 </div>
-            </div>
-            <div class="grid grid-cols-2 gap-6 mt-4">
-                <div>
-                    <label class="form-label" for="tags" required>Tags</label>
-                    <select id="tags" formControlName="tags" type="dropdown" size='3' class="form-input" multiple>
-                        @for (tag of tags; track $index) {
-                            <option value="{{tag}}">{{tag}}</option>
-                        }
-                        </select>
-                </div>
-                <div>
-                    <label class="form-label" for="lang" required>Language</label>
-                    <select id="lang" formControlName="language" size="3" type="text" class="form-input">
-                        <option value="English">English</option>
-                        <option value="German">German</option>
-                        <option value="Thai">Thai</option>
-                    </select>
-                </div>
-            </div>
-            <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-                <div>
-                    <label class="form-label" for="shareable">Share</label>
-                    <select id="shareable" formControlName="shareable" class="form-input">
-                        <option value=true selected>YES</option>
-                        <option value=false>NO</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="form-label" for="imageUrl">Image URL</label>
-                    <input id="imageUrl" formControlName="imageUrl" type="text" class="form-input"
-                        placeholder="https://unsplash.com/cat">
-                </div>
-            </div>
-        </form>
-        <app-form-files (filePath)="setFilePath($event)"></app-form-files>
-        <div class="flex justify-end mt-6">
-            <button type="button" class="button disabled:bg-red-200 hover:bg-blue-500 focus:bg-blue-500 font-bold py-2 px-4 rounded"
-            (click)="onSubmit()" [disabled]="!lessonForm.valid">Save</button>
         </div>
-    </section>
+        <div class="grid grid-cols-2 gap-6 mt-4">
+            <div>
+                <label class="form-label" for="tags" required>Tags</label>
+                <select id="tags" formControlName="tags" type="dropdown" size='3' class="form-input" multiple>
+                    @for (tag of tags; track $index) {
+                        <option value="{{tag}}">{{tag}}</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <label class="form-label" for="lang" required>Language</label>
+                <select id="lang" formControlName="language" size="3" type="text" class="form-input">
+                    <option value="English">English</option>
+                    <option value="German">German</option>
+                    <option value="Thai">Thai</option>
+                </select>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+            <div>
+                <label class="form-label" for="shareable">Share</label>
+                <select id="shareable" formControlName="shareable" class="form-input">
+                    <option value=true selected>YES</option>
+                    <option value=false>NO</option>
+                </select>
+            </div>
+            <div>
+                <label class="form-label" for="imageUrl">Image URL</label>
+                <input id="imageUrl" formControlName="imageUrl" type="text" class="form-input"
+                placeholder="https://unsplash.com/cat">
+            </div>
+        </div>
+    </form>
+    <app-form-files (filePath)="setFilePath($event)"></app-form-files>
+    <div class="flex justify-end mt-6">
+        <button type="button"
+        class="button disabled:bg-red-200 hover:bg-blue-500 focus:bg-blue-500 font-bold py-2 px-4 rounded"
+        (click)="onSubmit()" [disabled]="!lessonForm.valid">Save</button>
+    </div>
+</section>
+} @else {
+    <div class="flex justify-center">
+        <h2 class="text-lg font-semibold my-4  capitalize dark:text-white">Please Login to Create/Edit</h2>
+    </div>
+}
