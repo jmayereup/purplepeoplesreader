@@ -61,6 +61,7 @@ export type LessonsRecord = {
 	contentLines?: string
 	creatorId?: string
 	imageUrl?: string
+	audioUrl?: string
 	language?: LessonsLanguageOptions
 	shareable?: boolean
 	tags?: LessonsTagsOptions[]

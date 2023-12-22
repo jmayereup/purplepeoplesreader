@@ -12,7 +12,8 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class FormFilesComponent {
 
-  @Output() filePath: EventEmitter<string>  = new EventEmitter<string>();
+  @Output() imagePath: EventEmitter<string>  = new EventEmitter<string>();
+  @Output() audioPath: EventEmitter<string>  = new EventEmitter<string>();
 
   http = inject(HttpClient);
 
@@ -67,7 +68,11 @@ export class FormFilesComponent {
   }
   
   setFilePath(val: string) {
-    this.filePath.emit('test');
+    if (val.endsWith('.mp3')) {
+      this.audioPath.emit(val);
+      return;
+    }
+    this.imagePath.emit(val);
   }
 
 

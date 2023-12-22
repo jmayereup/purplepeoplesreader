@@ -8,22 +8,22 @@ import { StoreService } from './store.service';
 })
 export class SpeakService {
 
-cdRef: ChangeDetectorRef | undefined;
-// rate = signal<number>(1);
-// selectedLanguage = signal<string | undefined>(undefined);
-currentLinesRead = signal(0);
-private hasplayed = signal<boolean>(false);
-private isPlaying = signal<boolean>(false);
-private isPaused: boolean = false;
+  cdRef: ChangeDetectorRef | undefined;
+  // rate = signal<number>(1);
+  // selectedLanguage = signal<string | undefined>(undefined);
+  currentLinesRead = signal(0);
+  private hasplayed = signal<boolean>(false);
+  private isPlaying = signal<boolean>(false);
+  private isPaused: boolean = false;
 
-constructor() { 
+  constructor() {
 
-}
+  }
 
 
-setChangeDetector(cdr: ChangeDetectorRef) {
-  this.cdRef = cdr;
-}
+  setChangeDetector(cdr: ChangeDetectorRef) {
+    this.cdRef = cdr;
+  }
 
   pauseVoice() {
     if (!this.isPaused) {
@@ -32,39 +32,45 @@ setChangeDetector(cdr: ChangeDetectorRef) {
       this.isPaused = true;
     }
     else {
-    speechSynthesis.resume();
-    this.isPlaying.set(true);
-    this.isPaused = false;
-    }
-  }
-
-  readUtterance(line: string, points: number, lang?: string, rate?: number): void {
-    this.hasplayed.set(true);
-    if (this.isPlaying() && !this.isPaused) {
-      speechSynthesis.cancel();
-      this.isPlaying.set(false);
-      return;
-    }
-    if (this.isPaused) {
       speechSynthesis.resume();
       this.isPlaying.set(true);
       this.isPaused = false;
-      return;
-    }
-    else {
-      
-      this.isPlaying.set(true);
-      let utterance = new SpeechSynthesisUtterance(line);
-      utterance.lang = lang || "en-CA";
-      utterance.rate = rate || .8;
-      window.speechSynthesis.speak(utterance);
-      utterance.onend = () => {
-        this.currentLinesRead.update(old => old + points)
-        this.isPlaying.set(false);
-        console.log("lines read", this.currentLinesRead());
-        this.cdRef?.detectChanges();
-      };
     }
   }
+
+  readUtterance(line: string, points: number, lang?: string, rate?: number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.hasplayed.set(true);
+      if (this.isPlaying() && !this.isPaused) {
+        speechSynthesis.cancel();
+        this.isPlaying.set(false);
+        reject("cancelled");
+        return;
+      }
+      if (this.isPaused) {
+        speechSynthesis.resume();
+        this.isPlaying.set(true);
+        this.isPaused = false;
+        reject("resumed");
+        return;
+      }
+      else {
+
+        this.isPlaying.set(true);
+        let utterance = new SpeechSynthesisUtterance(line);
+        utterance.lang = lang || "en-CA";
+        utterance.rate = rate || .8;
+        window.speechSynthesis.speak(utterance);
+        utterance.onend = () => {
+          this.currentLinesRead.update(old => old + points)
+          this.isPlaying.set(false);
+          console.log("lines read", this.currentLinesRead());
+          this.cdRef?.detectChanges();
+          resolve();
+        };
+      }
+    });
+  }
+
 
 }

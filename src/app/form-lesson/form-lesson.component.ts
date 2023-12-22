@@ -35,6 +35,7 @@ lessonForm = this.fb.group({
   tags: this.fb.control([''], Validators.required),
   shareable: this.fb.control(false),
   imageUrl: this.fb.control(''),
+  audioUrl: this.fb.control(''),
   creatorId: this.fb.control(this.creatorID)
 
 })
@@ -62,15 +63,23 @@ loadLesson() {
     language: lesson?.language,
     shareable: lesson?.shareable,
     imageUrl: lesson?.imageUrl,
+    audioUrl: lesson?.audioUrl,
     creatorId: creatorID
   })
 }
 
-setFilePath(val:string) {  
+setImagePath(val:string) {  
   this.lessonForm.patchValue({
     imageUrl: val
   })
   console.log('imageURL:', val);
+}
+
+setAudioPath(val:string) {  
+  this.lessonForm.patchValue({
+    audioUrl: val
+  })
+  console.log('audoURL:', val);
 }
 
 async onSubmit() {
@@ -85,6 +94,7 @@ async onSubmit() {
     tags: this.lessonForm.value.tags,
     shareable: this.lessonForm.value.shareable,
     imageUrl: this.lessonForm.value.imageUrl,
+    audioUrl: this.lessonForm.value.audioUrl,
     creatorId: this.lessonForm.value.creatorId
   }
   if (this.itemDetails()?.id)
