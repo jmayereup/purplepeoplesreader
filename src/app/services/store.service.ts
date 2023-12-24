@@ -6,6 +6,7 @@ import { distinctUntilChanged, shareReplay } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { SpeakService } from './speak.service';
 import { LessonsRecord } from '../shared/pocketbase-types';
+import { assignLanguageCode } from '../shared/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -33,14 +34,14 @@ export class StoreService {
     create: (data: LessonsRecord) => this.db.createItem(data),
     update: (id: string, data: LessonsRecord) => this.db.updateItem(id, data).then(() => this.lessons.fetchTagResults((this.app.tag()), (data.language?.valueOf() || this.app.lang()))),
     delete: (id: string) => this.db.deleteItem(id).then(() => this.lessons.fetchTagResults(this.app.tag(), this.app.lang())),
-    fetchTagResults: (tag: string, lang:string) => this.db.fetchTagResults(tag, lang),
+    fetchTagResults: (tag: string, lang: string) => this.db.fetchTagResults(tag, lang),
     fetchDetails: (id: string) => this.db.fetchDetails(id),
     fetchUserCreatedLessons: (userId: string) => this.db.fetchUserCreatedLessons(userId)
   }
 
-   app = {
+  app = {
     showEdit: signal<boolean>(false),
-    selectedLanguage: signal<string | null >(null),
+    selectedLanguage: signal<string | null>(null),
     selectedRate: signal<number | null>(null),
     tag: signal<string>(""),
     lang: signal<string>(""),
@@ -48,10 +49,10 @@ export class StoreService {
   }
 
   tts = {
-    readUtterance: (text: string, points: number, lang?: string, rate?: number) => this.speak.readUtterance(text, points, 
-      this.app.selectedLanguage() || lang || this.lessons.details()?.language, 
-      this.app.selectedRate() || rate || .8
-      ),
+    readUtterance: (text: string, points: number = 1, rate: number = .8) => this.speak.readUtterance(text, points,
+      this.app.selectedLanguage() || assignLanguageCode(this.lessons.details()?.language || 'English'),
+      this.app.selectedRate() || rate
+    ),
     pause: () => this.speak.pauseVoice
   }
 
@@ -64,15 +65,10 @@ export class StoreService {
       if (this.app.tag() != tagParam || this.app.lang() != langParam) {
         this.app.tag.set(tagParam);
         this.app.lang.set(langParam);
-        if(tagParam == 'user') return this.lessons.fetchUserCreatedLessons(this.user.userId);
+        if (tagParam == 'user') return this.lessons.fetchUserCreatedLessons(this.user.userId);
         return this.lessons.fetchTagResults(this.app.tag(), this.app.lang());
       } else return console.log('no lesson found');
     });
-   }
 
-  //  async getUser() {
-  //   const username = this.auth.userId();
-  //   if (username) this.lessons.fetchUserCreatedLessons(username);
-  //  }
-  
+  }
 }

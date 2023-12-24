@@ -6,9 +6,12 @@ import { ErrorFindingComponent } from './error-finding/error-finding.component';
 import { FormLessonComponent } from './form-lesson/form-lesson.component';
 import { GermanComponent } from './lang/german/german.component';
 import { RegisterComponent } from './login/register/register.component';
+import { ThaiComponent } from './lang/thai/thai.component';
 
 export const routes: Routes = [
+    { path: '', redirectTo: '/English/uh3a26d818fe08n', pathMatch: 'full' }, // Redirect home to /English/uh3a26d818fe08n
     { path: 'German/:id', component: GermanComponent },  
+    { path: 'Thai/:id', component: ThaiComponent },  
     { path: 'English/:id', component: LessonComponent },
     { path: 'list', component: LessonListComponent },
     { path: 'list/:type', component: LessonListComponent },

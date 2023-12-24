@@ -18,14 +18,14 @@
                 </button>
                 <div class="flex">
                     <a class="nav-link text-lg" [routerLink]="['/intro']" queryParamsHandling="preserve">
-                        <p>TJ: Lingo-Lines</p>
+                        <p>The Purple People's Reader</p>
                     </a>
                 </div>
             </div>
             <div class="flex justify-between">
 
                 <div class="items-center hidden sm:flex">
-                    <a class="nav-link" [routerLink]="['/intro']" queryParamsHandling="preserve">
+                    <a class="nav-link" [routerLink]="['']">
                         <p>Home</p>
                     </a>
                     <a class="nav-link" [routerLink]="['/list']" queryParamsHandling="preserve">
@@ -46,7 +46,7 @@
         <div [ngClass]="isOpen ? 'opened' : 'closed'"
             class="menu max-w-screen-md absolute inset-x-0 mx-auto z-20 w-full px-6 py-2 transition-all duration-300 ease-in-out ">
             <div class="flex flex-col -mx-6" (click)="isOpen = !isOpen">
-                <a [routerLink]="['/intro']" queryParamsHandling="preserve" class="nav-link">HOME</a>
+                <a [routerLink]="['']" class="nav-link">HOME</a>
                 <a [routerLink]="['/list']" queryParamsHandling="preserve" class="nav-link">LESSONS</a>
                 <a [routerLink]="['/list/user']" [queryParams]="{tag: 'user'}" class="nav-link">MY LESSONS</a>
                 <a [routerLink]="['/new']" [queryParams]="{edit:'true'}" queryParamsHandling="merge"

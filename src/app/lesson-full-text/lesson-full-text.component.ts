@@ -20,7 +20,7 @@ export class LessonDetailsComponent {
   showTranslation = true;
 
   itemDetails = this.store.lessons.details;
-  lang = assignLanguageCode(this.itemDetails()?.language || "English");
+  coverImage = this.store.lessons.details()?.imageUrl || 'assets/purple-people-eater.jpeg';
 
   textOrUrl = '';
 

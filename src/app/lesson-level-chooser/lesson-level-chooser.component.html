@@ -1,38 +1,36 @@
-<section class="reading mx-auto px-2 sm:px-4">
-    <app-welcome></app-welcome>
-    <div class="px-0 pb-6 mx-auto ">
-        <h1 class="text-2xl font-semibold text-center">
+<section class="mx-auto px-2 mt-4 sm:px-4">
+    <div class="px-0 mx-auto ">
+        <h1 class="text-2xl font-semibold text-center mb-0">
             Choose Your Level
         </h1>
-
-        <p class="mt-4 text-center ">
-            You can also create your own lessons with text from the internet.</p>
-        <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 sm:grid-cols-2 md:grid-cols-3">
-            <div class="grid w-full" [routerLink]="['/list']" [queryParams]="{tag: 'A1'}">
+        <div class="grid grid-cols-1 gap-4 mt-4 xl:mt-12 xl:gap-12 sm:grid-cols-2 md:grid-cols-3">
+            <div class="grid w-full" [routerLink]="['/list']" [queryParams]="{tag: 'A1', lang: 'English'}">
                 <div class="bg-green-300 img-container">
                     <img src="../../assets/easy.svg" class="img-svg" alt="easy level">
                 </div>
-                    <p class="image-caption">A1 - Short texts with easy vocabulary.</p>
+                <p class="image-caption">A1 - Short texts with easy vocabulary.</p>
             </div>
-
-            <div class="grid w-full" [routerLink]="['/list']" [queryParams]="{tag: 'A2'}">
-
+            
+            <div class="grid w-full" [routerLink]="['/list']" [queryParams]="{tag: 'A2', lang: 'English' }">
+                
                 <div class="bg-orange-300 img-container">
                     <img src="../../assets/medium.svg" class="img-svg" alt="easy level">
                 </div>
                 <div>
-
+                    
                     <p class="image-caption">A2 - Texts with more difficulty vocabulary.</p>
                 </div>
             </div>
-
-            <div class="grid w-full" [routerLink]="['/list']" [queryParams]="{tag: 'B1'}">
+            
+            <div class="grid w-full" [routerLink]="['/list']" [queryParams]="{tag: 'B1', lang: 'English'}">
                 <div class="bg-red-300 img-container">
                     <img src="../../assets/hard.svg" class="img-svg" alt="easy level">
                 </div>
-
+                
                 <p class="image-caption">B1 - Longer texts with more advanced vocabulary or grammar.</p>
             </div>
         </div>
+        <p class="text-center ">
+            You can also create your own lessons with text from the internet.</p>
     </div>
 </section>

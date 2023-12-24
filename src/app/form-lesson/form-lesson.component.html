@@ -2,7 +2,7 @@
 
     <section class="w-full p-6 mx-auto m-0 rounded-lg shadow-md ">
         <h2 class="text-lg font-semibold  capitalize dark:text-white">CREATE/EDIT</h2>
-        <p class="form-label">Lesson ID: {{itemDetails()?.id || 'New Lesson'}}</p>
+        <p class="form-label">Lesson ID: {{itemDetails()?.id || 'New Lesson'}} Created By: {{itemDetails()?.creatorId}} </p>
         <form [formGroup]="lessonForm">
             <div class="grid grid-cols-1 gap-6 mt-4">
                 <div>
@@ -42,7 +42,7 @@
             <div>
                 <label class="form-label" for="shareable">Share</label>
                 <select id="shareable" formControlName="shareable" class="form-input">
-                    <option value=true selected>YES</option>
+                    <option value=true>YES</option>
                     <option value=false>NO</option>
                 </select>
             </div>

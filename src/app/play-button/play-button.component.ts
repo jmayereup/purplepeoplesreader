@@ -32,7 +32,7 @@ export class PlayButtonComponent {
     if (typeof this.textArray === 'string' && this.textArray.length > 0) {
       if (this.textArray.endsWith('.mp3')) this.playAudio(this.textArray);
       else
-      this.store.tts.readUtterance(this.textArray, this.points, this.store.app.selectedLanguage() || 'en-US');
+      this.store.tts.readUtterance(this.textArray, this.points);
       return;
     }
     if (t < this.textArray.length && this.textArray.length > 0) {
@@ -43,7 +43,7 @@ export class PlayButtonComponent {
         });
         return;
       }
-      this.store.tts.readUtterance(this.textArray[t], this.points, this.store.app.selectedLanguage() || 'en-US').then(() => {
+      this.store.tts.readUtterance(this.textArray[t], this.points).then(() => {
         this.playTextArray(t + 1);
         return;
       });
@@ -54,6 +54,9 @@ export class PlayButtonComponent {
     const audio = new Audio(path);
     this.currentAudio = audio;
     audio.play();
+    audio.onended = () => {
+      this.currentAudio = undefined;
+    }
   }
 
 }

@@ -28,6 +28,7 @@ export class LessonComponent implements OnChanges {
   ngOnChanges(): void {
     console.log('on changes called in lessons component');
     if(this.id) this.store.lessons.fetchDetails(this.id);
+    this.showEdit.set(false);
   }
 
   toggleShowEdit() {
