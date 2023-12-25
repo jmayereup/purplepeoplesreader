@@ -9,7 +9,7 @@
   --bg2: #ae92cb;
   --reader: white;
   --primary-text1: theme(colors.lbl-purple.100);
-  --primary-text2: theme(colors.lbl-purple.800);
+  --primary-text2: black;
   --accent: black;
   --blue: theme(colors.lbl-blue.400);
 
@@ -63,7 +63,7 @@ details {
 }
 
 .button {
-  @apply px-6 py-2 m-1 text-sm tracking-wide capitalize transition-colors duration-300 transform rounded-lg text-lbl-purple-900 bg-blue-200 focus:outline-none focus:ring focus:ring-opacity-50 disabled:bg-red-200 hover:bg-blue-500 focus:bg-blue-500;
+  @apply px-6 py-2 m-1 text-sm tracking-wide capitalize transition-colors duration-300 transform bg-blue-200 rounded-lg text-lbl-purple-900 focus:outline-none focus:ring focus:ring-opacity-50 disabled:bg-red-200 hover:bg-blue-500 focus:bg-blue-500;
 }
 
 .blue {

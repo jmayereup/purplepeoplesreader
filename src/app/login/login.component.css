@@ -1,3 +1,8 @@
 input {
     padding: .25rem;
 }
+
+p {
+    margin: 0;
+    color: var(--primary-text2, darkpurple);
+}

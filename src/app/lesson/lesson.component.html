@@ -1,7 +1,7 @@
 <section [ngStyle]="{'font-size': fSize()}">
-  <div class="flex flex-col p-2 gap-2">
-    <div class="flex flex-row justify-between bg-slate-300 rounded-lg">
-      <details class="bg-transparent text-black m-1">
+  <div class="flex flex-col gap-2 p-2">
+    <div class="flex flex-row justify-between rounded-lg bg-slate-300">
+      <details class="m-1 text-black bg-transparent">
         <summary>Settings</summary>
         <app-change-settings></app-change-settings>
       </details>
@@ -15,9 +15,9 @@
     <app-lesson-full-text></app-lesson-full-text>
     }
   </div>
-  <div class="flex justify-center">
+  <div class="flex justify-center mt-2 mb-4">
     <a [routerLink]="['/list']" queryParamsHandling="preserve">
-      <button class="button mb-2" type="button">Back</button>
+      <button class="button" type="button">Back</button>
     </a>
   </div>
 </section>
