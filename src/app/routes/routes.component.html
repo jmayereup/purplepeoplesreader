@@ -1,0 +1,12 @@
+<section class="p-4">
+    <button class="button mx-auto" (click)="fetchAll()">Fetch All Routes</button>
+    <div class="p-4">
+        @for (item of fetchedRoutes(); track item.id) {
+        /{{item.language}}/{{item.id}} <br>
+        }
+    </div>
+    <p>
+        Add this to the routes.txt file and run ng build again.
+    </p>
+</section>
+

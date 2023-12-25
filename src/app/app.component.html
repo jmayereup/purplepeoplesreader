@@ -1,5 +1,5 @@
     <div class="max-w-screen-md mx-auto">
-        <app-nav-bar [username]="username || ''"></app-nav-bar>
+        <app-nav-bar [username]="username()"></app-nav-bar>
         <section class="rounded-b-lg">
             <router-outlet></router-outlet>
             <app-login class="mt-8"></app-login>

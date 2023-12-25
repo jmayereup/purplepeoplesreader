@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
 
 
   username = this.store.user.userName;
-  userId: string | undefined = this.store.user.userId;
+  userId: string | undefined = this.store.user.userId();
   fSize = this.store.app.fontSize;
   constructor() {
   }

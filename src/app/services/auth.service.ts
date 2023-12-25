@@ -11,9 +11,9 @@ export class AuthService {
   authStore = this.db.authStore;
 
 
-  userId: string | undefined = this.db.authStore.model?.['id'];
-  userName: string | undefined = this.db.authStore.model?.['username'];
-  userEmail: string | undefined = this.db.authStore.model?.['email'];
+  userIdSignal = signal<string>("undefined");
+  userNameSignal = signal<string>("undefined");
+  userEmailSignal = signal<string>("undefined");
 
   constructor() {
 
@@ -41,11 +41,12 @@ export class AuthService {
   }
 
   async getUser() {
-    this.userName = await this.db.authStore.model?.['username'];
-    //  this.userName.set(username);
-    this.userId = await this.db.authStore.model?.['id'];
-    this.userEmail = await this.db.authStore.model?.['email'];
-    //  this.userId.set(userId);
+    const userName = await this.db.authStore.model?.['username'];
+    const userId = await this.db.authStore.model?.['id'];
+    const userEmail = await this.db.authStore.model?.['email'];
+    this.userNameSignal.set(userName);
+    this.userIdSignal.set(userId);
+    this.userEmailSignal.set(userEmail);
     return;
   }
 

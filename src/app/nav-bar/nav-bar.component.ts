@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { StoreService } from '../services/store.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -12,6 +13,8 @@ import { RouterLink } from '@angular/router';
 export class NavBarComponent {
 
   @Input() username = "";
+
+  store = inject(StoreService);
 
   isOpen=false;
 

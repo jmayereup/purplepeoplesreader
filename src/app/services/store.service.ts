@@ -22,12 +22,12 @@ export class StoreService {
     getUser: () => this.auth.getUser().then(() => {
       if (this.auth.authStore.model?.['id']) this.lessons.fetchUserCreatedLessons(this.auth.authStore.model?.['id']);
     }),
-    userId: this.auth.authStore.model?.['id'],
-    userName: this.auth.authStore.model?.['username'],
-    userEmail: this.auth.authStore.model?.['email'],
+    userId: this.auth.userIdSignal,
+    userName: this.auth.userNameSignal,
+    userEmail: this.auth.userEmailSignal,
     userLinesRead: this.auth.authStore.model?.['linesRead'],
     userLinesReadTemp: 0,
-    updateLinesRead: (points: number) => this.db.updateLinesRead(points, this.user.userId, this.user.userLinesRead),
+    updateLinesRead: (points: number) => this.db.updateLinesRead(points, this.user.userId(), this.user.userLinesRead),
     refresh: () => this.auth.db.collection('users').authRefresh(),
     clear: () => this.auth.authStore.clear(),
     loginWithEmail: (email: string, password: string) => this.auth.loginWithEmail(email, password),
@@ -37,6 +37,7 @@ export class StoreService {
 
   lessons = {
     results: this.db.getFetchedResults(),
+    all: this.db.getAllResults(),
     userResults: this.db.getUserCreatedLessons(),
     details: this.db.getItemDetailsState(),
     create: (data: LessonsRecord) => this.db.createItem(data),
@@ -44,7 +45,8 @@ export class StoreService {
     delete: (id: string) => this.db.deleteItem(id).then(() => this.lessons.fetchTagResults(this.app.tag(), this.app.lang())),
     fetchTagResults: (tag: string, lang: string) => this.db.fetchTagResults(tag, lang),
     fetchDetails: (id: string) => this.db.fetchDetails(id),
-    fetchUserCreatedLessons: (userId: string) => this.db.fetchUserCreatedLessons(userId)
+    fetchUserCreatedLessons: (userId: string) => this.db.fetchUserCreatedLessons(userId),
+    fetchAllResults: () => this.db.fetchAllResults(),
   }
 
   app = {
@@ -65,7 +67,7 @@ export class StoreService {
       this.user.userLinesReadTemp = this.user.userLinesReadTemp + points;
       if (this.user.userLinesReadTemp >= 10) {
         this.user.userLinesRead = this.user.userLinesRead + this.user.userLinesReadTemp;
-        this.user.userId ? this.user.updateLinesRead(this.user.userLinesRead) : console.log('no user id');
+        this.user.userId() == 'undefined' ? this.user.updateLinesRead(this.user.userLinesRead) : console.log('no user id');
         this.user.userLinesReadTemp = 0;
       }
     }),
@@ -85,7 +87,7 @@ export class StoreService {
       if (this.app.tag() != tagParam || this.app.lang() != langParam) {
         this.app.tag.set(tagParam);
         this.app.lang.set(langParam);
-        if (tagParam == 'user') return this.lessons.fetchUserCreatedLessons(this.user.userId);
+        if (tagParam == 'user') return this.lessons.fetchUserCreatedLessons(this.user.userId());
         return this.lessons.fetchTagResults(this.app.tag(), this.app.lang());
       } else return console.log('no lesson found');
     });

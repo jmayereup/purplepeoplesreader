@@ -15,6 +15,7 @@ export class PocketbaseService {
 
   private itemDetails = signal<LessonsResponse | null>(null);
   private fetchedResults = signal<LessonsResponse[] | null>(null);
+  private allResults = signal<LessonsResponse[] | null>(null);
   private userCreatedLessons = signal<LessonsResponse[] | null>(null);
 
   constructor() {
@@ -27,6 +28,18 @@ export class PocketbaseService {
     }).then(
       (res: LessonsResponse[]) => {
         this.fetchedResults.set(res);
+        return res;
+      }
+    );
+  }
+
+  async fetchAllResults() {
+    console.log('fetching results');
+    this.db.collection('lessons').getFullList({
+      filter: `shareable=true`,
+    }).then(
+      (res: LessonsResponse[]) => {
+        this.allResults.set(res);
         return res;
       }
     );
@@ -65,6 +78,10 @@ export class PocketbaseService {
 
   public getFetchedResults() {
     return this.fetchedResults;
+  }
+
+  public getAllResults() {
+    return this.allResults;
   }
 
   public getUserCreatedLessons() {

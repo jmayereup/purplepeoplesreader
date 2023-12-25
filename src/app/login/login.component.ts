@@ -33,6 +33,7 @@ export class LoginComponent {
   }
   logout() {
     this.store.user.clear();
+    this.store.user.getUser();
   }
 
 
