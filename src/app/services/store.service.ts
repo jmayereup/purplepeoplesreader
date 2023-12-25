@@ -24,7 +24,12 @@ export class StoreService {
     }),
     userId: this.auth.authStore.model?.['id'],
     userName: this.auth.authStore.model?.['username'],
-    refresh: () => this.auth.db.collection('users').authRefresh()
+    userEmail: this.auth.authStore.model?.['email'],
+    refresh: () => this.auth.db.collection('users').authRefresh(),
+    clear: () => this.auth.authStore.clear(),
+    loginWithEmail: (email: string, password: string) => this.auth.loginWithEmail(email, password),
+    loginWithGoogle: () => this.auth.loginWithGoogle(),
+    isValid: () => this.auth.authStore.isValid,
   }
 
   lessons = {

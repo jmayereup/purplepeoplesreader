@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
   constructor() {
   }
   ngOnInit(): void {
+    this.store.user.getUser();
     setTimeout(() => this.fetchUserRecords(), 1000);
   }
 

@@ -25,6 +25,7 @@ export class FormLessonComponent implements OnInit, OnChanges {
   itemDetails = this.store.lessons.details;
   tags = TAG_VALUES;
   creatorID: string = this.store.user.userId || '';
+  userIsValid = this.store.user.isValid;
 
   lessonForm = this.fb.group({
     id: this.fb.control(''),

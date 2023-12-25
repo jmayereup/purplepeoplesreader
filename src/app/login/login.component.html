@@ -1,14 +1,14 @@
 <hr>
 <div class="flex flex-col max-w-sm mx-auto">
-    @if (!authStore.isValid) {
-    <div class="px-6 py-4 flex flex-col mx-auto text-center items-center">
+    @if (!store.user.isValid()) {
+    <div class="flex flex-col items-center px-6 py-4 mx-auto text-center">
         <!-- <div class="flex justify-center mx-auto">
             <img class="w-auto h-20" src="../../assets/lbl-lingo-header.png" alt="">
         </div> -->
         <div>
             <p class="mt-1 text-center">Login or create account</p>
         </div>
-        <button class="bg-white flex flex-row gap-1 my-8" (click)="loginWithGoogle()">
+        <button class="flex flex-row gap-1 my-8 bg-white" (click)="loginWithGoogle()">
             <img class="h-5" alt="google logo" src="../../assets/icons/google-logo.svg" />
             <p>Login with Google</p>
         </button>
@@ -25,7 +25,7 @@
                     name="password" />
             </div>
 
-            <div class="flex flex-row justify-between items-center my-4">
+            <div class="flex flex-row items-center justify-between my-4">
                 <a href="#" class="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500">Forget
                     Password?</a>
                 <button type="button" (click)="loginWithEmail()">
@@ -42,8 +42,8 @@
     </div>
     }
     <div class="flex flex-col centered ">
-        @if (authStore.isValid) {
-        Logged in as: {{authStore.model!['username']}}
+        @if (store.user.isValid()) {
+        Logged in as: {{store.user.userEmail}}
         <button class="button" type="button" (click)="logout()">
             Logout
         </button>

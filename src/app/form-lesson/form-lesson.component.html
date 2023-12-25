@@ -1,7 +1,7 @@
-@if (creatorID) {
+@if (creatorID && userIsValid()) {
 
-    <section class="w-full p-6 mx-auto m-0 rounded-lg shadow-md ">
-        <h2 class="text-lg font-semibold  capitalize dark:text-white">CREATE/EDIT</h2>
+    <section class="w-full p-6 m-0 mx-auto rounded-lg shadow-md ">
+        <h2 class="text-lg font-semibold capitalize dark:text-white">CREATE/EDIT</h2>
         <p class="form-label">Lesson ID: {{itemDetails()?.id || 'New Lesson'}} Created By: {{itemDetails()?.creatorId}} </p>
         <form [formGroup]="lessonForm">
             <div class="grid grid-cols-1 gap-6 mt-4">
@@ -61,12 +61,12 @@
     </form>
     <div class="flex justify-end mt-6">
         <button type="button"
-        class="button disabled:bg-red-200 hover:bg-blue-500 focus:bg-blue-500 font-bold py-2 px-4 rounded"
+        class="px-4 py-2 font-bold rounded button disabled:bg-red-200 hover:bg-blue-500 focus:bg-blue-500"
         (click)="onSubmit()" [disabled]="!lessonForm.valid">Save</button>
     </div>
 </section>
 } @else {
     <div class="flex justify-center">
-        <h2 class="text-lg font-semibold my-4  capitalize dark:text-white">Please Login to Create/Edit</h2>
+        <h2 class="my-4 text-lg font-semibold capitalize dark:text-white">Please Login to Create/Edit</h2>
     </div>
 }

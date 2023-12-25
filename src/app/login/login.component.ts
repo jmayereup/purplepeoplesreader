@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
+import { StoreService } from '../services/store.service';
 
 @Component({
   selector: 'app-login',
@@ -12,26 +12,28 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent {
 
-  auth = inject(AuthService);
-  authStore = this.auth.authStore;
+  store = inject(StoreService);
 
-  loginData = {email: "", password:""};
+  loginData = { email: "", password: "" };
 
   constructor() {
 
   }
 
   loginWithEmail() {
-    this.auth.loginWithEmail(this.loginData.email, this.loginData.password)
+    this.store.user.loginWithEmail(this.loginData.email, this.loginData.password).then(() => {
+      this.store.user.getUser();
+    });
   }
 
   loginWithGoogle() {
-    this.auth.loginWithGoogle();
+    this.store.user.loginWithGoogle().then(() => {
+      this.store.user.getUser();
+    });
+  }
+  logout() {
+    this.store.user.clear();
   }
 
-  logout() {
-    this.authStore.clear();
-    }
 
-  
 }
