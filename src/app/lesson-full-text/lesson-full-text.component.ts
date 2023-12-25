@@ -30,6 +30,7 @@ export class LessonDetailsComponent {
     effect(() => {
       this.itemDetails();
       this.textOrUrl = this.itemDetails()?.audioUrl || '';
+      this.coverImage = this.itemDetails()?.imageUrl || 'assets/purple-people-eater.jpeg';
     });
   }
 
