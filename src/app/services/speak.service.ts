@@ -38,21 +38,21 @@ export class SpeakService {
     }
   }
 
-  readUtterance(line: string, points: number, lang?: string, rate?: number): Promise<void> {
+  readUtterance(line: string, points: number = 1, lang?: string, rate?: number): Promise<number> {
     return new Promise((resolve, reject) => {
       this.hasplayed.set(true);
       if (this.isPlaying() && !this.isPaused) {
         speechSynthesis.cancel();
         this.isPlaying.set(false);
         reject("cancelled");
-        return;
+        return 0;
       }
       if (this.isPaused) {
         speechSynthesis.resume();
         this.isPlaying.set(true);
         this.isPaused = false;
         reject("resumed");
-        return;
+        return 0;
       }
       else {
 
@@ -64,11 +64,11 @@ export class SpeakService {
         utterance.onend = () => {
           this.currentLinesRead.update(old => old + points)
           this.isPlaying.set(false);
-          console.log("lines read", this.currentLinesRead());
           this.cdRef?.detectChanges();
-          resolve();
+          resolve(points = points);
         };
       }
+      return points;
     });
   }
 

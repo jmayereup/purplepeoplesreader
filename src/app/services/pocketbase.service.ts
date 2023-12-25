@@ -86,4 +86,10 @@ export class PocketbaseService {
     return record;
   }
 
+  async updateLinesRead(points: number, id: string, currentLinesRead: number) {
+    const newTotal = currentLinesRead + points;
+    const record = await this.db.collection('users').update(id, { linesRead: newTotal });
+    return record;
+  }
+
 }

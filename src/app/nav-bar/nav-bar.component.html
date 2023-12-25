@@ -24,7 +24,7 @@
             </div>
             <div class="flex justify-between">
 
-                <div class="items-center hidden sm:flex">
+                <div class="items-center hidden md:flex">
                     <a class="nav-link" [routerLink]="['']">
                         <p>Home</p>
                     </a>
@@ -34,7 +34,7 @@
                     <a class="nav-link" [routerLink]="['/list/user']" [queryParams]="{tag: 'user'}">
                         <p>My Lessons</p>
                     </a>
-                    <a class="nav-link" [routerLink]="['/new']" [queryParams]="{edit:'true'}"
+                    <a class="nav-link" [routerLink]="['/new']" [queryParams]="{edit:'true', reset:'true'}"
                         queryParamsHandling="merge">
                         <p>CREATE</p>
                     </a>
@@ -49,7 +49,7 @@
                 <a [routerLink]="['']" class="nav-link">HOME</a>
                 <a [routerLink]="['/list']" queryParamsHandling="preserve" class="nav-link">LESSONS</a>
                 <a [routerLink]="['/list/user']" [queryParams]="{tag: 'user'}" class="nav-link">MY LESSONS</a>
-                <a [routerLink]="['/new']" [queryParams]="{edit:'true'}" queryParamsHandling="merge"
+                <a [routerLink]="['/new']" [queryParams]="{edit:'true', reset:'true'}" queryParamsHandling="merge"
                     class="nav-link">CREATE NEW</a>
             </div>
 

@@ -4,14 +4,16 @@
             Choose Your Level
         </h1>
         <div class="grid grid-cols-1 gap-4 mt-4 xl:mt-12 xl:gap-12 sm:grid-cols-2 md:grid-cols-3">
-            <div class="grid w-full" [routerLink]="['/list']" [queryParams]="{tag: 'A1', lang: 'English'}">
+            <div class="grid w-full" [routerLink]="['/list']" [queryParams]="{tag: 'A1'}"
+            queryParamsHandling="merge">
                 <div class="bg-green-300 img-container">
                     <img src="../../assets/easy.svg" class="img-svg" alt="easy level">
                 </div>
                 <p class="image-caption">A1 - Short texts with easy vocabulary.</p>
             </div>
             
-            <div class="grid w-full" [routerLink]="['/list']" [queryParams]="{tag: 'A2', lang: 'English' }">
+            <div class="grid w-full" [routerLink]="['/list']" [queryParams]="{tag: 'A2' }"
+            queryParamsHandling="merge">
                 
                 <div class="bg-orange-300 img-container">
                     <img src="../../assets/medium.svg" class="img-svg" alt="easy level">
@@ -22,7 +24,8 @@
                 </div>
             </div>
             
-            <div class="grid w-full" [routerLink]="['/list']" [queryParams]="{tag: 'B1', lang: 'English'}">
+            <div class="grid w-full" [routerLink]="['/list']" [queryParams]="{tag: 'B1'}"
+            queryParamsHandling="merge">
                 <div class="bg-red-300 img-container">
                     <img src="../../assets/hard.svg" class="img-svg" alt="easy level">
                 </div>

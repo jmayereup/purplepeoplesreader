@@ -37,19 +37,22 @@ export class LessonDetailsComponent {
 
   readThis($event: any) {
     const myText = $event.target.closest("div");
-    const points = Math.round((myText.textContent?.length || 100) / 100);
+    const points = Math.ceil((myText.textContent?.length || 100) / 100);
+    console.log('points', points);
     this.store.tts.readUtterance(myText.textContent || "none", points)
   }
 
   calculatePoints(text: string) {
-    return Math.round((text.length || 100) / 100);
+    return Math.ceil((text.length || 100) / 100);
   }
 
 
   readAll() {
     const myText = this.document.getElementById("full-text");
-    const points = Math.round((myText?.textContent?.length || 100) / 100);
+    const points = Math.ceil((myText?.textContent?.length || 100) / 100);
     this.textOrUrl = this.itemDetails()?.audioUrl || myText?.textContent || 'none';
-    this.playButton.readArray();
+    this.playButton.readArray().then(() => {
+      this.store.user.updateLinesRead(points);
+    });
   }
 }

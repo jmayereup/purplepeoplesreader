@@ -25,6 +25,9 @@ export class StoreService {
     userId: this.auth.authStore.model?.['id'],
     userName: this.auth.authStore.model?.['username'],
     userEmail: this.auth.authStore.model?.['email'],
+    userLinesRead: this.auth.authStore.model?.['linesRead'],
+    userLinesReadTemp: 0,
+    updateLinesRead: (points: number) => this.db.updateLinesRead(points, this.user.userId, this.user.userLinesRead),
     refresh: () => this.auth.db.collection('users').authRefresh(),
     clear: () => this.auth.authStore.clear(),
     loginWithEmail: (email: string, password: string) => this.auth.loginWithEmail(email, password),
@@ -56,8 +59,16 @@ export class StoreService {
   tts = {
     readUtterance: (text: string, points: number = 1, rate: number = .8) => this.speak.readUtterance(text, points,
       this.app.selectedLanguage() || assignLanguageCode(this.lessons.details()?.language || 'English'),
-      this.app.selectedRate() || rate
-    ),
+      this.app.selectedRate() || rate,
+    ).then((points: number) => {
+      console.log(this.user.userLinesRead, points);
+      this.user.userLinesReadTemp = this.user.userLinesReadTemp + points;
+      if (this.user.userLinesReadTemp >= 10) {
+        this.user.userLinesRead = this.user.userLinesRead + this.user.userLinesReadTemp;
+        this.user.userId ? this.user.updateLinesRead(this.user.userLinesRead) : console.log('no user id');
+        this.user.userLinesReadTemp = 0;
+      }
+    }),
     pause: () => this.speak.pauseVoice
   }
 
@@ -67,6 +78,10 @@ export class StoreService {
     this.route.queryParamMap.pipe(takeUntilDestroyed(), distinctUntilChanged(), shareReplay(1)).subscribe(params => {
       const tagParam = (params.get('tag') || 'A1');
       const langParam = (params.get('lang') || 'English');
+      const resetParam = (params.get('reset') || 'false');
+      if (resetParam == 'true') {
+        this.lessons.details.set(null);
+      }
       if (this.app.tag() != tagParam || this.app.lang() != langParam) {
         this.app.tag.set(tagParam);
         this.app.lang.set(langParam);

@@ -34,16 +34,18 @@
             </div>
 
         </form>
-        <div class="flex flex-row flex-wrap items-center justify-around w-full py-3 text-center rounded-lg bg-lbl-purple-200">
+        <div
+            class="flex flex-row flex-wrap items-center justify-around w-full py-3 text-center rounded-lg bg-lbl-purple-200">
             <span class="text-sm">Don't have an account?</span>
-    
+
             <a href="/register">Register</a>
         </div>
     </div>
     }
     <div class="flex flex-col centered ">
         @if (store.user.isValid()) {
-        Logged in as: {{store.user.userEmail}}
+        <p>Logged in as: {{store.user.userEmail}} </p>
+        <p>Listening Points Earned: {{store.user.userLinesRead}} </p>
         <button class="button" type="button" (click)="logout()">
             Logout
         </button>
