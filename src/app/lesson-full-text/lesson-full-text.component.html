@@ -8,7 +8,7 @@
       <h2 class="m-0 font-bold text-center">{{itemDetails()?.title}} </h2>
       <button class="flex justify-center gap-2 button">
         <app-play-button id="play-button" #playButton class="h-5" 
-        [textArray]="textOrUrl"
+        [textArray]="[textOrUrl]"
         (click)="readAll()"
         > Listen </app-play-button>
       </button>
@@ -35,9 +35,9 @@
   
   <div class="grid grid-cols-2 gap-1 mb-1">
     <button class="flex justify-center gap-2 mt-2 button" (click)="readAll()">
-      <app-play-button #playButton class="h-5" 
-      [textArray]="textOrUrl"
-      >Full Text</app-play-button>
+      <img class="h-5" alt="play-pause button" src="../../assets/icons/headphones.svg"> 
+      @if(audioPlaying()) { Playing...}
+      @else {Full Text}
     </button>
     <button class="flex justify-center w-full gap-2 mt-2 button" type="button"
       (click)="showTranslation = !showTranslation">Toggle Translations</button>

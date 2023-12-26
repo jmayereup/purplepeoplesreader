@@ -68,11 +68,12 @@ export type LessonsRecord = {
 	title?: string
 	vocabulary?: string
 }
+export type Playlist = [{id: string, title: string, language: LessonsLanguageOptions, points?: string}];
 
 export type UsersRecord = {
 	avatar?: string
 	linesRead?: number
-	playlist?: [{id: string, title: string, points?: string}]
+	playlist?: Playlist
 	name?: string
 }
 

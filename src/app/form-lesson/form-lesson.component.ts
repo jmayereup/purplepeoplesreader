@@ -43,7 +43,7 @@ export class FormLessonComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     console.log('on Init called');
-    this.store.user.checkUser();
+    // this.store.user.checkUser();
     this.loadLesson();
   }
 
@@ -110,7 +110,7 @@ export class FormLessonComponent implements OnInit, OnChanges {
       await this.store.lessons.create(lesson as LessonsRecord).then(data => {
         console.log('lesson created', data);
         this.store.lessons.fetchDetails(data.id).then(id => {
-          this.newID.emit(id);
+          this.newID.emit(data.id);
         });
 
       });

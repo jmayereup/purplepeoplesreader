@@ -1,6 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core';
 import PocketBase from 'pocketbase';
-import { TypedPocketBase, LessonsResponse, LessonsRecord } from '../shared/pocketbase-types';
+import { TypedPocketBase, LessonsResponse, LessonsRecord, Playlist } from '../shared/pocketbase-types';
 import { ActivatedRoute, Router } from '@angular/router';
 
 
@@ -19,6 +19,7 @@ export class PocketbaseService {
   private userCreatedLessons = signal<LessonsResponse[] | null>(null);
 
   constructor() {
+  
   }
 
   async fetchTagResults(type: string = 'A1', lang: string = 'English') {
@@ -59,17 +60,14 @@ export class PocketbaseService {
     );
   }
 
-  async fetchDetails(itemId: string) {
-    try {
-      const res = await this.db.collection('lessons').getOne<LessonsResponse>(itemId);
-      this.itemDetails.update(details => details = res as LessonsResponse);
-      return this.itemDetails()?.id;
-    } catch (error) {
-      this.router.navigate(['error'], { queryParams: {}, queryParamsHandling: 'preserve' });
-      // Handle the error here, such as logging it or showing an error message to the user
-      console.error(error);
-      return;
-    }
+  async fetchDetails(itemId: string): Promise<LessonsResponse | null> {
+    console.log('fetching details for', itemId);
+    const lesson = await this.db.collection('lessons').getOne(itemId).then(
+      res => {
+        this.itemDetails.set(res);
+        return res;
+      });
+    return lesson;
   }
 
 
@@ -110,9 +108,9 @@ export class PocketbaseService {
     return record;
   }
 
-  async addToPlaylist(id: string, title: string, userId: string, playlist: [{ id: string, title: string, points?: string }] | undefined) {
+  async addToPlaylist(id: string, title: string, userId: string, language: string, playlist: Playlist | undefined) {
     if (!playlist){
-      const newPlaylist = [{ id: id, title: title }];
+      const newPlaylist = [{ id: id, title: title, language: language}];
       const record = await this.db.collection('users').update(userId, { playlist: newPlaylist });
       return record;
     }
@@ -121,7 +119,7 @@ export class PocketbaseService {
     return record;
   }
 
-  async removeLessonFromPlaylist(id: string, userId: string, playlist: [{ id: string, title: string, points?: string }] | undefined) {
+  async removeLessonFromPlaylist(id: string, userId: string, playlist: Playlist | undefined) {
     if (!playlist) return;
     const newPlaylist = playlist.filter((lesson) => lesson.id !== id);
     const record = await this.db.collection('users').update(userId, { playlist: newPlaylist });
