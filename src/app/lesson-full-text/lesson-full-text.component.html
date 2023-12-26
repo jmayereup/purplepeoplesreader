@@ -21,9 +21,17 @@
     {{itemDetails()?.tags}}
   </p>
 </section>
-
+<!-- <section>
+  <div class="flex flex-row justify-between mb-2 rounded-lg bg-slate-300">
+    <details class="m-1 text-black bg-transparent">
+      <summary>Settings</summary>
+      <app-change-settings></app-change-settings>
+    </details>
+  </div>
+</section> -->
 <section class="p-4 rounded-lg reading">
   <h2 class="mb-0 text-center">Line-By-Line</h2>
+  <p class="mb-0 text-xs text-center">You can use a web browser like Chrome or Edge to provide translations. <a href="https://youtu.be/Jfv9bKDYxvM">(Video)</a></p>
   
   <div class="grid grid-cols-2 gap-1 mb-1">
     <button class="flex justify-center gap-2 mt-2 button" (click)="readAll()">
