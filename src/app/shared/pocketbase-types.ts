@@ -72,6 +72,7 @@ export type LessonsRecord = {
 export type UsersRecord = {
 	avatar?: string
 	linesRead?: number
+	playlist?: [{id: string, title: string, points?: string}]
 	name?: string
 }
 

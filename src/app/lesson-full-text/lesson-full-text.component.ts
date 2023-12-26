@@ -3,8 +3,8 @@ import { CommonModule, DOCUMENT } from '@angular/common';
 import { MarkdownPipe } from 'ngx-markdown';
 import { StoreService } from '../services/store.service';
 import { ChangeSettingsComponent } from "../change-settings/change-settings.component";
-import { assignLanguageCode } from '../shared/utils';
 import { PlayButtonComponent } from '../play-button/play-button.component';
+import e from 'express';
 
 @Component({
   selector: 'app-lesson-full-text',
@@ -20,7 +20,7 @@ export class LessonDetailsComponent {
   showTranslation = true;
 
   itemDetails = this.store.lessons.details;
-  coverImage = this.store.lessons.details()?.imageUrl || 'assets/purple-people-eater.jpeg';
+  coverImage = `https://www.purplepeoplesreader.com/${this.store.lessons.details()?.imageUrl}`;
 
   textOrUrl = '';
 
@@ -30,7 +30,7 @@ export class LessonDetailsComponent {
     effect(() => {
       this.itemDetails();
       this.textOrUrl = this.itemDetails()?.audioUrl || '';
-      this.coverImage = this.itemDetails()?.imageUrl || 'assets/purple-people-eater.jpeg';
+      this.coverImage = `https://www.purplepeoplesreader.com/${this.store.lessons.details()?.imageUrl}`;
     });
   }
 
@@ -55,5 +55,9 @@ export class LessonDetailsComponent {
     this.playButton.readArray().then(() => {
       this.store.user.updateLinesRead(points);
     });
+  }
+
+  addToPlaylist() {
+    this.store.user.addToPlaylist(this.itemDetails()?.id || 'none', this.itemDetails()?.title || 'none');
   }
 }

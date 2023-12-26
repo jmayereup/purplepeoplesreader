@@ -26,12 +26,12 @@ export class AppComponent implements OnInit {
 
 
   username = this.store.user.userName;
-  userId: string | undefined = this.store.user.userId();
+  userId = this.store.user.userId;
   fSize = this.store.app.fontSize;
   constructor() {
   }
   ngOnInit(): void {
-    this.store.user.getUser();
+    this.store.user.checkUser();
     setTimeout(() => this.fetchUserRecords(), 1000);
   }
 
@@ -47,8 +47,8 @@ export class AppComponent implements OnInit {
   }
 
   fetchUserRecords() {
-    if (this.userId) {
-      this.store.lessons.fetchUserCreatedLessons(this.userId);
+    if (this.userId()) {
+      this.store.lessons.fetchUserCreatedLessons(this.userId()!);
       return true;
     }
     return false;

@@ -1,17 +1,18 @@
-<section class="reading rounded-lg p-4 mb-2 mx-auto">
-  <img class="rounded-lg mx-auto" [src]="coverImage" alt="cover image">
+<section class="p-4 mx-auto mb-2 rounded-lg reading">
+  <img class="mx-auto rounded-lg" [src]="coverImage" alt="cover image">
 </section>
 
-<section class="flex flex-col flex-wrap reading rounded-lg p-4 mb-2">
+<section class="flex flex-col flex-wrap p-4 mb-2 rounded-lg reading">
   <div #fullText translate="no" class="max-h-[70vh] overflow-y-auto">
-    <div class="flex flex-row flex-wrap mb-4 justify-around items-center">
-      <h2 class="text-center font-bold m-0">{{itemDetails()?.title}} </h2>
+    <div class="flex flex-row flex-wrap items-center justify-around mb-4">
+      <h2 class="m-0 font-bold text-center">{{itemDetails()?.title}} </h2>
       <button class="flex justify-center gap-2 button">
         <app-play-button id="play-button" #playButton class="h-5" 
         [textArray]="textOrUrl"
         (click)="readAll()"
         > Listen </app-play-button>
       </button>
+      <button type="button" class="button" (click)="addToPlaylist()">Add to Playlist</button>
     </div>
     <div id='full-text' class="full-text" [innerHTML]="(itemDetails()?.content || '') | markdown | async"></div>
   </div>
@@ -21,8 +22,8 @@
   </p>
 </section>
 
-<section class="reading rounded-lg  p-4">
-  <h2 class="text-center mb-0">Line-By-Line</h2>
+<section class="p-4 rounded-lg reading">
+  <h2 class="mb-0 text-center">Line-By-Line</h2>
   
   <div class="grid grid-cols-2 gap-1 mb-1">
     <button class="flex justify-center gap-2 mt-2 button" (click)="readAll()">

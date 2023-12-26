@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class PocketbaseService {
 
-  db = new PocketBase('https://blog.teacherjake.com') as TypedPocketBase;
+  db = new PocketBase('https://www.purplepeoplesreader.com') as TypedPocketBase;
   route = inject(ActivatedRoute);
   router = inject(Router);
 
@@ -46,6 +46,7 @@ export class PocketbaseService {
   }
 
   async fetchUserCreatedLessons(userId: string) {
+    if (!userId) return;
     console.log('fetching results for', userId);
     await this.db.collection('lessons').getFullList({
       filter: `creatorId='${userId}'`
@@ -106,6 +107,24 @@ export class PocketbaseService {
   async updateLinesRead(points: number, id: string, currentLinesRead: number) {
     const newTotal = currentLinesRead + points;
     const record = await this.db.collection('users').update(id, { linesRead: newTotal });
+    return record;
+  }
+
+  async addToPlaylist(id: string, title: string, userId: string, playlist: [{ id: string, title: string, points?: string }] | undefined) {
+    if (!playlist){
+      const newPlaylist = [{ id: id, title: title }];
+      const record = await this.db.collection('users').update(userId, { playlist: newPlaylist });
+      return record;
+    }
+    const newPlaylist = [...playlist, { id: id, title: title }];
+    const record = await this.db.collection('users').update(userId, { playlist: newPlaylist });
+    return record;
+  }
+
+  async removeLessonFromPlaylist(id: string, userId: string, playlist: [{ id: string, title: string, points?: string }] | undefined) {
+    if (!playlist) return;
+    const newPlaylist = playlist.filter((lesson) => lesson.id !== id);
+    const record = await this.db.collection('users').update(userId, { playlist: newPlaylist });
     return record;
   }
 

@@ -24,7 +24,7 @@ export class FormLessonComponent implements OnInit, OnChanges {
 
   itemDetails = this.store.lessons.details;
   tags = TAG_VALUES;
-  creatorID: string = this.store.user.userId();
+  creatorID: string | undefined = this.store.user.userId();
   userIsValid = this.store.user.isValid;
 
   lessonForm = this.fb.group({
@@ -43,7 +43,7 @@ export class FormLessonComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     console.log('on Init called');
-    this.store.user.getUser();
+    this.store.user.checkUser();
     this.loadLesson();
   }
 
@@ -53,7 +53,7 @@ export class FormLessonComponent implements OnInit, OnChanges {
   }
 
   loadLesson() {
-    const creatorID: string = this.store.user.userId();
+    const creatorID: string = this.store.user.userId() || "none";
     const lesson = this.itemDetails();
     this.lessonForm.patchValue({
       id: lesson?.id,

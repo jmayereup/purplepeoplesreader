@@ -1,0 +1,8 @@
+.check-box {
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background: var(--bg1);
+    border: 1px solid #cacece;
+}

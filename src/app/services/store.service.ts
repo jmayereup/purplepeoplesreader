@@ -19,15 +19,25 @@ export class StoreService {
   public route = inject(ActivatedRoute);
 
   user = {
-    getUser: () => this.auth.getUser().then(() => {
-      if (this.auth.authStore.model?.['id']) this.lessons.fetchUserCreatedLessons(this.auth.authStore.model?.['id']);
-    }),
+    checkUser: () => this.auth.checkUser(),
     userId: this.auth.userIdSignal,
     userName: this.auth.userNameSignal,
     userEmail: this.auth.userEmailSignal,
     userLinesRead: this.auth.authStore.model?.['linesRead'],
     userLinesReadTemp: 0,
-    updateLinesRead: (points: number) => this.db.updateLinesRead(points, this.user.userId(), this.user.userLinesRead),
+    userPlaylist: this.auth.userPlaylistSignal,
+    addToPlaylist: (id: string, title: string) => {
+      if (!this.user.userId()) return;
+      this.db.addToPlaylist(id, title, this.user.userId()!, this.user.userPlaylist())
+    },
+    removeLessonFromPlaylist: (id: string) => {
+      if (!this.user.userId()) return;
+      this.db.removeLessonFromPlaylist(id, this.user.userId()!, this.user.userPlaylist())
+    },
+    updateLinesRead: (points: number) => {
+      if (!this.user.userId()) return;
+      this.db.updateLinesRead(points, this.user.userId()!, this.user.userLinesRead)
+    },
     refresh: () => this.auth.db.collection('users').authRefresh(),
     clear: () => this.auth.authStore.clear(),
     loginWithEmail: (email: string, password: string) => this.auth.loginWithEmail(email, password),
@@ -46,7 +56,7 @@ export class StoreService {
     fetchTagResults: (tag: string, lang: string) => this.db.fetchTagResults(tag, lang),
     fetchDetails: (id: string) => this.db.fetchDetails(id),
     fetchUserCreatedLessons: (userId: string) => this.db.fetchUserCreatedLessons(userId),
-    fetchAllResults: () => this.db.fetchAllResults(),
+    fetchAllResults: () => this.db.fetchAllResults()
   }
 
   app = {
@@ -67,7 +77,7 @@ export class StoreService {
       this.user.userLinesReadTemp = this.user.userLinesReadTemp + points;
       if (this.user.userLinesReadTemp >= 10) {
         this.user.userLinesRead = this.user.userLinesRead + this.user.userLinesReadTemp;
-        this.user.userId() == 'undefined' ? this.user.updateLinesRead(this.user.userLinesRead) : console.log('no user id');
+        !this.user.userId() ? this.user.updateLinesRead(this.user.userLinesRead) : console.log('no user id');
         this.user.userLinesReadTemp = 0;
       }
     }),
@@ -87,7 +97,8 @@ export class StoreService {
       if (this.app.tag() != tagParam || this.app.lang() != langParam) {
         this.app.tag.set(tagParam);
         this.app.lang.set(langParam);
-        if (tagParam == 'user') return this.lessons.fetchUserCreatedLessons(this.user.userId());
+        if (tagParam == 'user' && this.user.userId()) return this.lessons.fetchUserCreatedLessons(this.user.userId()!);
+        if (!tagParam || !langParam) return console.log('no tag or lang');
         return this.lessons.fetchTagResults(this.app.tag(), this.app.lang());
       } else return console.log('no lesson found');
     });

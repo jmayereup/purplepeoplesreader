@@ -15,7 +15,7 @@ export class PlayButtonComponent {
   @Input() speed: number = .9;
   @Input() points: number = 1;
 
-  store = inject(StoreService); 
+  store = inject(StoreService);
   currentAudio: HTMLAudioElement | undefined = undefined;
 
 
@@ -32,7 +32,7 @@ export class PlayButtonComponent {
     if (typeof this.textArray === 'string' && this.textArray.length > 0) {
       if (this.textArray.endsWith('.mp3')) this.playAudio(this.textArray);
       else
-      this.store.tts.readUtterance(this.textArray, this.points);
+        this.store.tts.readUtterance(this.textArray, this.points);
       return;
     }
     if (t < this.textArray.length && this.textArray.length > 0) {
@@ -57,6 +57,26 @@ export class PlayButtonComponent {
     audio.onended = () => {
       this.currentAudio = undefined;
     }
+  }
+
+  readById(id: string | string[]) {
+    if (typeof id === 'string') {
+      this.store.lessons.fetchDetails(id).then(() => {
+        this.textArray = this.store.lessons.details()?.audioUrl || this.store.lessons.details()?.content || '';
+        this.readArray();
+      });
+    }
+    else {
+      const lessonArray = [''];
+      id.forEach((id) => {
+        this.store.lessons.fetchDetails(id).then(() => {
+          lessonArray.push(this.store.lessons.details()?.audioUrl || this.store.lessons.details()?.content || '');
+        });
+      });
+      this.textArray = lessonArray;
+      this.readArray();
+    }
+
   }
 
 }
