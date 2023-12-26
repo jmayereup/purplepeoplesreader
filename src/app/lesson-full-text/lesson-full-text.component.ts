@@ -58,7 +58,7 @@ export class LessonDetailsComponent {
       const points = Math.ceil((myText.textContent?.length || 100) / 100);
       this.textOrUrl = this.itemDetails()?.audioUrl || myText.textContent || 'none';
       this.playButton.readArray([this.textOrUrl]).then(() => {
-        this.store.user.updateLinesRead(points);
+        // this.store.user.updateLinesRead(points);
       });
     } catch (error) {
       console.error(error);

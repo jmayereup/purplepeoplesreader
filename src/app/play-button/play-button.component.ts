@@ -32,15 +32,6 @@ export class PlayButtonComponent {
 
   async playTextArray(data: string[], t = 0) {
     this.audioPlaying.set(true);
-    // if (typeof this.textArray === 'string' && this.textArray.length > 0) {
-    //   if (this.textArray.endsWith('.mp3')) {
-    //     this.playAudio(`https://www.purplepeoplesreader.com/${this.textArray}`);
-    //     console.log('reading', this.textArray);
-    //   }
-    //   else
-    //     this.store.tts.readUtterance(this.textArray, this.points);
-    //   return;
-    // }
     if (t < data.length) {
       if (data[t].endsWith('.mp3')) {
         console.log('reading', data[t]);
@@ -84,11 +75,6 @@ export class PlayButtonComponent {
       const fetchedRecord = await this.store.lessons.fetchDetails(record);
       lessonArray.push(fetchedRecord?.audioUrl || fetchedRecord?.content || '');
     }
-    // id.forEach((record) => {
-    //   this.store.lessons.fetchDetails(record).then(() => {
-    //     lessonArray.push(this.store.lessons.details()?.audioUrl || this.store.lessons.details()?.content || '');
-    //   });
-    // });
     console.log('reading', lessonArray);
     this.readArray([...lessonArray]);
   }
