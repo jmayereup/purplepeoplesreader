@@ -3,7 +3,7 @@ import { PocketbaseService } from './pocketbase.service';
 import { AuthService } from './auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { distinctUntilChanged, shareReplay } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SpeakService } from './speak.service';
 import { LessonsRecord } from '../shared/pocketbase-types';
 import { assignLanguageCode } from '../shared/utils';
@@ -17,13 +17,21 @@ export class StoreService {
   private auth = inject(AuthService);
   private speak = inject(SpeakService);
   public route = inject(ActivatedRoute);
+  public router = inject(Router);
 
   private tagParam: string = "A1";
   private langParam: string = "English";
-  // private resetParam: string = "false";
+  private resetParam: string = "false";  //used to clear the detailsSignal to allow creatin a new lesson
 
   user = {
     checkUser: () => this.auth.checkUser(),
+    clearUser: () => {
+      this.user.userId.set(undefined);
+      this.user.userName.set(undefined);
+      this.user.userEmail.set(undefined);
+      this.user.userLinesRead.set(undefined);
+      this.user.userPlaylist.set(undefined);
+    },
     userId: this.auth.userIdSignal,
     userName: this.auth.userNameSignal,
     userEmail: this.auth.userEmailSignal,
@@ -96,10 +104,17 @@ export class StoreService {
     this.route.queryParamMap.pipe(takeUntilDestroyed(), distinctUntilChanged(), shareReplay(1)).subscribe(params => {
       this.tagParam = params.get('tag') || 'A1';
       this.langParam = params.get('lang') || 'English';
-      // this.resetParam = (params.get('reset') || 'false');
-      // if (this.resetParam == 'true') {
-      //   this.lessons.details.set(null);
-      // }
+      this.resetParam = (params.get('reset') || 'false');
+      if (this.resetParam == 'true') {
+        this.lessons.details.set(null);
+        this.router.navigate([], {
+          queryParams: {
+            resetParam: null
+          },
+          queryParamsHandling: 'merge'
+        });
+      
+      }
       this.app.tag.set(this.tagParam);
       this.app.lang.set(this.langParam);
       console.log('fetching tag results', this.tagParam, this.langParam, this.user.userId());

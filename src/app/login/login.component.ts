@@ -35,7 +35,7 @@ export class LoginComponent {
   }
   logout() {
     this.store.user.clear();
-    // this.store.user.checkUser();
+    this.store.user.clearUser();
   }
 
 
