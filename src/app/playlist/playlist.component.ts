@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { StoreService } from '../services/store.service';
 import { PlayButtonComponent } from "../play-button/play-button.component";
 import { RouterLink } from '@angular/router';
+import { SpinnerComponent } from "../spinner/spinner.component";
 
 @Component({
     selector: 'app-playlist',
     standalone: true,
     templateUrl: './playlist.component.html',
     styleUrl: './playlist.component.css',
-    imports: [CommonModule, PlayButtonComponent, RouterLink]
+    imports: [CommonModule, PlayButtonComponent, RouterLink, SpinnerComponent]
 })
 export class PlaylistComponent implements OnInit {
 
@@ -17,6 +18,7 @@ export class PlaylistComponent implements OnInit {
 
   playlist = this.store.user.userPlaylist;
   textOrUrlArray: string[] | undefined = undefined;
+  loading = this.store.lessons.loading;
 
   ngOnInit() {
     this.store.user.checkUser();
@@ -33,9 +35,17 @@ export class PlaylistComponent implements OnInit {
     }
   }
 
-  removeLesson(lessonId: string) {
-    this.store.user.removeLessonFromPlaylist(lessonId);
-    this.store.user.checkUser();
+  async removeLesson(lessonId: string) {
+    try {
+      this.loading.set(true);
+      this.store.user.removeLessonFromPlaylist(lessonId);
+      await this.store.user.checkUser();
+    } catch (error) {
+      // Handle error here
+      console.error(error);
+    } finally {
+      this.loading.set(false);
+    }
   }
 
 

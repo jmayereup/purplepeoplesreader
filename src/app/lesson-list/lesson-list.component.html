@@ -4,24 +4,34 @@
     <app-tag-chooser class=""></app-tag-chooser>
     }
     <div class="grid grid-cols-1 gap-2 px-2 my-2 sm:grid-cols-2">
-        @if (resultList()) {
+        @if (resultList() && resultList()!.length > 0) {
         @for (item of resultList(); track item.id) {
-        <div class="flex flex-row items-center justify-between gap-2 p-2 rounded-md shadow-md flex-nowrap bg-lbl-purple-200"
-            [routerLink]="['/', item.language, item.id]">
-            <img class="object-cover w-12 h-12 rounded-md" [src]="'https://www.purplepeoplesreader.com/' + item.imageUrl || defaultImage" alt="">
-            <div class="w-60">
-                <h2 class="p-0 m-0 text-sm font-semibold text-gray-800 dark:text-white">
-                    {{item.title.slice(0,30)}}</h2>
-                <p class="text-sm ">{{item.content.slice(0,30)}}</p>
-            </div>
+        <div class="flex flex-row items-center justify-between gap-2 p-2 rounded-md shadow-md flex-nowrap bg-lbl-purple-200">
+                <img class="object-cover w-12 h-12 rounded-md"
+                    [src]="'https://www.purplepeoplesreader.com/' + item.imageUrl || defaultImage" alt=""
+                    [routerLink]="['/', item.language, item.id]">
+                <div class="w-60" [routerLink]="['/', item.language, item.id]">
+                    <h2 class="p-0 m-0 text-sm font-semibold text-gray-800 dark:text-white">
+                        {{item.title.slice(0,30)}}</h2>
+                    <p class="text-sm ">{{item.content.slice(0,30)}}</p>
+                </div>
             @if ( item.creatorId == store.user.userId()) {
             <button (click)="deleteLesson(item)"
                 class="w-5 h-5 p-0 text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none clear"><img
                     src="../../assets/icons/trash.svg" alt="trash icon" class="w-5 h-5" />
             </button>
-        }
+            }
         </div>
         }
+        } @else {
+        <div class="flex flex-col items-center justify-center w-full h-64">
+            <img src="../../assets/icons/no.svg" alt="empty icon" class="w-32 h-32" />
+            <p class="text-lg font-semibold text-gray-800 dark:text-white">No lessons found</p>
+        </div>
+        <div class="flex-col items-center justify-center w-full h-64 hidden sm:flex">
+            <img src="../../assets/icons/no.svg" alt="empty icon" class="w-32 h-32" />
+            <p class="text-lg font-semibold text-gray-800 dark:text-white">No lessons found</p>
+        </div>
         }
     </div>
     <app-lesson-level-chooser></app-lesson-level-chooser>

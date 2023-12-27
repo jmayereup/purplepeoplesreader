@@ -23,27 +23,42 @@ export class LessonListComponent implements OnChanges, OnInit {
   
   itemDetails = this.store.lessons.details;
   resultList = this.store.lessons.results;
+  loading = this.store.lessons.loading;
   
   defaultImage = "../../assets/icons/book.svg";
 
   constructor() {  }
 
   ngOnInit() {
-    this.store.user.checkUser().then(() => {
-      if (this.type == "user") this.store.lessons.fetchUserCreatedLessons(this.store.user.userId()!);
-      else this.store.lessons.fetchTagResults();
-    });
+    this.store.user.checkUser().then(() => this.loadLessons());
   }
   
   ngOnChanges() {
         if (this.type == "user") this.resultList = this.store.lessons.userResults;
   }
 
-deleteLesson(item: LessonsResponse) {
+loadLessons() {
+    if (this.type == "user") this.store.lessons.fetchUserCreatedLessons(this.store.user.userId()!);
+    else this.store.lessons.fetchTagResults();
+}
+
+
+async deleteLesson(item: LessonsResponse) {
   let confirmed = confirm(`Are you sure you want to delete lesson: \n ${item.title}`)
-  if (confirmed) { this.store.lessons.delete(item.id)}
-    else return
+  if (confirmed) { 
+    try {
+      this.loading.set(true);
+      await this.store.lessons.delete(item.id);
+      await this.loadLessons();
+      this.loading.set(false);
+    } catch (error) {
+      console.error("Error deleting lesson:", error);
+      this.loading.set(false);
+    }
+  } else {
+    return;
   }
+}
 
 }
 

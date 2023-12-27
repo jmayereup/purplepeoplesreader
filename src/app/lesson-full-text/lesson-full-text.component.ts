@@ -4,7 +4,7 @@ import { MarkdownPipe } from 'ngx-markdown';
 import { StoreService } from '../services/store.service';
 import { ChangeSettingsComponent } from "../change-settings/change-settings.component";
 import { PlayButtonComponent } from '../play-button/play-button.component';
-import e from 'express';
+import { LessonsLanguageOptions } from '../shared/pocketbase-types';
 
 @Component({
   selector: 'app-lesson-full-text',
@@ -66,6 +66,14 @@ export class LessonDetailsComponent {
   }
 
   addToPlaylist() {
-    this.store.user.addToPlaylist(this.itemDetails()?.id || 'none', this.itemDetails()?.title || 'none', this.itemDetails()?.language || 'English');
+    try {
+      const itemId = this.itemDetails()?.id || 'none';
+      const itemTitle = this.itemDetails()?.title || 'none';
+      const itemLanguage = this.itemDetails()?.language || LessonsLanguageOptions.English; // Replace Language.English with the default language enum value
+      console.log(itemId, itemTitle, itemLanguage);
+      this.store.user.addToPlaylist(itemId, itemTitle, itemLanguage);
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core';
 import PocketBase from 'pocketbase';
-import { TypedPocketBase, LessonsResponse, LessonsRecord, Playlist } from '../shared/pocketbase-types';
+import { TypedPocketBase, LessonsResponse, LessonsRecord, Playlist, LessonsLanguageOptions } from '../shared/pocketbase-types';
 import { ActivatedRoute, Router } from '@angular/router';
 
 
@@ -108,13 +108,14 @@ export class PocketbaseService {
     return record;
   }
 
-  async addToPlaylist(id: string, title: string, userId: string, language: string, playlist: Playlist | undefined) {
+  async addToPlaylist(id: string, title: string, language: LessonsLanguageOptions, userId: string, playlist: Playlist | undefined) {
     if (!playlist){
       const newPlaylist = [{ id: id, title: title, language: language}];
+      console.table(newPlaylist);
       const record = await this.db.collection('users').update(userId, { playlist: newPlaylist });
       return record;
     }
-    const newPlaylist = [...playlist, { id: id, title: title }];
+    const newPlaylist = [...playlist, { id: id, title: title, language: language }];
     const record = await this.db.collection('users').update(userId, { playlist: newPlaylist });
     return record;
   }

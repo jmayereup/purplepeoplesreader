@@ -5,7 +5,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { distinctUntilChanged, shareReplay } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpeakService } from './speak.service';
-import { LessonsRecord } from '../shared/pocketbase-types';
+import { LessonsLanguageOptions, LessonsRecord } from '../shared/pocketbase-types';
 import { assignLanguageCode } from '../shared/utils';
 
 @Injectable({
@@ -38,17 +38,19 @@ export class StoreService {
     userLinesRead: this.auth.userLinesReadSignal,
     userLinesReadTemp: 0,
     userPlaylist: this.auth.userPlaylistSignal,
-    addToPlaylist: (id: string, title: string, language: string) => {
+    addToPlaylist: (id: string, title: string, language: LessonsLanguageOptions) => {
       if (!this.user.userId()) return;
-      this.db.addToPlaylist(id, title, this.user.userId()!, language, this.user.userPlaylist())
+      this.db.addToPlaylist(id, title, language, this.user.userId() || 'none', this.user.userPlaylist());
     },
     removeLessonFromPlaylist: (id: string) => {
       if (!this.user.userId()) return;
       this.db.removeLessonFromPlaylist(id, this.user.userId()!, this.user.userPlaylist())
+      .then((d) => this.user.userPlaylist.set(d?.playlist));
+
     },
     updateLinesRead: (points: number) => {
       if (!this.user.userId()) return;
-      this.db.updateLinesRead(points, this.user.userId()!, this.user.userLinesRead() || 1 )
+      this.db.updateLinesRead(points, this.user.userId()!, this.user.userLinesRead() || 1 );
       if (!this.user.userLinesRead()) return;
       this.user.userLinesRead.set(this.user.userLinesRead()! + points);
     },
@@ -70,7 +72,8 @@ export class StoreService {
     fetchTagResults: (tag: string = this.tagParam, lang: string = this.langParam) => this.db.fetchTagResults(tag, lang),
     fetchDetails: (id: string) => this.db.fetchDetails(id).then((data) => data),
     fetchUserCreatedLessons: (userId: string) => this.db.fetchUserCreatedLessons(userId),
-    fetchAllResults: () => this.db.fetchAllResults()
+    fetchAllResults: () => this.db.fetchAllResults(),
+    loading: signal<boolean>(false),
   }
 
   app = {
