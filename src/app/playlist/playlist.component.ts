@@ -18,11 +18,6 @@ export class PlaylistComponent implements OnInit {
   playlist = this.store.user.userPlaylist;
   textOrUrlArray: string[] | undefined = undefined;
 
-  constructor() { 
-    // this.store.user.checkUser();
-
-  }
-
   ngOnInit() {
     this.store.user.checkUser();
   }

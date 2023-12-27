@@ -14,10 +14,12 @@
                     {{item.title.slice(0,30)}}</h2>
                 <p class="text-sm ">{{item.content.slice(0,30)}}</p>
             </div>
+            @if ( item.creatorId == store.user.userId()) {
             <button (click)="deleteLesson(item)"
                 class="w-5 h-5 p-0 text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none clear"><img
                     src="../../assets/icons/trash.svg" alt="trash icon" class="w-5 h-5" />
             </button>
+        }
         </div>
         }
         }

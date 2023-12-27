@@ -16,6 +16,11 @@ export class NavBarComponent {
 
   store = inject(StoreService);
 
+  tag = this.store.app.tag;
+  lang = this.store.app.lang;
+
   isOpen=false;
+
+
 
 }

@@ -1,4 +1,4 @@
-import { Component, Input, inject, OnChanges } from '@angular/core';
+import { Component, Input, inject, OnChanges, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { TagChooserComponent } from "../tag-chooser/tag-chooser.component";
@@ -14,7 +14,7 @@ import { LessonLevelChooserComponent } from "../lesson-level-chooser/lesson-leve
     styleUrl: './lesson-list.component.css',
     imports: [CommonModule, RouterLink, TagChooserComponent, LangChooserComponent, LessonLevelChooserComponent]
 })
-export class LessonListComponent implements OnChanges {
+export class LessonListComponent implements OnChanges, OnInit {
 
   store = inject(StoreService);
   router = inject(Router);
@@ -27,6 +27,13 @@ export class LessonListComponent implements OnChanges {
   defaultImage = "../../assets/icons/book.svg";
 
   constructor() {  }
+
+  ngOnInit() {
+    this.store.user.checkUser().then(() => {
+      if (this.type == "user") this.store.lessons.fetchUserCreatedLessons(this.store.user.userId()!);
+      else this.store.lessons.fetchTagResults();
+    });
+  }
   
   ngOnChanges() {
         if (this.type == "user") this.resultList = this.store.lessons.userResults;

@@ -18,6 +18,10 @@ export class StoreService {
   private speak = inject(SpeakService);
   public route = inject(ActivatedRoute);
 
+  private tagParam: string = "A1";
+  private langParam: string = "English";
+  // private resetParam: string = "false";
+
   user = {
     checkUser: () => this.auth.checkUser(),
     userId: this.auth.userIdSignal,
@@ -52,8 +56,8 @@ export class StoreService {
     details: this.db.getItemDetailsState(),
     create: (data: LessonsRecord) => this.db.createItem(data),
     update: (id: string, data: LessonsRecord) => this.db.updateItem(id, data).then(() => this.lessons.fetchTagResults((this.app.tag()), (data.language?.valueOf() || this.app.lang()))),
-    delete: (id: string) => this.db.deleteItem(id).then(() => this.lessons.fetchTagResults(this.app.tag(), this.app.lang())),
-    fetchTagResults: (tag: string, lang: string) => this.db.fetchTagResults(tag, lang),
+    delete: (id: string) => this.db.deleteItem(id).then(() => this.lessons.fetchTagResults()),
+    fetchTagResults: (tag: string = this.tagParam, lang: string = this.langParam) => this.db.fetchTagResults(tag, lang),
     fetchDetails: (id: string) => this.db.fetchDetails(id).then((data) => data),
     fetchUserCreatedLessons: (userId: string) => this.db.fetchUserCreatedLessons(userId),
     fetchAllResults: () => this.db.fetchAllResults()
@@ -81,7 +85,7 @@ export class StoreService {
         this.user.userLinesReadTemp = 0;
       }
     }),
-    audioPlaying : signal<boolean>(false),
+    audioPlaying: signal<boolean>(false),
     pause: () => this.speak.pauseVoice
   }
 
@@ -89,19 +93,18 @@ export class StoreService {
   constructor() {
 
     this.route.queryParamMap.pipe(takeUntilDestroyed(), distinctUntilChanged(), shareReplay(1)).subscribe(params => {
-      const tagParam = (params.get('tag') || 'A1');
-      const langParam = (params.get('lang') || 'English');
-      const resetParam = (params.get('reset') || 'false');
-      if (resetParam == 'true') {
-        this.lessons.details.set(null);
-      }
-      if (this.app.tag() != tagParam || this.app.lang() != langParam) {
-        this.app.tag.set(tagParam);
-        this.app.lang.set(langParam);
-        if (tagParam == 'user' && this.user.userId()) return this.lessons.fetchUserCreatedLessons(this.user.userId()!);
-        if (!tagParam || !langParam) return console.log('no tag or lang');
-        return this.lessons.fetchTagResults(this.app.tag(), this.app.lang());
-      } else return console.log('no lesson found');
+      this.tagParam = params.get('tag') || 'A1';
+      this.langParam = params.get('lang') || 'English';
+      // this.resetParam = (params.get('reset') || 'false');
+      // if (this.resetParam == 'true') {
+      //   this.lessons.details.set(null);
+      // }
+      this.app.tag.set(this.tagParam);
+      this.app.lang.set(this.langParam);
+      console.log('fetching tag results', this.tagParam, this.langParam, this.user.userId());
+      if ((this.tagParam == 'user') && this.user.userId()) return this.lessons.fetchUserCreatedLessons(this.user.userId()!);
+      // if (!this.tagParam || !this.langParam) return console.log('no tag or lang');
+      return this.lessons.fetchTagResults(this.app.tag(), this.app.lang());
     });
 
   }
