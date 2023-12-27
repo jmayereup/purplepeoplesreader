@@ -1,10 +1,6 @@
 <section [ngStyle]="{'font-size': fSize()}">
   <div class="flex flex-col gap-2 p-2">
-    <div class="flex flex-row justify-between rounded-lg bg-slate-300">
-      <details class="m-1 text-black bg-transparent">
-        <summary>Settings</summary>
-        <app-change-settings></app-change-settings>
-      </details>
+    <div class="flex flex-row justify-end -my-2">
       <button class="flex justify-center mr-1 clear focus:bg-transparent" (click)="toggleShowEdit()" type="button">
         <img src="../../assets/icons/edit.svg" alt="editbutton" class="w-5 h-5">Edit</button>
     </div>
