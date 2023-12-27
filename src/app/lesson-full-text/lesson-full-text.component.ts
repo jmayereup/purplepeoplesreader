@@ -20,6 +20,7 @@ export class LessonDetailsComponent {
   showTranslation = true;
 
   itemDetails = this.store.lessons.details;
+  audioPlaying = this.store.tts.audioPlaying;
   coverImage = `https://www.purplepeoplesreader.com/${this.store.lessons.details()?.imageUrl}`;
 
   textOrUrl = '';
@@ -29,7 +30,7 @@ export class LessonDetailsComponent {
   constructor() {
     effect(() => {
       this.itemDetails();
-      this.textOrUrl = this.itemDetails()?.audioUrl || '';
+      this.textOrUrl = this.itemDetails()?.audioUrl || 'none';
       this.coverImage = `https://www.purplepeoplesreader.com/${this.store.lessons.details()?.imageUrl}`;
     });
   }
@@ -48,16 +49,23 @@ export class LessonDetailsComponent {
   }
 
 
-  readAll() {
-    const myText = this.document.getElementById("full-text");
-    const points = Math.ceil((myText?.textContent?.length || 100) / 100);
-    this.textOrUrl = this.itemDetails()?.audioUrl || myText?.textContent || 'none';
-    this.playButton.readArray().then(() => {
-      this.store.user.updateLinesRead(points);
-    });
+  async readAll() {
+    try {
+      const myText = this.document.getElementById("full-text");
+      if (!myText) {
+        throw new Error("Element with id 'full-text' not found");
+      }
+      const points = Math.ceil((myText.textContent?.length || 100) / 100);
+      this.textOrUrl = this.itemDetails()?.audioUrl || myText.textContent || 'none';
+      this.playButton.readArray([this.textOrUrl]).then(() => {
+        // this.store.user.updateLinesRead(points);
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   addToPlaylist() {
-    this.store.user.addToPlaylist(this.itemDetails()?.id || 'none', this.itemDetails()?.title || 'none');
+    this.store.user.addToPlaylist(this.itemDetails()?.id || 'none', this.itemDetails()?.title || 'none', this.itemDetails()?.language || 'English');
   }
 }

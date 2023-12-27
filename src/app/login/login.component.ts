@@ -22,18 +22,18 @@ export class LoginComponent {
 
   loginWithEmail() {
     this.store.user.loginWithEmail(this.loginData.email, this.loginData.password).then(() => {
-      this.store.user.checkUser();
+      // this.store.user.checkUser();
     });
   }
 
   loginWithGoogle() {
     this.store.user.loginWithGoogle().then(() => {
-      this.store.user.checkUser();
+      // this.store.user.checkUser();
     });
   }
   logout() {
     this.store.user.clear();
-    this.store.user.checkUser();
+    // this.store.user.checkUser();
   }
 
 

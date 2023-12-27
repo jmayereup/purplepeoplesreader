@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { PocketbaseService } from './pocketbase.service';
-import { UsersResponse } from '../shared/pocketbase-types';
-import { RecordAuthResponse, RecordSubscription } from 'pocketbase';
+import { Playlist, UsersResponse } from '../shared/pocketbase-types';
+import { RecordAuthResponse } from 'pocketbase';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class AuthService {
   userIdSignal = signal<string | undefined>(undefined);
   userNameSignal = signal<string | undefined>(undefined);
   userEmailSignal = signal<string | undefined>(undefined);
-  userPlaylistSignal = signal<[{id: string, title: string, points?: string}] | undefined>(undefined);
+  userPlaylistSignal = signal<Playlist | undefined>(undefined);
 
   constructor() {
     this.checkUser();

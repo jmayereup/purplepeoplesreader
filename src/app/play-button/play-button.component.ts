@@ -11,72 +11,72 @@ import { StoreService } from '../services/store.service';
 })
 export class PlayButtonComponent {
 
-  @Input() textArray: string[] | string = '';
+  @Input() textArray: string[] = [];
   @Input() speed: number = .9;
   @Input() points: number = 1;
 
   store = inject(StoreService);
   currentAudio: HTMLAudioElement | undefined = undefined;
+  audioPlaying = this.store.tts.audioPlaying;
 
 
-  async readArray(t = 0, f = 0) {
+  async readArray(data: string[] , t = 0, f = 0) {
     if (this.currentAudio) {
       this.currentAudio.pause();
       this.currentAudio = undefined;
+      this.audioPlaying.set(false);
       return;
     }
-    this.playTextArray(t);
+    this.playTextArray(data, t);
   }
 
-  async playTextArray(t = 0) {
-    if (typeof this.textArray === 'string' && this.textArray.length > 0) {
-      if (this.textArray.endsWith('.mp3')) this.playAudio(this.textArray);
-      else
-        this.store.tts.readUtterance(this.textArray, this.points);
-      return;
-    }
-    if (t < this.textArray.length && this.textArray.length > 0) {
-      if (this.textArray[t].endsWith('.mp3')) {
-        await this.playAudio(this.textArray[t]).then(() => {
-          this.playTextArray(t + 1);
+  async playTextArray(data: string[], t = 0) {
+    this.audioPlaying.set(true);
+    if (t < data.length) {
+      if (data[t].endsWith('.mp3')) {
+        console.log('reading', data[t]);
+        this.playAudio(`https://www.purplepeoplesreader.com/${data[t]}`).then(() => {
+        this.playTextArray(data, t + 1);
           return;
         });
         return;
       }
-      this.store.tts.readUtterance(this.textArray[t], this.points).then(() => {
-        this.playTextArray(t + 1);
+      this.store.tts.readUtterance(data[t], this.points).then(() => {
+        this.playTextArray(data, t + 1);
+        this.audioPlaying.set(false);
         return;
       });
     }
   }
 
   async playAudio(path: string) {
-    const audio = new Audio(path);
-    this.currentAudio = audio;
-    audio.play();
-    audio.onended = () => {
-      this.currentAudio = undefined;
-    }
+    return new Promise((resolve, reject) => {
+      const audio = new Audio(path);
+      this.currentAudio = audio;
+      audio.play();
+      audio.onended = () => {
+        this.currentAudio = undefined;
+        this.audioPlaying.set(false);
+        resolve(true);
+      };
+      audio.onerror = (error) => {
+        this.currentAudio = undefined;
+        this.audioPlaying.set(false);
+        reject(error);
+      };
+    });
   }
+  
 
-  readById(id: string | string[]) {
-    if (typeof id === 'string') {
-      this.store.lessons.fetchDetails(id).then(() => {
-        this.textArray = this.store.lessons.details()?.audioUrl || this.store.lessons.details()?.content || '';
-        this.readArray();
-      });
+  async readById(id: string[]) {
+    console.log('reading  ids', id);
+    const lessonArray: string[] = [];
+    for (const record of id) {
+      const fetchedRecord = await this.store.lessons.fetchDetails(record);
+      lessonArray.push(fetchedRecord?.audioUrl || fetchedRecord?.content || '');
     }
-    else {
-      const lessonArray = [''];
-      id.forEach((id) => {
-        this.store.lessons.fetchDetails(id).then(() => {
-          lessonArray.push(this.store.lessons.details()?.audioUrl || this.store.lessons.details()?.content || '');
-        });
-      });
-      this.textArray = lessonArray;
-      this.readArray();
-    }
-
+    console.log('reading', lessonArray);
+    this.readArray([...lessonArray]);
   }
 
 }

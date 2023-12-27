@@ -26,9 +26,9 @@ export class StoreService {
     userLinesRead: this.auth.authStore.model?.['linesRead'],
     userLinesReadTemp: 0,
     userPlaylist: this.auth.userPlaylistSignal,
-    addToPlaylist: (id: string, title: string) => {
+    addToPlaylist: (id: string, title: string, language: string) => {
       if (!this.user.userId()) return;
-      this.db.addToPlaylist(id, title, this.user.userId()!, this.user.userPlaylist())
+      this.db.addToPlaylist(id, title, this.user.userId()!, language, this.user.userPlaylist())
     },
     removeLessonFromPlaylist: (id: string) => {
       if (!this.user.userId()) return;
@@ -54,7 +54,7 @@ export class StoreService {
     update: (id: string, data: LessonsRecord) => this.db.updateItem(id, data).then(() => this.lessons.fetchTagResults((this.app.tag()), (data.language?.valueOf() || this.app.lang()))),
     delete: (id: string) => this.db.deleteItem(id).then(() => this.lessons.fetchTagResults(this.app.tag(), this.app.lang())),
     fetchTagResults: (tag: string, lang: string) => this.db.fetchTagResults(tag, lang),
-    fetchDetails: (id: string) => this.db.fetchDetails(id),
+    fetchDetails: (id: string) => this.db.fetchDetails(id).then((data) => data),
     fetchUserCreatedLessons: (userId: string) => this.db.fetchUserCreatedLessons(userId),
     fetchAllResults: () => this.db.fetchAllResults()
   }
@@ -65,7 +65,7 @@ export class StoreService {
     selectedRate: signal<number | null>(null),
     tag: signal<string>(""),
     lang: signal<string>(""),
-    fontSize: signal<string>('large')
+    fontSize: signal<string>('large'),
   }
 
   tts = {
@@ -81,6 +81,7 @@ export class StoreService {
         this.user.userLinesReadTemp = 0;
       }
     }),
+    audioPlaying : signal<boolean>(false),
     pause: () => this.speak.pauseVoice
   }
 
