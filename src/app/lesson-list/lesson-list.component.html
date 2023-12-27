@@ -9,10 +9,10 @@
         <div class="flex flex-row items-center justify-between gap-2 p-2 rounded-md shadow-md flex-nowrap bg-lbl-purple-200"
             [routerLink]="['/', item.language, item.id]">
             <img class="object-cover w-12 h-12 rounded-md" [src]="'https://www.purplepeoplesreader.com/' + item.imageUrl || defaultImage" alt="">
-            <div class="">
+            <div class="w-60">
                 <h2 class="p-0 m-0 text-sm font-semibold text-gray-800 dark:text-white">
-                    {{item.title.slice(0,36)}}</h2>
-                <p class="text-sm ">{{item.content.slice(0,36)}}</p>
+                    {{item.title.slice(0,30)}}</h2>
+                <p class="text-sm ">{{item.content.slice(0,30)}}</p>
             </div>
             <button (click)="deleteLesson(item)"
                 class="w-5 h-5 p-0 text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none clear"><img

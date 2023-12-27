@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreService } from '../services/store.service';
 import { PlayButtonComponent } from "../play-button/play-button.component";
@@ -10,7 +10,7 @@ import { PlayButtonComponent } from "../play-button/play-button.component";
     styleUrl: './playlist.component.css',
     imports: [CommonModule, PlayButtonComponent]
 })
-export class PlaylistComponent {
+export class PlaylistComponent implements OnInit {
 
   store = inject(StoreService);
 
@@ -18,8 +18,12 @@ export class PlaylistComponent {
   textOrUrlArray: string[] = [''];
 
   constructor() { 
-    this.store.user.checkUser();
+    // this.store.user.checkUser();
 
+  }
+
+  ngOnInit() {
+    this.store.user.checkUser();
   }
 
   toggleLesson(lessonId: string, event: Event) {
@@ -33,6 +37,7 @@ export class PlaylistComponent {
 
   removeLesson(lessonId: string) {
     this.store.user.removeLessonFromPlaylist(lessonId);
+    this.store.user.checkUser();
   }
 
 

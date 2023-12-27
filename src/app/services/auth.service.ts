@@ -35,17 +35,13 @@ export class AuthService {
   async checkUser() {
     const authData = await this.db.collection('users').authRefresh();
     this.getUser(authData);
-    console.log('authData', authData);
   }
 
   async getUser(authData: RecordAuthResponse<UsersResponse>) {
-    console.log('authData', authData);
     const userName = authData.record.name;
     const userId = authData.record.id;
     const userEmail = authData.record.email;
     const userPlaylist = authData.record.playlist;
-    console.log('username', userName);
-    console.log('playlist', userPlaylist);
     this.userNameSignal.set(userName);
     this.userIdSignal.set(userId);
     this.userEmailSignal.set(userEmail);
