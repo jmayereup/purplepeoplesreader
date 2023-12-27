@@ -17,6 +17,7 @@ export class AuthService {
   userNameSignal = signal<string | undefined>(undefined);
   userEmailSignal = signal<string | undefined>(undefined);
   userPlaylistSignal = signal<Playlist | undefined>(undefined);
+  userLinesReadSignal = signal<number | undefined>(undefined);
 
   constructor() {
     this.checkUser();
@@ -42,10 +43,12 @@ export class AuthService {
     const userId = authData.record.id;
     const userEmail = authData.record.email;
     const userPlaylist = authData.record.playlist;
+    const userLinesRead = authData.record.linesRead;
     this.userNameSignal.set(userName);
     this.userIdSignal.set(userId);
     this.userEmailSignal.set(userEmail);
     this.userPlaylistSignal.set(userPlaylist);
+    this.userLinesReadSignal.set(userLinesRead);
     return;
   }
 

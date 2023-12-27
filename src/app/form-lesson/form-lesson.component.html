@@ -59,10 +59,13 @@
             <app-form-files (imagePath)="setImagePath($event)" (audioPath)="setAudioPath($event)"></app-form-files>
         </div>
     </form>
-    <div class="flex justify-end mt-6">
+    <div class="flex items-center justify-end mt-6">
         <button type="button"
         class="px-4 py-2 font-bold rounded button disabled:bg-red-200 hover:bg-blue-500 focus:bg-blue-500"
         (click)="onSubmit()" [disabled]="!lessonForm.valid">Save</button>
+        @if (saved) {
+            <span class="text-green-700">Saved!</span>
+        }
     </div>
 </section>
 } @else {

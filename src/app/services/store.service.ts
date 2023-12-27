@@ -27,7 +27,7 @@ export class StoreService {
     userId: this.auth.userIdSignal,
     userName: this.auth.userNameSignal,
     userEmail: this.auth.userEmailSignal,
-    userLinesRead: this.auth.authStore.model?.['linesRead'],
+    userLinesRead: this.auth.userLinesReadSignal,
     userLinesReadTemp: 0,
     userPlaylist: this.auth.userPlaylistSignal,
     addToPlaylist: (id: string, title: string, language: string) => {
@@ -40,7 +40,9 @@ export class StoreService {
     },
     updateLinesRead: (points: number) => {
       if (!this.user.userId()) return;
-      this.db.updateLinesRead(points, this.user.userId()!, this.user.userLinesRead)
+      this.db.updateLinesRead(points, this.user.userId()!, this.user.userLinesRead() || 1 )
+      if (!this.user.userLinesRead()) return;
+      this.user.userLinesRead.set(this.user.userLinesRead()! + points);
     },
     refresh: () => this.auth.db.collection('users').authRefresh(),
     clear: () => this.auth.authStore.clear(),
@@ -77,11 +79,10 @@ export class StoreService {
       this.app.selectedLanguage() || assignLanguageCode(this.lessons.details()?.language || 'English'),
       this.app.selectedRate() || rate,
     ).then((points: number) => {
-      console.log(this.user.userLinesRead, points);
+      console.log(this.user.userLinesRead(), points);
       this.user.userLinesReadTemp = this.user.userLinesReadTemp + points;
       if (this.user.userLinesReadTemp >= 10) {
-        this.user.userLinesRead = this.user.userLinesRead + this.user.userLinesReadTemp;
-        !this.user.userId() ? this.user.updateLinesRead(this.user.userLinesRead) : console.log('no user id');
+        this.user.updateLinesRead(this.user.userLinesReadTemp);
         this.user.userLinesReadTemp = 0;
       }
     }),

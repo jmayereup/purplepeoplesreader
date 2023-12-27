@@ -45,7 +45,7 @@
     <div class="flex flex-col centered ">
         @if (store.user.isValid()) {
         <p>Logged in as: {{store.user.userEmail()}} </p>
-        <p>Listening Points Earned: {{store.user.userLinesRead}} </p>
+        <p>Listening Points Earned: {{linesRead()}} </p>
         <button class="button" type="button" (click)="logout()">
             Logout
         </button>

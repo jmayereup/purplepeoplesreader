@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, Output, EventEmitter, inject } from '@angular/core';
+import { Component, OnChanges, OnInit, Output, EventEmitter, inject, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormFilesComponent } from '../form-files/form-files.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -15,7 +15,7 @@ import { LoginComponent } from "../login/login.component";
   styleUrl: './form-lesson.component.css',
   imports: [CommonModule, FormFilesComponent, ReactiveFormsModule, FormFilesComponent, LoginComponent]
 })
-export class FormLessonComponent implements OnInit, OnChanges {
+export class FormLessonComponent implements OnInit, OnChanges, OnDestroy {
 
   @Output() newID = new EventEmitter<string>();
 
@@ -26,6 +26,8 @@ export class FormLessonComponent implements OnInit, OnChanges {
   tags = TAG_VALUES;
   creatorID: string | undefined = this.store.user.userId();
   userIsValid = this.store.user.isValid;
+  saved = false;
+  private subscription: any;
 
   lessonForm = this.fb.group({
     id: this.fb.control(''),
@@ -41,15 +43,28 @@ export class FormLessonComponent implements OnInit, OnChanges {
 
   })
 
+  constructor() {
+    this.subscription = this.lessonForm.valueChanges.subscribe(val => {
+      this.saved = false;
+    });
+      
+    }
+
   ngOnInit() {
     console.log('on Init called');
     // this.store.user.checkUser();
-    this.loadLesson();
+    this.loadLesson();    
+
+
   }
 
   ngOnChanges() {
     console.log('on Changes called');
     this.loadLesson();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   loadLesson() {
@@ -103,6 +118,7 @@ export class FormLessonComponent implements OnInit, OnChanges {
       this.store.lessons.update(this.itemDetails()!.id, lesson as LessonsRecord).then(data => {
         console.log('updated lesson');
         this.store.lessons.fetchDetails(this.itemDetails()!.id || "");
+        this.saved = true;
       });
       //create new lesson
     } else {
@@ -111,6 +127,7 @@ export class FormLessonComponent implements OnInit, OnChanges {
         console.log('lesson created', data);
         this.store.lessons.fetchDetails(data.id).then(id => {
           this.newID.emit(data.id);
+          this.saved = true;
         });
 
       });

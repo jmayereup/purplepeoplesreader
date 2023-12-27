@@ -14,6 +14,8 @@ export class LoginComponent {
 
   store = inject(StoreService);
 
+  linesRead = this.store.user.userLinesRead;
+
   loginData = { email: "", password: "" };
 
   constructor() {
