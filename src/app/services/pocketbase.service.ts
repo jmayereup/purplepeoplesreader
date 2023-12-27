@@ -26,6 +26,7 @@ export class PocketbaseService {
     console.log('fetching results', type, lang);
     this.db.collection('lessons').getFullList({
       filter: `tags~'${type}' && language='${lang}' && shareable=true`,
+      sort: '-created',
     }).then(
       (res: LessonsResponse[]) => {
         this.fetchedResults.set(res);
@@ -38,6 +39,7 @@ export class PocketbaseService {
     console.log('fetching results');
     this.db.collection('lessons').getFullList({
       filter: `shareable=true`,
+      sort: '-created',
     }).then(
       (res: LessonsResponse[]) => {
         this.allResults.set(res);
@@ -50,7 +52,8 @@ export class PocketbaseService {
     if (!userId) return;
     console.log('fetching results for', userId);
     await this.db.collection('lessons').getFullList({
-      filter: `creatorId='${userId}'`
+      filter: `creatorId='${userId}'`,
+      sort: '-created',
     }).then(
       res => {
         this.userCreatedLessons.set(res);
