@@ -8,7 +8,7 @@
         @for (item of resultList(); track item.id) {
         <div class="flex flex-row items-center justify-between gap-2 p-2 rounded-md shadow-md flex-nowrap bg-lbl-purple-200">
                 <img class="object-cover w-12 h-12 rounded-md"
-                    [src]="'https://www.purplepeoplesreader.com/' + item.imageUrl || defaultImage" alt=""
+                    [src]="getImage(item)"
                     [routerLink]="['/', item.language, item.id]" loading="lazy">
                 <div class="w-60" [routerLink]="['/', item.language, item.id]">
                     <h2 class="p-0 m-0 text-sm font-semibold text-gray-800">
@@ -34,7 +34,7 @@
         </div>
         }
     </div>
-    @if (this.type != 'user') {
+    @if (this.type !== 'user') {
     <app-lesson-level-chooser></app-lesson-level-chooser>
     }
 </section>

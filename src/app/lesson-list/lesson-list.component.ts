@@ -24,9 +24,8 @@ export class LessonListComponent implements OnChanges, OnInit {
   itemDetails = this.store.lessons.details;
   resultList = this.store.lessons.results;
   loading = this.store.lessons.loading;
+  baseUrl = "https://www.purplepeoplesreader.com/";
   
-  defaultImage = "../../assets/icons/book.svg";
-
   constructor() {  }
 
   ngOnInit() {
@@ -61,6 +60,10 @@ async deleteLesson(item: LessonsResponse) {
   }
 }
 
+getImage(item: LessonsResponse) {
+  if (item.imageUrl) return this.baseUrl + item.imageUrl;
+  return this.baseUrl + "apps/assets/purple-people-eater.jpeg"
 }
 
+}
 

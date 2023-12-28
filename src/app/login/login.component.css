@@ -1,5 +1,6 @@
 input {
     padding: .25rem;
+    border-radius: .5rem;
 }
 
 p {

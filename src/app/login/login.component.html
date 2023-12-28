@@ -8,12 +8,11 @@
         <div>
             <p class="mt-1 text-center">Login or create account</p>
         </div>
-        <button class="flex flex-row gap-1 my-8 bg-white" (click)="loginWithGoogle()">
+        <button class="flex flex-row gap-1 my-4 bg-white rounded-lg" (click)="loginWithGoogle()">
             <img class="h-5" alt="google logo" src="../../assets/icons/google-logo.svg" />
             <p>Login with Google</p>
         </button>
-
-
+        <p>OR</p>
         <form #loginForm="ngForm">
             <div class="w-full mt-4">
                 <input type="email" placeholder="Email Address" aria-label="Email Address" [(ngModel)]="loginData.email"

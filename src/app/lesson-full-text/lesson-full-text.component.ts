@@ -21,7 +21,7 @@ export class LessonDetailsComponent {
 
   itemDetails = this.store.lessons.details;
   audioPlaying = this.store.tts.audioPlaying;
-  coverImage = `https://www.purplepeoplesreader.com/${this.store.lessons.details()?.imageUrl}`;
+  baseUrl = "https://www.purplepeoplesreader.com/";
 
   textOrUrl = '';
 
@@ -31,7 +31,6 @@ export class LessonDetailsComponent {
     effect(() => {
       this.itemDetails();
       this.textOrUrl = this.itemDetails()?.audioUrl || 'none';
-      this.coverImage = `https://www.purplepeoplesreader.com/${this.store.lessons.details()?.imageUrl}`;
     });
   }
 
@@ -76,4 +75,13 @@ export class LessonDetailsComponent {
       console.error(error);
     }
   }
+
+  getImage(): string {
+    const coverImage = this.itemDetails()?.imageUrl;
+    if (coverImage) return `${this.baseUrl}${coverImage}`;
+    else
+      return `${this.baseUrl}apps/assets/purple-people-eater.jpeg`;
+  }
+
+
 }
