@@ -34,6 +34,9 @@ export class LessonDetailsComponent {
     });
   }
 
+  ngOnInit() {
+    console.log('init');
+  }
 
 
   readThis($event: any) {

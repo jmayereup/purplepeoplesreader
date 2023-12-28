@@ -22,8 +22,12 @@ export class PlayButtonComponent {
 
   async readArray(data: string[] , t = 0, f = 0) {
     if (this.currentAudio) {
+      if (this.currentAudio.paused) {
+        this.currentAudio.play();
+        this.audioPlaying.set(true);
+        return;
+      }
       this.currentAudio.pause();
-      this.currentAudio = undefined;
       this.audioPlaying.set(false);
       return;
     }
@@ -55,13 +59,13 @@ export class PlayButtonComponent {
       this.currentAudio = audio;
       audio.play();
       audio.onended = () => {
-        this.currentAudio = undefined;
         this.audioPlaying.set(false);
+        this.currentAudio = undefined;
         resolve(true);
       };
       audio.onerror = (error) => {
-        this.currentAudio = undefined;
         this.audioPlaying.set(false);
+        this.currentAudio = undefined;
         reject(error);
       };
     });

@@ -4,16 +4,7 @@
 
 <section class="flex flex-col flex-wrap p-4 mb-2 rounded-lg reading">
   <div #fullText translate="no" class="max-h-[70vh] overflow-y-auto">
-    <div class="flex flex-row flex-wrap items-center justify-around mb-4">
-      <h2 class="m-0 font-bold text-center">{{itemDetails()?.title}} </h2>
-      <button class="flex justify-center gap-2 button">
-        <app-play-button id="play-button" #playButton class="h-5" 
-        [textArray]="[textOrUrl]"
-        (click)="readAll()"
-        > Listen </app-play-button>
-      </button>
-      <button type="button" class="button" (click)="addToPlaylist()">Add to Playlist</button>
-    </div>
+    <h2 class="m-0 font-bold text-center">{{itemDetails()?.title}} </h2>
     <div id='full-text' class="full-text" [innerHTML]="(itemDetails()?.content || '') | markdown | async"></div>
   </div>
   <p class="mt-2 text-sm">
@@ -27,23 +18,29 @@
       <summary class="w-full">Settings</summary>
       <app-change-settings></app-change-settings>
     </details>
-   </div>
+  </div>
 </section>
 <section class="p-4 rounded-lg reading">
   <h2 class="mb-0 text-center">Line-By-Line</h2>
-  <p class="mb-0 text-xs text-center">You can use a web browser like Chrome or Edge to provide translations. <a href="https://youtu.be/Jfv9bKDYxvM">(Video)</a></p>
-  
-  <div class="grid grid-cols-2 gap-1 mb-1">
-    <button class="flex justify-center gap-2 mt-2 button" (click)="readAll()">
+  <p class="mb-0 text-xs text-center" translate="yes">You can use a web browser like Chrome or Edge to provide translations. <a
+      href="https://youtu.be/Jfv9bKDYxvM">(Video)</a> Clicking on a line will also play audio in most browsers.</p>
+
+  <div class="flex flex-row flex-wrap justify-around gap-1">
+    <!-- <button class="flex justify-center gap-2 mt-2 button" (click)="readAll()">
       <img class="h-5" alt="play-pause button" src="../../assets/icons/headphones.svg"> 
       @if(audioPlaying()) { Playing...}
       @else {Full Text}
-    </button>
-    <button class="flex justify-center w-full gap-2 mt-2 button" type="button"
+    </button> -->
+    <button class="flex items-center justify-center w-20 gap-2 sm:w-fit button" type="button"
       (click)="showTranslation = !showTranslation">Toggle Translations</button>
+    <button class="flex items-center justify-center w-24 gap-2 button">
+      <app-play-button id="play-button" #playButton class="w-24 h-5" [textArray]="[textOrUrl]" (click)="readAll()"> Listen
+      </app-play-button>
+    </button>
+    <button type="button" class="flex items-center w-20 sm:w-fit button" (click)="addToPlaylist()">Add to Playlist</button>
   </div>
-  
-  
+
+
   <div [innerHTML]="(itemDetails()?.contentLines || '') | markdown | async" (click)="readThis($event)"
     [ngClass]="showTranslation ? 'shown' : 'hide-translations'"></div>
 </section>

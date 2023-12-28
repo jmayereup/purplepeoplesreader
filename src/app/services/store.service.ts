@@ -104,7 +104,7 @@ export class StoreService {
       }
     }),
     audioPlaying: signal<boolean>(false),
-    pause: () => this.speak.pauseVoice
+    pause: () => this.speak.pauseVoice,
   }
 
 
