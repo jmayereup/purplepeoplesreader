@@ -30,11 +30,12 @@ export class LessonListComponent implements OnChanges, OnInit {
   constructor() {  }
 
   ngOnInit() {
-    this.store.user.checkUser().then(() => this.loadLessons());
+    if (this.type == "user") this.resultList = this.store.lessons.userResults;
+    this.loadLessons();
   }
   
   ngOnChanges() {
-        if (this.type == "user") this.resultList = this.store.lessons.userResults;
+    this.loadLessons();
   }
 
 loadLessons() {

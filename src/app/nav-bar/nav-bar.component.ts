@@ -12,10 +12,10 @@ import { StoreService } from '../services/store.service';
 })
 export class NavBarComponent {
 
-  @Input() username = "";
-
+  
   store = inject(StoreService);
-
+  
+  username = this.store.user.userName;
   tag = this.store.app.tag;
   lang = this.store.app.lang;
 

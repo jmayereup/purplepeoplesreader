@@ -1,4 +1,4 @@
-import { Injectable, OnInit, OnDestroy, inject, signal } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { PocketbaseService } from './pocketbase.service';
 import { Playlist, UsersResponse } from '../shared/pocketbase-types';
 import { RecordAuthResponse, RecordSubscription } from 'pocketbase';
@@ -6,7 +6,7 @@ import { RecordAuthResponse, RecordSubscription } from 'pocketbase';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService implements OnInit, OnDestroy {
+export class AuthService {
 
   dbService = inject(PocketbaseService);
   db = this.dbService.db;
@@ -20,30 +20,16 @@ export class AuthService implements OnInit, OnDestroy {
   userPlaylistSignal = signal<Playlist | undefined>(undefined);
   userLinesReadSignal = signal<number | undefined>(undefined);
 
-  ngOnInit() {
-    this.checkUser().then((d) => {
-      console.log('user checked', d);
-      const userId = d?.record.id;
-      if (!userId) return;
-      this.subscription = this.db.collection('users').subscribe(userId, (authData) => {
-        console.log('subscribed to user', authData);
-        this.setUserSignals(authData);
-      });
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (!this.subscription) return;
-    this.subscription.unsubscribe();
-  }
 
   async loginWithEmail(username: string, password: string) {
     const authData = await this.db.collection('users').authWithPassword(username, password);
+    console.log('logged in with email', authData);
     this.setUserSignals(authData);
   }
 
   async loginWithGoogle() {
     const authData = await this.db.collection('users').authWithOAuth2({ provider: 'google' });
+    console.log('logged in with google', authData);
     this.setUserSignals(authData);
   }
 
@@ -51,13 +37,6 @@ export class AuthService implements OnInit, OnDestroy {
     try {
       const authData = await this.db.collection('users').authRefresh();
       this.setUserSignals(authData);
-      // if (!this.subscription && this.userIdSignal()) {
-      //   this.subscription = this.db.collection('users').subscribe(this.userIdSignal()!, (authData) => {
-      //     console.log('subscribed to user', authData);
-      //     this.setUserSignals(authData);
-      //   });
-      // }
-
       return authData;
     } catch (error) {
       console.error('Error checking user:', error);
@@ -68,7 +47,7 @@ export class AuthService implements OnInit, OnDestroy {
   setUserSignals(authData: RecordAuthResponse<UsersResponse> | RecordSubscription<UsersResponse>) {
     try {
       if (!authData) return authData;
-      const userName = authData.record.name;
+      const userName = authData.record.username;
       const userId = authData.record.id;
       const userEmail = authData.record.email;
       const userPlaylist = authData.record.playlist;
@@ -78,6 +57,7 @@ export class AuthService implements OnInit, OnDestroy {
       this.userEmailSignal.set(userEmail);
       this.userPlaylistSignal.set(userPlaylist);
       this.userLinesReadSignal.set(userLinesRead);
+      this.dbService.fetchUserCreatedLessons(authData.record.id);
     } catch (error) {
       console.error('Error getting user:', error);
     }

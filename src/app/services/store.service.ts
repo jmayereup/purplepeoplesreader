@@ -24,13 +24,18 @@ export class StoreService {
   private resetParam: string = "false";  //used to clear the detailsSignal to allow creatin a new lesson
 
   user = {
-    checkUser: () => this.auth.checkUser(),
+    checkUser: () => this.auth.checkUser().then((d) => {
+      console.log('user checked', d);
+      if (!d) return;
+      this.lessons.fetchUserCreatedLessons(d.record.id);
+    }),
     clearUser: () => {
       this.user.userId.set(undefined);
       this.user.userName.set(undefined);
       this.user.userEmail.set(undefined);
       this.user.userLinesRead.set(undefined);
       this.user.userPlaylist.set(undefined);
+      this.lessons.userResults.set(null);
     },
     userId: this.auth.userIdSignal,
     userName: this.auth.userNameSignal,
