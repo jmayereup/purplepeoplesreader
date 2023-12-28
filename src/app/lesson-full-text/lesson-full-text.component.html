@@ -3,7 +3,7 @@
 </section>
 
 <section class="flex flex-col flex-wrap p-4 mb-2 rounded-lg reading">
-  <div #fullText translate="no" class="max-h-[70vh] overflow-y-auto">
+  <div #fullText translate="no" class="max-h-[40vh] overflow-y-auto">
     <h2 class="m-0 font-bold text-center">{{itemDetails()?.title}} </h2>
     <div id='full-text' class="full-text" [innerHTML]="(itemDetails()?.content || '') | markdown | async"></div>
   </div>
