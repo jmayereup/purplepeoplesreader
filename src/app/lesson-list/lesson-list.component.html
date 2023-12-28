@@ -3,13 +3,13 @@
     <app-lang-chooser></app-lang-chooser>
     <app-tag-chooser class=""></app-tag-chooser>
     }
-    <div class="grid grid-cols-1 gap-2 px-2 my-2 sm:grid-cols-2">
+    <div class="grid max-h-screen grid-cols-1 gap-2 px-2 my-2 overflow-y-auto sm:grid-cols-2">
         @if (resultList() && resultList()!.length > 0) {
         @for (item of resultList(); track item.id) {
         <div class="flex flex-row items-center justify-between gap-2 p-2 rounded-md shadow-md flex-nowrap bg-lbl-purple-200">
                 <img class="object-cover w-12 h-12 rounded-md"
                     [src]="'https://www.purplepeoplesreader.com/' + item.imageUrl || defaultImage" alt=""
-                    [routerLink]="['/', item.language, item.id]">
+                    [routerLink]="['/', item.language, item.id]" loading="lazy">
                 <div class="w-60" [routerLink]="['/', item.language, item.id]">
                     <h2 class="p-0 m-0 text-sm font-semibold text-gray-800">
                         {{item.title.slice(0,30)}}</h2>
@@ -34,5 +34,7 @@
         </div>
         }
     </div>
+    @if (this.type != 'user') {
     <app-lesson-level-chooser></app-lesson-level-chooser>
+    }
 </section>
