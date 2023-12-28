@@ -1,0 +1,10 @@
+<section class="flex flex-col justify-center w-full max-w-md p-4 mx-auto ">
+    <h1 class="mb-4 text-2xl text-center">
+        Profile
+    </h1>
+    <p>Username: {{userName()}} 
+        <a (click)="updateUsername()">(change)</a>  
+    </p>
+    <p>Email: {{userEmail()}}</p>
+    <p>Listening Points: {{userLinesRead()}}</p>
+</section>

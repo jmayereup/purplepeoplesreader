@@ -35,14 +35,14 @@
                     <p>Playlist</p>
                 </a>
                 @if(username()){
-                    <a class="nav-link" [routerLink]="['/new']" [queryParams]="{edit:'true', reset:'true'}"
-                        queryParamsHandling="merge">
-                        <p>CREATE</p>
-                    </a>
+                <a class="nav-link" [routerLink]="['/new']" [queryParams]="{edit:'true', reset:'true'}"
+                    queryParamsHandling="merge">
+                    <p>CREATE</p>
+                </a>
                 } @else {
-                    <a class="nav-link" [routerLink]="['/register']">
-                        <p>SignUp/In</p>
-                    </a>
+                <a class="nav-link" [routerLink]="['/register']">
+                    <p>SignUp/In</p>
+                </a>
                 }
             </div>
 
@@ -59,19 +59,20 @@
             <a [routerLink]="['/new']" [queryParams]="{edit:'true', reset:'true'}" queryParamsHandling="merge"
                 class="nav-link">CREATE NEW</a>
             } @else {
-                <a [routerLink]="['/register']" class="nav-link">SignUp/In</a>
+            <a [routerLink]="['/register']" class="nav-link">SignUp/In</a>
             }
-                @if(this.store.user.userEmail() === "admin@teacherjake.com") {<a [routerLink]="['/routes']" class="nav-link">ROUTES</a>}
-                <div class="flex items-center mt-2 ml-4 lg:mt-0">
-                    @if(username()) {
-                    <div class="w-8 h-8 overflow-hidden border-2 border-gray-400 rounded-full">
-                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
-                            class="object-cover w-full h-full" alt="avatar">
-                    </div>
-        
-                    <p class="pl-3"> {{username()}}</p>
-                    }
+            @if(this.store.user.userEmail() === "admin@teacherjake.com") {<a [routerLink]="['/routes']"
+                class="nav-link">ROUTES</a>}
+            @if(username()) {
+            <div class="flex items-center mt-2 ml-4 lg:mt-0 nav-link" [routerLink]="['/profile']">
+                <div class="w-8 h-8 overflow-hidden border-2 border-gray-400 rounded-full">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
+                        class="object-cover w-full h-full" alt="avatar">
                 </div>
+
+                <p class="pl-3"> {{username()}}</p>
+            </div>
+            }
         </div>
 
     </div>

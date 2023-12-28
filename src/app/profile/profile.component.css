@@ -1,0 +1,10 @@
+p {
+    margin-bottom: .25rem;
+}
+
+a {
+    text-decoration: underline;
+    color: var(--primary);
+    cursor: pointer;
+    font-size: .8rem;
+}

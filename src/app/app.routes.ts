@@ -9,6 +9,7 @@ import { RegisterComponent } from './login/register/register.component';
 import { ThaiComponent } from './lang/thai/thai.component';
 import { RoutesComponent } from './routes/routes.component';
 import { PlaylistComponent } from './playlist/playlist.component';
+import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/English/uh3a26d818fe08n', pathMatch: 'full' }, // Redirect home to /English/uh3a26d818fe08n
@@ -22,6 +23,7 @@ export const routes: Routes = [
     { path: 'routes', component: RoutesComponent},
     { path: 'playlist', component: PlaylistComponent},
     { path: 'register' , component: RegisterComponent},
+    { path: 'profile', component: ProfileComponent},
     { path: 'error', component: ErrorFindingComponent},
     { path: '**', component: LessonLevelChooserComponent},
 ];

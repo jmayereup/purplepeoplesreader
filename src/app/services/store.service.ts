@@ -59,6 +59,7 @@ export class StoreService {
       if (!this.user.userLinesRead()) return;
       this.user.userLinesRead.set(this.user.userLinesRead()! + points);
     },
+    updateUsername: (username: string) => this.auth.updateUsername(username),
     refresh: () => this.auth.db.collection('users').authRefresh(),
     clear: () => this.auth.authStore.clear(),
     loginWithEmail: (email: string, password: string) => this.auth.loginWithEmail(email, password),

@@ -63,6 +63,11 @@ export class AuthService {
     }
   }
 
+  updateUsername(username: string) {
+    if (!this.userIdSignal()) return;
+    this.db.collection('users').update(this.userIdSignal()!, { username: username });
+  }
+
 
 
 
