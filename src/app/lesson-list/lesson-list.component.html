@@ -13,7 +13,7 @@
                 <div class="w-60" [routerLink]="['/', item.language, item.id]">
                     <h2 class="p-0 m-0 text-sm font-semibold text-gray-800">
                         {{item.title.slice(0,30)}}</h2>
-                    <p class="text-sm ">{{item.content.slice(0,30)}}</p>
+                    <p class="text-sm ">{{item.content.slice(0,27)}}...</p>
                 </div>
             @if ( item.creatorId == store.user.userId()) {
             <button (click)="deleteLesson(item)"
