@@ -17,7 +17,7 @@ export class PlaylistComponent implements OnInit {
   store = inject(StoreService);
 
   playlist = this.store.user.userPlaylist;
-  textOrUrlArray: string[] | undefined = undefined;
+  textOrUrlArray: string[] = [];
   loading = this.store.lessons.loading;
 
   ngOnInit() {
@@ -27,11 +27,12 @@ export class PlaylistComponent implements OnInit {
   toggleLesson(lessonId: string, event: Event) {
     const checkbox = event.target as HTMLInputElement;
     if (checkbox.checked) {
-      if (!this.textOrUrlArray) this.textOrUrlArray = [];
       this.textOrUrlArray.push(lessonId);
+      this.textOrUrlArray = [...this.textOrUrlArray];
     } else {
       if (!this.textOrUrlArray) return;
       this.textOrUrlArray = this.textOrUrlArray.filter(id => id !== lessonId);
+      this.textOrUrlArray = [...this.textOrUrlArray];
     }
   }
 

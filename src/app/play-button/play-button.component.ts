@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreService } from '../services/store.service';
 
@@ -9,30 +9,34 @@ import { StoreService } from '../services/store.service';
   templateUrl: './play-button.component.html',
   styleUrl: './play-button.component.css'
 })
-export class PlayButtonComponent {
+export class PlayButtonComponent implements OnChanges {
 
   @Input() textArray: string[] = [];
+  @Input() textSource: string = '';
   @Input() speed: number = .9;
   @Input() points: number = 1;
 
   store = inject(StoreService);
-  currentAudio: HTMLAudioElement | undefined = undefined;
+  // audioButton: HTMLAudioElement | undefined = undefined;
+  // @ViewChild('audio') audioButton!: HTMLAudioElement;
+  @ViewChild('audioButton') audioButton!: ElementRef<HTMLAudioElement>;
   audioPlaying = this.store.tts.audioPlaying;
+  path: string = '';
 
 
-  async readArray(data: string[] , t = 0, f = 0) {
-    if (this.currentAudio) {
-      if (this.currentAudio.paused) {
-        this.currentAudio.play();
-        this.audioPlaying.set(true);
-        return;
-      }
-      this.currentAudio.pause();
-      this.audioPlaying.set(false);
-      return;
+  ngOnChanges(): void {
+    if (this.textSource) {
+      this.playTextArray([this.textSource]);
     }
-    this.playTextArray(data, t);
+      this.readById(this.textArray);
+    
   }
+
+  // async readArray(data: string[], t = 0, f = 0) {
+  //   // this.audioButton.nativeElement.pause();
+  //   // this.audioPlaying.set(false);
+  //   this.playTextArray(data, t);
+  // }
 
   async playTextArray(data: string[], t = 0) {
     this.audioPlaying.set(true);
@@ -40,7 +44,7 @@ export class PlayButtonComponent {
       if (data[t].endsWith('.mp3')) {
         console.log('reading', data[t]);
         this.playAudio(`https://www.purplepeoplesreader.com/${data[t]}`).then(() => {
-        this.playTextArray(data, t + 1);
+          this.playTextArray(data, t + 1);
           return;
         });
         return;
@@ -55,24 +59,30 @@ export class PlayButtonComponent {
 
   async playAudio(path: string) {
     return new Promise((resolve, reject) => {
-      const audio = new Audio(path);
-      this.currentAudio = audio;
-      audio.play();
-      audio.onended = () => {
+      // this.audioButton = new Audio();
+      this.path = path;
+      // this.audioButton.nativeElement.play();
+      this.audioButton.nativeElement.onended = () => {
         this.audioPlaying.set(false);
-        this.currentAudio = undefined;
+        // this.audioButton.nativeElement.pause();
         resolve(true);
       };
-      audio.onerror = (error) => {
+      this.audioButton.nativeElement.onerror = (error) => {
         this.audioPlaying.set(false);
-        this.currentAudio = undefined;
+        // this.audioButton.nativeElement.pause();
         reject(error);
       };
     });
   }
-  
 
-  async readById(id: string[]) {
+
+  async readById(id: string[] = []) {
+    if (!id[0]) {
+      this.audioPlaying.set(false);
+      this.audioButton.nativeElement.pause();
+      return;
+    }
+    this.audioButton.nativeElement.autoplay = true;
     console.log('reading  ids', id);
     const lessonArray: string[] = [];
     for (const record of id) {
@@ -80,7 +90,7 @@ export class PlayButtonComponent {
       lessonArray.push(fetchedRecord?.audioUrl || fetchedRecord?.content || '');
     }
     console.log('reading', lessonArray);
-    this.readArray([...lessonArray]);
+    this.playTextArray([...lessonArray]);
   }
 
 }

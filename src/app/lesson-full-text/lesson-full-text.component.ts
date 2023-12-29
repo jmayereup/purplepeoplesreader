@@ -1,10 +1,11 @@
-import { Component, ViewChild, effect, inject } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, effect, inject } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { MarkdownPipe } from 'ngx-markdown';
 import { StoreService } from '../services/store.service';
 import { ChangeSettingsComponent } from "../change-settings/change-settings.component";
 import { PlayButtonComponent } from '../play-button/play-button.component';
 import { LessonsLanguageOptions } from '../shared/pocketbase-types';
+import { After } from 'node:v8';
 
 @Component({
   selector: 'app-lesson-full-text',
@@ -13,7 +14,7 @@ import { LessonsLanguageOptions } from '../shared/pocketbase-types';
   styleUrl: './lesson-full-text.component.css',
   imports: [CommonModule, MarkdownPipe, ChangeSettingsComponent, PlayButtonComponent]
 })
-export class LessonDetailsComponent {
+export class LessonDetailsComponent implements OnInit, AfterViewInit {
 
   store = inject(StoreService);
   document = inject(DOCUMENT);
@@ -38,6 +39,11 @@ export class LessonDetailsComponent {
     console.log('init');
   }
 
+  ngAfterViewInit() {
+    console.log('after view init');
+    this.readAll();
+  }
+
 
   readThis($event: any) {
     const myText = $event.target.closest("div");
@@ -59,9 +65,6 @@ export class LessonDetailsComponent {
       }
       const points = Math.ceil((myText.textContent?.length || 100) / 100);
       this.textOrUrl = this.itemDetails()?.audioUrl || myText.textContent || 'none';
-      this.playButton.readArray([this.textOrUrl]).then(() => {
-        // this.store.user.updateLinesRead(points);
-      });
     } catch (error) {
       console.error(error);
     }

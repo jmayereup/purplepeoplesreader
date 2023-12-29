@@ -3,10 +3,11 @@
         Loading
     <app-spinner></app-spinner>
     } -->
-    <h1 class="text-2xl font-bold">Playlist</h1>
-    <p>It is helpful listen to your lessons several times after reading them.</p>
-    <div class="flex flex-row justify-center mb-2 align-middle"><app-play-button #playButton class="button"
-            (click)="playButton.readById(textOrUrlArray || ['no file selected'])">Listen</app-play-button></div>
+    <div class="flex flex-col items-center justify-center p-4">
+        <h1 class="text-2xl font-bold">Playlist</h1>
+        <p class="text-center">After studying a lesson line-by-line, it is important to listen to the lesson several more times on different days.</p>
+        <app-play-button #playButton [textArray]="textOrUrlArray"></app-play-button>
+    </div>
     @for (lesson of playlist(); track $index) {
     <div class="flex flex-row items-center justify-between w-full gap-4 p-2 mb-1 rounded-md" 
     [ngClass]="{'bg-pink-50': $index % 2 !== 0, 'bg-pink-200': $index % 2 === 0}">

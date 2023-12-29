@@ -22,8 +22,9 @@
 </section>
 <section class="p-4 rounded-lg reading">
   <h2 class="mb-0 text-center">Line-By-Line</h2>
-  <p class="mb-0 text-xs text-center" translate="yes">You can use a web browser like Chrome or Edge to provide translations. <a
-      href="https://youtu.be/Jfv9bKDYxvM">(Video)</a> Clicking on a line will also play audio in most browsers.</p>
+  <p class="mb-0 text-xs text-center" translate="yes">You can use a web browser like Chrome or Edge to provide
+    translations. <a href="https://youtu.be/Jfv9bKDYxvM">(Instructions)</a> Clicking on a line will also play audio in most
+    browsers.</p>
 
   <div class="flex flex-row flex-wrap justify-around gap-1">
     <!-- <button class="flex justify-center gap-2 mt-2 button" (click)="readAll()">
@@ -31,13 +32,11 @@
       @if(audioPlaying()) { Playing...}
       @else {Full Text}
     </button> -->
-    <button class="flex items-center justify-center w-20 gap-2 sm:w-fit button" type="button"
+    <button class="flex items-center justify-center gap-2 sm:w-fit button" type="button"
       (click)="showTranslation = !showTranslation">Toggle Translations</button>
-    <button class="flex items-center justify-center w-24 gap-2 button">
-      <app-play-button id="play-button" #playButton class="w-24 h-5" [textArray]="[textOrUrl]" (click)="readAll()"> Listen
-      </app-play-button>
-    </button>
-    <button type="button" class="flex items-center w-20 sm:w-fit button" (click)="addToPlaylist()">Add to Playlist</button>
+    <button type="button" class="flex items-center sm:w-fit button" (click)="addToPlaylist()">Add to
+      Playlist</button>
+    <app-play-button #playButton [textSource]="textOrUrl"></app-play-button>
   </div>
 
 
