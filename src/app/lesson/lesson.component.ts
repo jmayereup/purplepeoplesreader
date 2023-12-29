@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { LessonDetailsComponent } from "../lesson-full-text/lesson-full-text.component";
 import { RouterLink } from '@angular/router';
 import { FormLessonComponent } from '../form-lesson/form-lesson.component';
@@ -17,8 +17,9 @@ export class LessonComponent implements OnChanges {
 
   @Input() id = "";
   store = inject(StoreService);
-  itemDetails = this.store.lessons.details;
+  location = inject(Location);
 
+  itemDetails = this.store.lessons.details;
   showEdit = this.store.app.showEdit;
   fSize = this.store.app.fontSize;
 
@@ -35,6 +36,9 @@ export class LessonComponent implements OnChanges {
     this.showEdit.set(!this.showEdit());
   }
 
+  goBack() {
+    this.location.back();
+  }
 
 
 }

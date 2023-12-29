@@ -12,8 +12,6 @@
     }
   </div>
   <div class="flex justify-center mt-2 mb-4">
-    <a [routerLink]="['/list']" queryParamsHandling="preserve">
-      <button class="button" type="button">Back</button>
-    </a>
+      <button class="button" type="button" (click)="goBack()">Back</button>
   </div>
 </section>
