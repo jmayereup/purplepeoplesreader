@@ -17,6 +17,7 @@ export class LoginComponent {
   linesRead = this.store.user.userLinesRead;
   userName = this.store.user.userName;
   userEmail = this.store.user.userEmail;
+  errorMesage = "";
 
   loginData = { email: "", password: "" };
 
@@ -27,18 +28,30 @@ export class LoginComponent {
   loginWithEmail() {
     this.store.user.loginWithEmail(this.loginData.email, this.loginData.password).then(() => {
       // this.store.user.checkUser();
+    })
+    .catch((error) => {
+      console.error('Error occurred during email login:', error);
+      this.errorMesage = error;
     });
   }
 
   loginWithGoogle() {
-    this.store.user.loginWithGoogle().then(() => {
-      // this.store.user.checkUser();
-    });
+    this.store.user.loginWithGoogle()
+      .then(() => {
+        // this.store.user.checkUser();
+      })
+      .catch((error) => {
+        console.error('Error occurred during Google login:', error);
+        this.errorMesage = error;
+      });
   }
+
+  clearError() {  
+    this.errorMesage = "";
+  }
+
   logout() {
     this.store.user.clear();
     this.store.user.clearUser();
   }
-
-
 }

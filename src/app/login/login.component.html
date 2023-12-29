@@ -1,26 +1,26 @@
 <hr>
-<div class="flex flex-col max-w-sm mx-auto">
+<div class="flex flex-col justify-center max-w-sm mx-auto">
     @if (!store.user.isValid()) {
-    <div class="flex flex-col items-center w-full px-2 py-4 mx-auto text-center">
+    <div class="flex flex-col items-center justify-center w-full px-2 py-4 text-center">
         <!-- <div class="flex justify-center mx-auto">
             <img class="w-auto h-20" src="../../assets/lbl-lingo-header.png" alt="">
         </div> -->
         <div>
             <p class="mt-1 text-center">Login or create account</p>
         </div>
-        <button class="flex flex-row gap-1 my-4 bg-white rounded-lg" (click)="loginWithGoogle()">
+        <button class="flex flex-row h-10 gap-1 px-2 my-4 bg-white rounded-lg" (click)="loginWithGoogle()">
             <img class="h-5" alt="google logo" src="../../assets/icons/google-logo.svg" />
             <p>Login with Google</p>
         </button>
         <p>OR</p>
-        <form #loginForm="ngForm">
+        <form #loginForm="ngForm" class="flex flex-col flex-wrap">
             <div class="w-full mt-4">
-                <input type="email" placeholder="Email Address" aria-label="Email Address" [(ngModel)]="loginData.email"
+                <input class="p-2 rounded-lg w-72" type="email" placeholder="Email Address" aria-label="Email Address" [(ngModel)]="loginData.email"
                     name="email" />
             </div>
 
             <div class="w-full mt-4">
-                <input type="password" placeholder="Password" aria-label="Password" [(ngModel)]="loginData.password"
+                <input class="p-2 rounded-lg w-72" type="password" placeholder="Password" aria-label="Password" [(ngModel)]="loginData.password"
                     name="password" />
             </div>
 
@@ -31,6 +31,13 @@
                     Sign In
                 </button>
             </div>
+            @if (errorMesage) {
+                <div class="flex flex-row justify-between p-2 mb-2 bg-red-300 rounded-lg">
+                    <p class="error">There was a problem logging in. <br> Please check your password.
+                    </p>
+                    <button type="button" class="ml-2 text-lg text-red-800 bg-lbl-purple-100 error" (click)="clearError()"> X </button>
+                </div>
+            }   
 
         </form>
         <div
