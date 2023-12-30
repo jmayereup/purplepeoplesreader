@@ -119,9 +119,7 @@ export class StoreService {
     pause: () => this.speak.pauseVoice,
   }
 
-
-  constructor() {
-
+  fetchQueryParams() {
     this.route.queryParamMap.pipe(takeUntilDestroyed(), distinctUntilChanged(), shareReplay(1)).subscribe(params => {
       this.tagParam = params.get('tag') || 'A1';
       this.langParam = params.get('lang') || 'English';
@@ -143,6 +141,11 @@ export class StoreService {
       // if (!this.tagParam || !this.langParam) return console.log('no tag or lang');
       return this.lessons.fetchTagResults(this.app.tag(), this.app.lang());
     });
-
   }
+
+  
+  constructor() {
+    this.fetchQueryParams();
+  }
+  
 }
