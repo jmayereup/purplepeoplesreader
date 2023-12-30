@@ -44,13 +44,25 @@ export class StoreService {
     userLinesReadTemp: 0,
     userPlaylist: this.auth.userPlaylistSignal,
     addToPlaylist: (id: string, title: string, language: LessonsLanguageOptions) => {
-      if (!this.user.userId()) return;
+      if (!this.user.userId()) {
+        const newPlaylist = this.user.userPlaylist() || undefined;
+        if(!newPlaylist) {
+          this.user.userPlaylist.set([{ id, title, language }]);
+          return;
+        }
+        if(newPlaylist.find((item) => item.id == id)) return console.log('already in playlist');
+        if(newPlaylist) {
+          newPlaylist.push({ id, title, language });
+          this.user.userPlaylist.set(newPlaylist);
+        } 
+        return;
+      }
       this.db.addToPlaylist(id, title, language, this.user.userId() || 'none', this.user.userPlaylist());
     },
     removeLessonFromPlaylist: (id: string) => {
       if (!this.user.userId()) return;
       this.db.removeLessonFromPlaylist(id, this.user.userId()!, this.user.userPlaylist())
-      .then((d) => this.user.userPlaylist.set(d?.playlist));
+      .then((d) => this.user.userPlaylist.set(d?.playlist || [{ id: '', title: '', language: LessonsLanguageOptions.English }]));
 
     },
     updateLinesRead: (points: number) => {

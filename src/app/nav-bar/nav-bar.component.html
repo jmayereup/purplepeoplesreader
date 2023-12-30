@@ -41,7 +41,7 @@
                 </a>
                 } @else {
                 <a class="nav-link" [routerLink]="['/register']">
-                    <p>SignUp/In</p>
+                    <p>Login</p>
                 </a>
                 }
             </div>
@@ -59,7 +59,7 @@
             <a [routerLink]="['/new']" [queryParams]="{edit:'true', reset:'true'}" queryParamsHandling="merge"
                 class="nav-link">CREATE NEW</a>
             } @else {
-            <a [routerLink]="['/register']" class="nav-link">SignUp/In</a>
+            <a [routerLink]="['/register']" class="nav-link">Login</a>
             }
             @if(this.store.user.userEmail() === "admin@teacherjake.com") {<a [routerLink]="['/routes']"
                 class="nav-link">ROUTES</a>}

@@ -128,12 +128,16 @@ p {
   margin-bottom: 1rem;
 }
 
-p>a {
-  color: var(--primary-text2, blue);
+a {
+  color: blue;
 }
 
-p>a:hover {
+a:hover {
   cursor: pointer;
+}
+
+a.nav-link {
+  color: unset
 }
 
 /* CSS Spinner */

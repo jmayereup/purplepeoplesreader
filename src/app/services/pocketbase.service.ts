@@ -112,12 +112,14 @@ export class PocketbaseService {
   }
 
   async addToPlaylist(id: string, title: string, language: LessonsLanguageOptions, userId: string, playlist: Playlist | undefined) {
+    if (userId === 'none') return;
     if (!playlist){
       const newPlaylist = [{ id: id, title: title, language: language}];
       console.table(newPlaylist);
       const record = await this.db.collection('users').update(userId, { playlist: newPlaylist });
       return record;
     }
+    if (playlist.find((item) => item.id == id)) return console.log('already in playlist');
     const newPlaylist = [...playlist, { id: id, title: title, language: language }];
     const record = await this.db.collection('users').update(userId, { playlist: newPlaylist });
     return record;
