@@ -42,7 +42,6 @@ export class LessonDetailsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     console.log('after view init');
-    this.readAll();
   }
 
 
@@ -65,7 +64,8 @@ export class LessonDetailsComponent implements OnInit, AfterViewInit {
         throw new Error("Element with id 'full-text' not found");
       }
       const points = Math.ceil((myText.textContent?.length || 100) / 100);
-      this.textOrUrl = this.itemDetails()?.audioUrl || myText.textContent || 'none';
+      this.store.tts.readUtterance(myText.textContent || "", points);
+      // this.textOrUrl = this.itemDetails()?.audioUrl || myText.textContent || 'none';
     } catch (error) {
       console.error(error);
     }

@@ -68,9 +68,11 @@ export class StoreService {
     },
     updateLinesRead: (points: number) => {
       if (!this.user.userId()) return;
-      this.db.updateLinesRead(points, this.user.userId()!, this.user.userLinesRead() || 1 );
+      this.db.updateLinesRead(points, this.user.userId()!, this.user.userLinesRead() || 1 ).then((d) => {
+        this.user.userLinesRead.set(d?.linesRead || 0);
+      });
       if (!this.user.userLinesRead()) return;
-      this.user.userLinesRead.set(this.user.userLinesRead()! + points);
+      // this.user.userLinesRead.set(this.user.userLinesRead()! + points);
     },
     updateUsername: (username: string) => this.auth.updateUsername(username),
     refresh: () => this.auth.db.collection('users').authRefresh(),

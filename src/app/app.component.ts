@@ -1,6 +1,6 @@
 import { OnInit, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Router, Event, NavigationStart, NavigationEnd, RouterOutlet } from '@angular/router';
 import { LoginComponent } from "./login/login.component";
 import { LessonComponent } from "./lesson/lesson.component";
 import { RouterLink } from '@angular/router';
@@ -22,18 +22,32 @@ export class AppComponent implements OnInit {
 
   title = 'Level Up:LBL';
   store = inject(StoreService);
+  router = inject(Router);     
   // route = inject(ActivatedRoute);
 
 
   username = this.store.user.userName;
   userId = this.store.user.userId;
   fSize = this.store.app.fontSize;
+  loading = true;
   constructor() {
   }
   ngOnInit(): void {
     this.store.user.checkUser();
     window.addEventListener('beforeunload', () => this.store.autoSave());
     window.setInterval(() => this.store.autoSave(), 10000);
+
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationStart) {
+        console.log('nav start');
+        this.loading = true;
+        this.store.lessons.details.set(null);
+      } else if (event instanceof NavigationEnd) {
+        this.loading = false;
+      }
+    });
+
+
   }
 
   attemptFetch() {

@@ -1,5 +1,5 @@
 @if (itemDetails()?.videoUrl) {
-  <div class="sticky top-0 z-20">
+  <div class="sticky top-0 z-20 -ml-2 -mr-2">
     <video-player [videoUrl]='itemDetails()?.videoUrl!'></video-player>
   </div>
 } @else {
@@ -43,7 +43,11 @@
       (click)="showTranslation = !showTranslation">Toggle Translations</button>
     <button type="button" class="flex items-center sm:w-fit button" (click)="addToPlaylist()">Add to
       Playlist</button>
-    <app-play-button #playButton [textSource]="textOrUrl"></app-play-button>
+    @if (textOrUrl) {
+      <app-play-button #playButton [textSource]="textOrUrl"></app-play-button>
+    } @else {
+      <button type="button" class="button" (click)="readAll()">Read (TTS)</button>
+    }
   </div>
 
 

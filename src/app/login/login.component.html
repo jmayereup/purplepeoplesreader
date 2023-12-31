@@ -47,16 +47,17 @@
             <a href="/register">Register</a>
         </div>
     </div>
-    }
-    <div class="flex flex-col centered ">
-        @if (store.user.isValid()) {
-        <p>Logged in as: {{userName()}} - {{userEmail()}} </p>
-        <p>Listening Points Earned: {{linesRead()}} </p>
-        <div class="mt-1">
-            <button class="button" type="button" (click)="logout()">
-                Logout
-            </button>
+    } @else {
+        <div class="flex flex-col centered ">
+            @if (store.user.isValid()) {
+            <p>Logged in as: {{userName()}} - {{userEmail()}} </p>
+            <p>Listening Points Earned: {{linesRead()}} </p>
+            <div class="mt-1">
+                <button class="button" type="button" (click)="logout()">
+                    Logout
+                </button>
+            </div>
+            } @else {Not Logged In}
         </div>
-        } @else {Not Logged In}
-    </div>
+    }
 </div>

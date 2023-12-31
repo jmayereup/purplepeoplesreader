@@ -62,6 +62,7 @@ export class PlayButtonComponent implements OnChanges {
       // this.audioButton = new Audio();
       this.path = path;
       // this.audioButton.nativeElement.play();
+      if (!this.audioButton?.nativeElement) return;
       this.audioButton.nativeElement.onended = () => {
         this.audioPlaying.set(false);
         // this.audioButton.nativeElement.pause();
@@ -79,7 +80,7 @@ export class PlayButtonComponent implements OnChanges {
   async readById(id: string[] = []) {
     if (!id[0]) {
       this.audioPlaying.set(false);
-      this.audioButton.nativeElement.pause();
+      if (this.audioButton?.nativeElement) this.audioButton.nativeElement.pause();
       return;
     }
     this.audioButton.nativeElement.autoplay = true;
