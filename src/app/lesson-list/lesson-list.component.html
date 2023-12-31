@@ -3,11 +3,11 @@
     <app-lang-chooser></app-lang-chooser>
     <app-tag-chooser class=""></app-tag-chooser>
     }
-    <div class="grid max-h-screen grid-cols-1 gap-2 px-2 my-2 overflow-y-auto sm:grid-cols-2">
+    <div class="grid max-h-screen grid-cols-1 gap-1 px-2 my-2 overflow-y-auto sm:grid-cols-2">
         @if (resultList() && resultList()!.length > 0) {
         @for (item of resultList(); track item.id) {
         <div class="grid items-center self-center justify-between w-full grid-cols-8 gap-2 p-2 mx-auto rounded-md shadow-md overflow-clip bg-lbl-purple-200">
-                <img class="object-cover w-12 h-12 col-span-1 rounded-md"
+                <img class="object-cover w-12 col-span-1 rounded-md"
                     [src]="getImage(item)"
                     [routerLink]="['/', item.language, item.id]" queryParamsHandling="preserve" loading="lazy" alt="thumbnail">
                 <div class="col-span-6" [routerLink]="['/', item.language, item.id]" queryParamsHandling="preserve">
