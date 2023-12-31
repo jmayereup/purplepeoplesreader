@@ -20,35 +20,16 @@
                     placeholder="cat, dog, mouse">
                 </div>
         </div>
-        <div class="grid grid-cols-2 gap-6 mt-4">
-            <div>
-                <label class="form-label" for="tags" required>Tags</label>
-                <select id="tags" formControlName="tags" type="dropdown" size='3' class="form-input" multiple>
-                    @for (tag of tags; track $index) {
-                        <option value="{{tag}}">{{tag}}</option>
-                    }
-                </select>
-            </div>
-            <div>
-                <label class="form-label" for="lang" required>Language</label>
-                <select id="lang" formControlName="language" size="3" type="text" class="form-input">
-                    <option value="English">English</option>
-                    <option value="German">German</option>
-                    <option value="Thai">Thai</option>
-                </select>
-            </div>
-        </div>
-        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-            <div>
-                <label class="form-label" for="shareable">Share</label>
-                <select id="shareable" formControlName="shareable" class="form-input">
-                    <option value=true>YES</option>
-                    <option value=false>NO</option>
-                </select>
-            </div>
+        <div class="grid grid-cols-2 gap-2 mt-4 grid-rows-7 grid-flow-dense">
+            <app-form-files (imagePath)="setImagePath($event)" (audioPath)="setAudioPath($event)"></app-form-files>
             <div>
                 <label class="form-label" for="imageUrl">Image URL</label>
                 <input id="imageUrl" formControlName="imageUrl" type="text" class="form-input"
+                placeholder="https://unsplash.com/cat">
+            </div>
+            <div>
+                <label class="form-label" for="imageUrl">YouTube URL</label>
+                <input id="videoUrl" formControlName="videoUrl" type="text" class="form-input"
                 placeholder="https://unsplash.com/cat">
             </div>
             <div>
@@ -56,7 +37,29 @@
                 <input id="audioUrl" formControlName="audioUrl" type="text" class="form-input"
                 placeholder="https://blog.teacherjake.com/cat-sounds.mp3">
             </div>
-            <app-form-files (imagePath)="setImagePath($event)" (audioPath)="setAudioPath($event)"></app-form-files>
+            <div>
+                <label class="form-label" for="shareable">Share</label>
+                <select id="shareable" formControlName="shareable" class="form-input">
+                    <option value=true>YES</option>
+                    <option value=false>NO</option>
+                </select>
+            </div>
+            <div class="row-span-1">
+                <label class="form-label" for="lang" required>Language</label>
+                <select id="lang" formControlName="language" type="text" class="form-input">
+                    <option value="English">English</option>
+                    <option value="German">German</option>
+                    <option value="Thai">Thai</option>
+                </select>
+            </div>
+            <div class="row-span-4">
+                <label class="form-label" for="tags" required>Tags (Hold CTRL to select more than one.)</label>
+                <select id="tags" formControlName="tags" type="dropdown" size='13' class="form-input" multiple>
+                    @for (tag of tags; track $index) {
+                        <option value="{{tag}}">{{tag}}</option>
+                    }
+                </select>
+            </div>
         </div>
     </form>
     <div class="flex items-center justify-end mt-6">

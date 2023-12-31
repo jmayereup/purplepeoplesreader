@@ -46,6 +46,7 @@ export enum LessonsTagsOptions {
 	"NON-FICTION" = "NON-FICTION",
 	"SCIENCE" = "SCIENCE",
 	"NEWS" = "NEWS",
+	"VIDEO" = "VIDEO",
 	"OTHER" = "OTHER",
 }
 
@@ -60,6 +61,7 @@ export type LessonsRecord = {
 	creatorId?: string
 	imageUrl?: string
 	audioUrl?: string
+	videoUrl?: string
 	language?: LessonsLanguageOptions
 	shareable?: boolean
 	tags?: LessonsTagsOptions[]

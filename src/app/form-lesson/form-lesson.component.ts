@@ -39,6 +39,7 @@ export class FormLessonComponent implements OnInit, OnChanges, OnDestroy {
     shareable: this.fb.control(true, Validators.required),
     imageUrl: this.fb.control(''),
     audioUrl: this.fb.control(''),
+    videoUrl: this.fb.control(''),
     creatorId: this.fb.control(this.creatorID)
 
   })
@@ -80,6 +81,7 @@ export class FormLessonComponent implements OnInit, OnChanges, OnDestroy {
       shareable: lesson?.shareable || true,
       imageUrl: lesson?.imageUrl,
       audioUrl: lesson?.audioUrl,
+      videoUrl: lesson?.videoUrl,
       creatorId: creatorID
     })
   }
@@ -111,6 +113,7 @@ export class FormLessonComponent implements OnInit, OnChanges, OnDestroy {
       shareable: this.lessonForm.value.shareable,
       imageUrl: this.lessonForm.value.imageUrl,
       audioUrl: this.lessonForm.value.audioUrl,
+      videoUrl: this.lessonForm.value.videoUrl,
       creatorId: this.lessonForm.value.creatorId || this.creatorID
     }
     if (this.itemDetails()?.id) {

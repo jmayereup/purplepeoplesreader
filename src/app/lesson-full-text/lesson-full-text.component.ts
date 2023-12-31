@@ -6,13 +6,14 @@ import { ChangeSettingsComponent } from "../change-settings/change-settings.comp
 import { PlayButtonComponent } from '../play-button/play-button.component';
 import { LessonsLanguageOptions } from '../shared/pocketbase-types';
 import { After } from 'node:v8';
+import { VideoPlayerComponent } from "../video-player/video-player.component";
 
 @Component({
-  selector: 'app-lesson-full-text',
-  standalone: true,
-  templateUrl: './lesson-full-text.component.html',
-  styleUrl: './lesson-full-text.component.css',
-  imports: [CommonModule, MarkdownPipe, ChangeSettingsComponent, PlayButtonComponent]
+    selector: 'app-lesson-full-text',
+    standalone: true,
+    templateUrl: './lesson-full-text.component.html',
+    styleUrl: './lesson-full-text.component.css',
+    imports: [CommonModule, MarkdownPipe, ChangeSettingsComponent, PlayButtonComponent, VideoPlayerComponent]
 })
 export class LessonDetailsComponent implements OnInit, AfterViewInit {
 
@@ -31,7 +32,7 @@ export class LessonDetailsComponent implements OnInit, AfterViewInit {
   constructor() {
     effect(() => {
       this.itemDetails();
-      this.textOrUrl = this.itemDetails()?.audioUrl || 'none';
+      this.textOrUrl = this.itemDetails()?.audioUrl || '';
     });
   }
 
@@ -49,7 +50,7 @@ export class LessonDetailsComponent implements OnInit, AfterViewInit {
     const myText = $event.target.closest("div");
     const points = Math.ceil((myText.textContent?.length || 100) / 100);
     console.log('points', points);
-    this.store.tts.readUtterance(myText.textContent || "none", points)
+    this.store.tts.readUtterance(myText.textContent || "", points)
   }
 
   calculatePoints(text: string) {
