@@ -32,7 +32,8 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
     this.store.user.checkUser();
-    // setTimeout(() => this.fetchUserRecords(), 1000);
+    window.addEventListener('beforeunload', () => this.store.autoSave());
+    window.setInterval(() => this.store.autoSave(), 10000);
   }
 
   attemptFetch() {

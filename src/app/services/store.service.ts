@@ -22,6 +22,7 @@ export class StoreService {
   private tagParam: string = "A1";
   private langParam: string = "English";
   private resetParam: string = "false";  //used to clear the detailsSignal to allow creatin a new lesson
+  public tempLinesRead = this.speak.currentLinesRead;
 
   user = {
     checkUser: () => this.auth.checkUser().then((d) => {
@@ -41,7 +42,7 @@ export class StoreService {
     userName: this.auth.userNameSignal,
     userEmail: this.auth.userEmailSignal,
     userLinesRead: this.auth.userLinesReadSignal,
-    userLinesReadTemp: 0,
+    // userLinesReadTemp: () => this.speak.currentLinesRead,
     userPlaylist: this.auth.userPlaylistSignal,
     addToPlaylist: (id: string, title: string, language: LessonsLanguageOptions) => {
       if (!this.user.userId()) {
@@ -109,11 +110,7 @@ export class StoreService {
       this.app.selectedRate() || rate,
     ).then((points: number) => {
       console.log(this.user.userLinesRead(), points);
-      this.user.userLinesReadTemp = this.user.userLinesReadTemp + points;
-      if (this.user.userLinesReadTemp >= 10) {
-        this.user.updateLinesRead(this.user.userLinesReadTemp);
-        this.user.userLinesReadTemp = 0;
-      }
+      this.tempLinesRead.update(old => old + points);
     }),
     audioPlaying: signal<boolean>(false),
     pause: () => this.speak.pauseVoice,
@@ -141,6 +138,13 @@ export class StoreService {
       // if (!this.tagParam || !this.langParam) return console.log('no tag or lang');
       return this.lessons.fetchTagResults(this.app.tag(), this.app.lang());
     });
+  }
+
+  autoSave() {
+    if (!this.user.userId()) return;
+    if (this.tempLinesRead() == 0) return;
+    this.user.updateLinesRead(this.tempLinesRead());
+    this.tempLinesRead.set(0);
   }
 
   

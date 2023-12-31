@@ -1,4 +1,4 @@
-<nav class="max-w-screen-md mx-auto shadow primary md:rounded-t-lg">
+<nav class="z-30 max-w-screen-md mx-auto shadow primary md:rounded-t-lg">
     <div class="flex items-center justify-between mx-2 h-14">
         <!-- Mobile menu button -->
         <div class="flex flex-row items-center">
@@ -50,8 +50,8 @@
     </div>
     <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
     <div [ngClass]="isOpen ? 'opened' : 'closed'"
-        class="absolute inset-x-0 z-20 w-full max-w-screen-md px-6 py-2 mx-auto transition-all duration-300 ease-in-out menu ">
-        <div class="flex flex-col -mx-6" (click)="isOpen = !isOpen">
+        class="absolute inset-x-0 z-30 w-full max-w-screen-md px-6 py-2 mx-auto transition-all duration-300 ease-in-out menu ">
+        <div class="flex flex-col -mx-6 z-100" (click)="isOpen = !isOpen">
             <a [routerLink]="['/list']" [queryParams]="{tag: tag(), lang: lang() }" class="nav-link">LESSONS</a>
             <a [routerLink]="['/list/user']" [queryParams]="{tag: 'user'}" class="nav-link">MY LESSONS</a>
             <a [routerLink]="['/playlist']" class="nav-link">PLAYLIST</a>
