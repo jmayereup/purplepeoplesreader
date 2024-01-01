@@ -14,7 +14,7 @@ export class LoginComponent {
 
   store = inject(StoreService);
 
-  linesRead = this.store.tempLinesRead;
+  linesRead = this.store.user.userLinesRead;
   userName = this.store.user.userName;
   userEmail = this.store.user.userEmail;
   errorMesage = "";
