@@ -22,15 +22,50 @@ export class AuthService {
 
 
   async loginWithEmail(username: string, password: string) {
-    const authData = await this.db.collection('users').authWithPassword(username, password);
-    console.log('logged in with email', authData);
-    this.setUserSignals(authData);
+    try {
+      const authData = await this.db.collection('users').authWithPassword(username, password);
+      console.log('logged in with email', authData);
+      this.setUserSignals(authData);
+    } catch (error) {
+      alert('Error logging in with email: ' + error);
+      console.error('Error logging in with email:', error);
+    }
   }
 
   async loginWithGoogle() {
-    const authData = await this.db.collection('users').authWithOAuth2({ provider: 'google' });
-    console.log('logged in with google', authData);
-    this.setUserSignals(authData);
+    try {
+      const authData = await this.db.collection('users').authWithOAuth2({ provider: 'google' });
+      console.log('logged in with google', authData);
+      this.setUserSignals(authData);
+    } catch (error) {
+      alert('Error logging in with Google: ' + error);
+      console.error('Error logging in with Google:', error);
+    }
+  }
+
+  async registerWithEmail(email: string, password: string, username: string) {
+    try {
+      const data = {
+        "username": username,
+        "email": email,
+        "emailVisibility": true,
+        "password": password,
+        "passwordConfirm": password,
+        "name": "",
+        "linesRead": 0,
+      };
+      const newUser = await this.db.collection('users').create(data).catch((e) => console.error('Error creating user:', e));
+      const authData = await this.db.collection('users').authWithPassword(email, password).catch((e) => {
+        console.error('Error logging in with email:', e)
+        return undefined;});
+      if (!authData) return;
+      await this.db.collection('users').requestVerification(authData.record.email);
+      console.log('registered with email', authData);
+      this.setUserSignals(authData);
+    } catch (error) {
+      alert('Error registering with email: ' + error);
+      console.error('Error registering with email:', error);
+    }
   }
 
   async checkUser() {

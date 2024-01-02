@@ -15,9 +15,22 @@ export class RegisterComponent {
   store = inject(StoreService);
 
   registerData = {email: "", password:"", username:""};
+  confirmationPassword = "";
 
 
   registerWithEmail() {
-    // this.store.registerWithEmail(this.registerData.email, this.registerData.password, this.registerData.username)
+    this.store.user.registerWithEmail(this.registerData.email, this.registerData.password, this.registerData.username)
   }
+
+  loginWithGoogle() {
+    this.store.user.loginWithGoogle()
+      .then(() => {
+        // this.store.user.checkUser();
+      })
+      .catch((error) => {
+        console.error('Error occurred during Google login:', error);
+        alert('Error occurred during Google login:' + error);
+      });
+  }
+
 }

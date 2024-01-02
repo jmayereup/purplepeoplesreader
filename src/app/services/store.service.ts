@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SpeakService } from './speak.service';
 import { LessonsLanguageOptions, LessonsRecord } from '../shared/pocketbase-types';
 import { assignLanguageCode } from '../shared/utils';
+import e from 'express';
 
 @Injectable({
   providedIn: 'root'
@@ -47,15 +48,15 @@ export class StoreService {
     addToPlaylist: (id: string, title: string, language: LessonsLanguageOptions) => {
       if (!this.user.userId()) {
         const newPlaylist = this.user.userPlaylist() || undefined;
-        if(!newPlaylist) {
+        if (!newPlaylist) {
           this.user.userPlaylist.set([{ id, title, language }]);
           return;
         }
-        if(newPlaylist.find((item) => item.id == id)) return console.log('already in playlist');
-        if(newPlaylist) {
+        if (newPlaylist.find((item) => item.id == id)) return console.log('already in playlist');
+        if (newPlaylist) {
           newPlaylist.push({ id, title, language });
           this.user.userPlaylist.set(newPlaylist);
-        } 
+        }
         return;
       }
       this.db.addToPlaylist(id, title, language, this.user.userId() || 'none', this.user.userPlaylist());
@@ -63,12 +64,12 @@ export class StoreService {
     removeLessonFromPlaylist: (id: string) => {
       if (!this.user.userId()) return;
       this.db.removeLessonFromPlaylist(id, this.user.userId()!, this.user.userPlaylist())
-      .then((d) => this.user.userPlaylist.set(d?.playlist || [{ id: '', title: '', language: LessonsLanguageOptions.English }]));
+        .then((d) => this.user.userPlaylist.set(d?.playlist || [{ id: '', title: '', language: LessonsLanguageOptions.English }]));
 
     },
     updateLinesRead: (points: number) => {
       if (!this.user.userId()) return;
-      this.db.updateLinesRead(points, this.user.userId()!, this.user.userLinesRead() || 1 ).then((d) => {
+      this.db.updateLinesRead(points, this.user.userId()!, this.user.userLinesRead() || 1).then((d) => {
         this.user.userLinesRead.set(d?.linesRead || 0);
       });
       if (!this.user.userLinesRead()) return;
@@ -79,8 +80,14 @@ export class StoreService {
     clear: () => this.auth.authStore.clear(),
     loginWithEmail: (email: string, password: string) => this.auth.loginWithEmail(email, password),
     loginWithGoogle: () => this.auth.loginWithGoogle(),
+    registerWithEmail: (email: string, password: string, username: string) => {
+      this.auth.registerWithEmail(email, password, username).then(
+        (d) => {
+          if (this.user.userId()) this.router.navigate(['/']);
+        });
+    },
     isValid: () => this.auth.authStore.isValid,
-  }
+  };
 
   lessons = {
     results: this.db.getFetchedResults(),
@@ -131,7 +138,7 @@ export class StoreService {
           },
           queryParamsHandling: 'merge'
         });
-      
+
       }
       this.app.tag.set(this.tagParam);
       this.app.lang.set(this.langParam);
@@ -149,9 +156,9 @@ export class StoreService {
     this.tempLinesRead.set(0);
   }
 
-  
+
   constructor() {
     this.fetchQueryParams();
   }
-  
+
 }

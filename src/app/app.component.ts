@@ -1,4 +1,4 @@
-import { OnInit, Component, inject } from '@angular/core';
+import { OnInit, Component, inject, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, Event, NavigationStart, NavigationEnd, RouterOutlet } from '@angular/router';
 import { LoginComponent } from "./login/login.component";
@@ -18,7 +18,7 @@ import { StoreService } from './services/store.service';
 
 
 
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
 
   title = 'Level Up:LBL';
   store = inject(StoreService);
@@ -33,10 +33,6 @@ export class AppComponent implements OnInit {
   constructor() {
   }
   ngOnInit(): void {
-    this.store.user.checkUser();
-    window.addEventListener('beforeunload', () => this.store.autoSave());
-    window.setInterval(() => this.store.autoSave(), 10000);
-
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
         console.log('nav start');
@@ -46,28 +42,33 @@ export class AppComponent implements OnInit {
         this.loading = false;
       }
     });
-
-
   }
 
-  attemptFetch() {
-    let status = false;
-    let retries = 0;
-    const maxRetries = 3;
-    status = this.fetchUserRecords();
-    while (!status && retries < 3) {
-      this.fetchUserRecords();
-      retries++;
-    }
+  ngAfterViewInit() {
+    this.store.user.checkUser();
+    if (typeof window === 'undefined') return;
+    window.addEventListener('beforeunload', () => this.store.autoSave());
+    window.setInterval(() => this.store.autoSave(), 10000);
   }
 
-  fetchUserRecords() {
-    if (this.userId()) {
-      this.store.lessons.fetchUserCreatedLessons(this.userId()!);
-      return true;
-    }
-    return false;
-  }
+  // attemptFetch() {
+  //   let status = false;
+  //   let retries = 0;
+  //   const maxRetries = 3;
+  //   status = this.fetchUserRecords();
+  //   while (!status && retries < 3) {
+  //     this.fetchUserRecords();
+  //     retries++;
+  //   }
+  // }
+
+  // fetchUserRecords() {
+  //   if (this.userId()) {
+  //     this.store.lessons.fetchUserCreatedLessons(this.userId()!);
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
 }
 
