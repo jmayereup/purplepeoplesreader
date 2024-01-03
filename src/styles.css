@@ -46,9 +46,8 @@ button.hover {
   background-color: lightcyan;
 }
 
-h2 {
-  margin-bottom: .5rem;
-  font-size: 1.5rem;
+h1, h2, h3, h4, h5, h6 {
+  margin-top: .5rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
@@ -140,3 +139,23 @@ a.nav-link {
   color: unset
 }
 
+h1 {
+  font-size: xx-large;
+  font-weight: bold;    
+}
+
+h2 {
+  font-size: x-large;
+  font-weight: bold;    
+}
+
+h3, h4, h5, h6 {
+  font-size: larger;
+  font-weight: bold;    
+}
+
+.full-text>ul>li, .full-text>ol>li {
+  list-style: disc;
+  margin-left: 2rem;
+  margin-bottom: .5rem;
+}
