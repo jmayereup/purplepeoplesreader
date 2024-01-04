@@ -7,7 +7,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SpeakService } from './speak.service';
 import { LessonsLanguageOptions, LessonsRecord } from '../shared/pocketbase-types';
 import { assignLanguageCode } from '../shared/utils';
-import e from 'express';
 
 @Injectable({
   providedIn: 'root'

@@ -19,6 +19,7 @@ export class PlaylistComponent implements OnInit {
   playlist = this.store.user.userPlaylist;
   textOrUrlArray: string[] = [];
   loading = this.store.lessons.loading;
+  allChecked = false;
 
   ngOnInit() {
     this.store.user.checkUser();
@@ -34,6 +35,20 @@ export class PlaylistComponent implements OnInit {
       this.textOrUrlArray = this.textOrUrlArray.filter(id => id !== lessonId);
       this.textOrUrlArray = [...this.textOrUrlArray];
     }
+  }
+
+  toggleAll()
+  {
+    if (!this.playlist()) return;
+    let newTextOrUrlArray: string[] = [];
+    if (this.textOrUrlArray.length == this.playlist()?.length) {
+      this.textOrUrlArray = [...newTextOrUrlArray];
+    }
+    else {
+      newTextOrUrlArray = this.playlist()?.map((item) => item.id) || [];
+    }
+    this.textOrUrlArray = [...newTextOrUrlArray];
+    this.allChecked = !this.allChecked;
   }
 
   async removeLesson(lessonId: string) {

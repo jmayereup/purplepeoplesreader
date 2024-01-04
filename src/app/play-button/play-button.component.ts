@@ -17,12 +17,9 @@ export class PlayButtonComponent implements OnChanges {
   @Input() points: number = 1;
 
   store = inject(StoreService);
-  // audioButton: HTMLAudioElement | undefined = undefined;
-  // @ViewChild('audio') audioButton!: HTMLAudioElement;
   @ViewChild('audioButton') audioButton!: ElementRef<HTMLAudioElement>;
   audioPlaying = this.store.tts.audioPlaying;
   path: string = '';
-
 
   ngOnChanges(): void {
     if (this.textSource) {
@@ -31,12 +28,6 @@ export class PlayButtonComponent implements OnChanges {
       this.readById(this.textArray);
     
   }
-
-  // async readArray(data: string[], t = 0, f = 0) {
-  //   // this.audioButton.nativeElement.pause();
-  //   // this.audioPlaying.set(false);
-  //   this.playTextArray(data, t);
-  // }
 
   async playTextArray(data: string[], t = 0) {
     this.audioPlaying.set(true);
@@ -59,18 +50,18 @@ export class PlayButtonComponent implements OnChanges {
 
   async playAudio(path: string) {
     return new Promise((resolve, reject) => {
-      // this.audioButton = new Audio();
       this.path = path;
-      // this.audioButton.nativeElement.play();
+      this.audioButton.nativeElement.onplaying = () => {
+        this.audioButton.nativeElement.autoplay = true;
+      }
       if (!this.audioButton?.nativeElement) return;
       this.audioButton.nativeElement.onended = () => {
         this.audioPlaying.set(false);
-        // this.audioButton.nativeElement.pause();
+        this.store.user.updateLinesRead(5);
         resolve(true);
       };
       this.audioButton.nativeElement.onerror = (error) => {
         this.audioPlaying.set(false);
-        // this.audioButton.nativeElement.pause();
         reject(error);
       };
     });
@@ -83,7 +74,7 @@ export class PlayButtonComponent implements OnChanges {
       if (this.audioButton?.nativeElement) this.audioButton.nativeElement.pause();
       return;
     }
-    this.audioButton.nativeElement.autoplay = true;
+    this.audioButton.nativeElement.autoplay = false;
     console.log('reading  ids', id);
     const lessonArray: string[] = [];
     for (const record of id) {
