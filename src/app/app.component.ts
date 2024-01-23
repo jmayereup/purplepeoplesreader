@@ -22,7 +22,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   title = 'Level Up:LBL';
   store = inject(StoreService);
-  router = inject(Router);     
+  router = inject(Router);
   // route = inject(ActivatedRoute);
 
 
@@ -50,25 +50,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     window.addEventListener('beforeunload', () => this.store.autoSave());
     window.setInterval(() => this.store.autoSave(), 10000);
   }
-
-  // attemptFetch() {
-  //   let status = false;
-  //   let retries = 0;
-  //   const maxRetries = 3;
-  //   status = this.fetchUserRecords();
-  //   while (!status && retries < 3) {
-  //     this.fetchUserRecords();
-  //     retries++;
-  //   }
-  // }
-
-  // fetchUserRecords() {
-  //   if (this.userId()) {
-  //     this.store.lessons.fetchUserCreatedLessons(this.userId()!);
-  //     return true;
-  //   }
-  //   return false;
-  // }
 
 }
 

@@ -51,10 +51,10 @@ export class PlayButtonComponent implements OnChanges {
   async playAudio(path: string) {
     return new Promise((resolve, reject) => {
       this.path = path;
+      if (!this.audioButton?.nativeElement) return;
       this.audioButton.nativeElement.onplaying = () => {
         this.audioButton.nativeElement.autoplay = true;
       }
-      if (!this.audioButton?.nativeElement) return;
       this.audioButton.nativeElement.onended = () => {
         this.audioPlaying.set(false);
         this.store.user.updateLinesRead(5);
