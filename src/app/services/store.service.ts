@@ -96,7 +96,11 @@ export class StoreService {
     create: (data: LessonsRecord) => this.db.createItem(data),
     update: (id: string, data: LessonsRecord) => this.db.updateItem(id, data).then(() => this.lessons.fetchTagResults((this.app.tag()), (data.language?.valueOf() || this.app.lang()))),
     delete: (id: string) => this.db.deleteItem(id).then(() => this.lessons.fetchTagResults()),
-    fetchTagResults: (tag: string = this.tagParam, lang: string = this.langParam) => this.db.fetchTagResults(tag, lang),
+    fetchTagResults: (tag: string = this.tagParam, lang: string = this.langParam) => {
+      this.lessons.loading.set(true);
+      this.lessons.results.set(null);
+      this.db.fetchTagResults(tag, lang).then(() => this.lessons.loading.set(false));
+    },
     fetchDetails: (id: string) => this.db.fetchDetails(id).then((data) => data),
     fetchUserCreatedLessons: (userId: string) => this.db.fetchUserCreatedLessons(userId),
     fetchAllResults: () => this.db.fetchAllResults(),

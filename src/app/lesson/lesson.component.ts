@@ -5,13 +5,15 @@ import { RouterLink } from '@angular/router';
 import { FormLessonComponent } from '../form-lesson/form-lesson.component';
 import { StoreService } from '../services/store.service';
 import { ChangeSettingsComponent } from "../change-settings/change-settings.component";
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 @Component({
     selector: 'app-lesson',
     standalone: true,
     templateUrl: './lesson.component.html',
     styleUrl: './lesson.component.css',
-    imports: [CommonModule, LessonDetailsComponent, FormLessonComponent, RouterLink, ChangeSettingsComponent]
+    imports: [CommonModule, LessonDetailsComponent, FormLessonComponent, 
+      RouterLink, ChangeSettingsComponent, SpinnerComponent]
 })
 export class LessonComponent implements OnChanges {
 

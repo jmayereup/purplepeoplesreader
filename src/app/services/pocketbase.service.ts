@@ -40,6 +40,7 @@ export class PocketbaseService {
     this.db.collection('lessons').getFullList({
       filter: `shareable=true`,
       sort: '-created',
+      fields: '*, content:excerpt(50,true)',
     }).then(
       (res: LessonsResponse[]) => {
         this.allResults.set(res);
@@ -54,6 +55,7 @@ export class PocketbaseService {
     await this.db.collection('lessons').getFullList({
       filter: `creatorId='${userId}'`,
       sort: '-created',
+      fields: `*, content:excerpt(50,true)`,
     }).then(
       res => {
         this.userCreatedLessons.set(res);

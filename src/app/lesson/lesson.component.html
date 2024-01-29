@@ -11,6 +11,11 @@
     <app-lesson-full-text></app-lesson-full-text>
     }
   </div>
+    @if (!itemDetails()) {
+      <div class="text-lbl-purple-700">
+        <app-spinner></app-spinner>
+    </div>
+  }
   <div class="flex justify-center mt-2 mb-4">
       <button class="button" type="button" (click)="goBack()">Back</button>
   </div>

@@ -3,18 +3,21 @@
     <app-lang-chooser></app-lang-chooser>
     <app-tag-chooser class=""></app-tag-chooser>
     }
+    @if (resultList()) {
+
     <div class="grid max-h-screen grid-cols-1 gap-1 px-2 my-2 overflow-y-auto sm:grid-cols-2">
-        @if (resultList() && resultList()!.length > 0) {
+        <!-- @if (resultList() && resultList()!.length > 0) { -->
         @for (item of resultList(); track item.id) {
-        <div class="grid items-center self-center justify-between w-full grid-cols-8 gap-2 p-2 mx-auto rounded-md shadow-md overflow-clip bg-lbl-purple-200">
-                <img class="self-center object-cover h-16 min-w-full col-span-2 mx-auto rounded-md shadow-md"
-                    [src]="getImage(item)"
-                    [routerLink]="['/', item.language, item.id]" queryParamsHandling="preserve" loading="lazy" alt="thumbnail">
-                <div class="col-span-5" [routerLink]="['/', item.language, item.id]" queryParamsHandling="preserve">
-                    <h2 class="p-0 m-0 text-sm font-semibold text-gray-800 overflow-clip whitespace-nowrap">
-                        {{item.title.slice(0,80)}}</h2>
-                    <p class="text-sm whitespace-nowrap overflow-clip">{{item.content.slice(0,80)}}</p>
-                </div>
+        <div
+            class="grid items-center self-center justify-between w-full grid-cols-8 gap-2 p-2 mx-auto rounded-md shadow-md overflow-clip bg-lbl-purple-200">
+            <img class="self-center object-cover h-16 min-w-full col-span-2 mx-auto rounded-md shadow-md"
+                [src]="getImage(item)" [routerLink]="['/', item.language, item.id]" queryParamsHandling="preserve"
+                loading="lazy" alt="thumbnail">
+            <div class="col-span-5" [routerLink]="['/', item.language, item.id]" queryParamsHandling="preserve">
+                <h2 class="p-0 m-0 text-sm font-semibold text-gray-800 overflow-clip whitespace-nowrap">
+                    {{item.title.slice(0,80)}}</h2>
+                <p class="text-sm whitespace-nowrap overflow-clip">{{item.content.slice(0,80)}}</p>
+            </div>
             @if ( item.creatorId == store.user.userId()) {
             <button (click)="deleteLesson(item)"
                 class="w-5 h-5 col-span-1 p-0 text-gray-500 transition-colors duration-200 place-self-center hover:text-red-500 focus:outline-none clear"><img
@@ -23,17 +26,24 @@
             }
         </div>
         }
-        } @else {
-        <div class="flex flex-col items-center justify-center w-full h-64">
-            <img src="../../assets/icons/no.svg" alt="empty icon" class="w-32 h-32" />
-            <p class="text-lg font-semibold text-gray-800">No lessons found</p>
-        </div>
-        <div class="flex-col items-center justify-center hidden w-full h-64 sm:flex">
-            <img src="../../assets/icons/no.svg" alt="empty icon" class="w-32 h-32" />
-            <p class="text-lg font-semibold text-gray-800">No lessons found</p>
-        </div>
-        }
     </div>
+    }
+    @if (!resultList()) {
+    <div class="text-lbl-purple-700">
+        <app-spinner></app-spinner>
+    </div>
+    }
+    @if (resultList() && resultList()!.length == 0) {
+    <div class="flex flex-col items-center justify-center w-full h-64">
+        <img src="../../assets/icons/no.svg" alt="empty icon" class="w-32 h-32" />
+        <p class="text-lg font-semibold text-gray-800">No lessons found</p>
+    </div>
+    <div class="flex-col items-center justify-center hidden w-full h-64 sm:flex">
+        <img src="../../assets/icons/no.svg" alt="empty icon" class="w-32 h-32" />
+        <p class="text-lg font-semibold text-gray-800">No lessons found</p>
+    </div>
+    }
+
     @if (this.type !== 'user') {
     <app-lesson-level-chooser></app-lesson-level-chooser>
     }
