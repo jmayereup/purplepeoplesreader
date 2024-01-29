@@ -27,8 +27,6 @@ export class LessonListComponent implements OnChanges, OnInit {
   loading = this.store.lessons.loading;
   baseUrl = "https://www.purplepeoplesreader.com/";
 
-  isLoading = this.store.lessons.loading;
-
   constructor() { }
 
   ngOnInit() {
