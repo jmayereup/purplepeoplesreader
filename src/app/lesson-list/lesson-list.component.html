@@ -28,7 +28,7 @@
         }
     </div>
     }
-    @if (!resultList()) {
+    @if (!resultList() && !(this.type == 'user' && !this.userIsAuthenticated())) {
     <div class="text-lbl-purple-700">
         <app-spinner></app-spinner>
     </div>

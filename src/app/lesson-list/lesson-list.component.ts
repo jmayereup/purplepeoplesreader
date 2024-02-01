@@ -19,6 +19,7 @@ export class LessonListComponent implements OnChanges, OnInit {
 
   store = inject(StoreService);
   router = inject(Router);
+  userIsAuthenticated = this.store.user.userId;
 
   @Input() type = "";
 
