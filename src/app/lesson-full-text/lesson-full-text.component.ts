@@ -5,8 +5,8 @@ import { StoreService } from '../services/store.service';
 import { ChangeSettingsComponent } from "../change-settings/change-settings.component";
 import { PlayButtonComponent } from '../play-button/play-button.component';
 import { LessonsLanguageOptions } from '../shared/pocketbase-types';
-import { After } from 'node:v8';
 import { VideoPlayerComponent } from "../video-player/video-player.component";
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-lesson-full-text',
@@ -27,12 +27,20 @@ export class LessonDetailsComponent implements OnInit, AfterViewInit {
 
   textOrUrl = '';
 
+  titleService = inject(Title);
+  metaService = inject(Meta);
+
   @ViewChild(PlayButtonComponent) playButton!: PlayButtonComponent;
 
   constructor() {
     effect(() => {
       this.itemDetails();
       this.textOrUrl = this.itemDetails()?.audioUrl || '';
+      this.titleService.setTitle(this.itemDetails()?.title || 'Lesson Details');
+      this.metaService.updateTag({ name: 'og:title', content: this.itemDetails()?.title || "The Purple People's Reader" });
+      this.metaService.updateTag({ name: 'og:description', content: this.itemDetails()?.content?.slice(0,50) || "Learn languages through listenings and reading." });
+      this.metaService.updateTag({ name: 'og:image', content: this.getImage() });
+
     });
   }
 
