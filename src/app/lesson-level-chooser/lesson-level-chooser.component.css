@@ -1,9 +1,9 @@
 .image-caption {
-    @apply flex mt-4 text-base lg:text-lg bg-lbl-purple-200 rounded-lg dark:bg-gray-700 p-1 w-full h-16 md:h-24 text-center items-center justify-center;
+    @apply flex items-center justify-center w-full h-16 p-1 mt-4 text-base text-center rounded-lg lg:text-lg bg-lbl-purple-200 md:h-24;
 }
 
 .img-container {
-    @apply h-20 grid rounded-lg shadow-lg;
+    @apply grid h-20 rounded-lg shadow-lg;
 }
 
 .img-svg {

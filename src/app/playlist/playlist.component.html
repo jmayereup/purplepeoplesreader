@@ -8,11 +8,12 @@
         <p class="text-center">After studying a lesson line-by-line, it is important to listen to the lesson several more times on different days.</p>
         <app-play-button #playButton [textArray]="textOrUrlArray"></app-play-button>
     </div>
-    <div class="flex flex-row items-center w-full gap-4 p-2 mb-1">
-        <input type="checkbox" name="toggleAll" id="toggaleAll" class="check-box"
+    <div class="flex flex-row items-center w-full gap-4 pl-2">
+        <input type="checkbox" name="toggleAll" id="toggleAll" class="check-box"
         (click)="toggleAll()">
+        <label for="toggkeAll">Select All</label>
     </div>
-
+    <hr class="my-2 border-lbl-purple-700">
     @for (lesson of playlist(); track $index) {
     <div class="flex flex-row items-center justify-between w-full gap-4 p-2 mb-1 rounded-md" 
     [ngClass]="{'bg-pink-50': $index % 2 !== 0, 'bg-pink-200': $index % 2 === 0}">
@@ -20,7 +21,7 @@
         [checked]="allChecked">
         <span class="w-4/5"><a [routerLink]="['/', lesson.language, lesson.id]">{{lesson.title}}</a></span>
         <button (click)="removeLesson(lesson.id)"
-            class="w-5 h-5 p-0 text-gray-800 transition-colors duration-200 bg-white dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none clear"><img
+            class="w-5 h-5 p-0 text-gray-800 transition-colors duration-200 bg-white hover:text-red-500 focus:outline-none clear"><img
                 src="../../assets/icons/trash.svg" alt="trash icon" class="w-5 h-5" />
         </button>
     </div>
