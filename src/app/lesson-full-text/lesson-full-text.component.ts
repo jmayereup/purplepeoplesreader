@@ -44,7 +44,7 @@ export class LessonDetailsComponent implements OnInit, AfterViewInit {
     console.log('init');
     this.titleService.setTitle(this.itemDetails()?.title || 'Lesson Details');
     this.metaService.updateTag({ name: 'og:title', content: this.itemDetails()?.title || "The Purple People's Reader" });
-    this.metaService.updateTag({ name: 'og:description', content: this.itemDetails()?.content?.slice(0,50) || "Learn languages through listenings and reading." });
+    this.metaService.updateTag({ name: 'og:description', content: this.itemDetails()?.content?.slice(0,50).replace(/[#_*\[\]\(\)]/g, "") || "Learn languages through listenings and reading." });
     this.metaService.updateTag({ name: 'og:image', content: this.getImage() });
   }
 

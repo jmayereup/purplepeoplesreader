@@ -72,5 +72,11 @@ export class LessonListComponent implements OnChanges, OnInit {
     return this.baseUrl + "apps/assets/purple-people-eater.jpeg"
   }
 
+  removeMarkdown(content: string): string {
+    if (!content) { return ''; } // Handle empty input
+    return content.slice(0, 50)
+                  .replace(/[#_*\[\]\(\)]/g, "");
+}
+
 }
 
