@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild, effect, inject } from '@angular/core';
+import { Component, ViewChild, effect, inject } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { MarkdownPipe } from 'ngx-markdown';
 import { StoreService } from '../services/store.service';
@@ -6,7 +6,6 @@ import { ChangeSettingsComponent } from "../change-settings/change-settings.comp
 import { PlayButtonComponent } from '../play-button/play-button.component';
 import { LessonsLanguageOptions } from '../shared/pocketbase-types';
 import { VideoPlayerComponent } from "../video-player/video-player.component";
-import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-lesson-full-text',
@@ -15,7 +14,7 @@ import { Meta, Title } from '@angular/platform-browser';
     styleUrl: './lesson-full-text.component.css',
     imports: [CommonModule, MarkdownPipe, ChangeSettingsComponent, PlayButtonComponent, VideoPlayerComponent]
 })
-export class LessonDetailsComponent implements OnInit, AfterViewInit {
+export class LessonDetailsComponent {
 
   store = inject(StoreService);
   document = inject(DOCUMENT);
@@ -23,12 +22,9 @@ export class LessonDetailsComponent implements OnInit, AfterViewInit {
 
   itemDetails = this.store.lessons.details;
   audioPlaying = this.store.tts.audioPlaying;
-  baseUrl = "https://www.purplepeoplesreader.com/";
+  baseUrl = this.store.app.baseUrl;
 
   textOrUrl = '';
-
-  titleService = inject(Title);
-  metaService = inject(Meta);
 
   @ViewChild(PlayButtonComponent) playButton!: PlayButtonComponent;
 
@@ -40,19 +36,7 @@ export class LessonDetailsComponent implements OnInit, AfterViewInit {
     });
   }
   
-  ngOnInit() {
-    console.log('init');
-    this.titleService.setTitle(this.itemDetails()?.title || 'Lesson Details');
-    this.metaService.updateTag({ name: 'og:title', content: this.itemDetails()?.title || "The Purple People's Reader" });
-    this.metaService.updateTag({ name: 'og:description', content: this.itemDetails()?.content?.slice(0,50).replace(/[#_*\[\]\(\)]/g, "") || "Learn languages through listenings and reading." });
-    this.metaService.updateTag({ name: 'og:image', content: this.getImage() });
-  }
-
-  ngAfterViewInit() {
-    console.log('after view init');
-  }
-
-
+ 
   readThis($event: any) {
     const myText = $event.target.closest("div");
     const points = Math.ceil((myText.textContent?.length || 100) / 100);

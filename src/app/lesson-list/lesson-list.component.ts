@@ -26,7 +26,7 @@ export class LessonListComponent implements OnChanges, OnInit {
   itemDetails = this.store.lessons.details;
   resultList = this.store.lessons.results;
   loading = this.store.lessons.loading;
-  baseUrl = "https://www.purplepeoplesreader.com/";
+  baseUrl = this.store.app.baseUrl;
 
   constructor() { }
 

@@ -1,4 +1,4 @@
-import { OnInit, Component, inject, AfterViewInit } from '@angular/core';
+import { OnInit, Component, inject, AfterViewInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, Event, NavigationStart, NavigationEnd, RouterOutlet } from '@angular/router';
 import { LoginComponent } from "./login/login.component";
@@ -23,15 +23,16 @@ export class AppComponent implements OnInit, AfterViewInit {
   title = 'Level Up:LBL';
   store = inject(StoreService);
   router = inject(Router);
-  // route = inject(ActivatedRoute);
 
-
+  itemDetails = this.store.lessons.details;
   username = this.store.user.userName;
   userId = this.store.user.userId;
   fSize = this.store.app.fontSize;
   loading = true;
-  constructor() {
-  }
+
+  constructor() { }
+
+
   ngOnInit(): void {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {

@@ -113,6 +113,7 @@ export class StoreService {
     tag: signal<string>(""),
     lang: signal<string>(""),
     fontSize: signal<string>('large'),
+    baseUrl: "https://www.purplepeoplesreader.com/",
   }
 
   tts = {
