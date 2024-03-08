@@ -1,4 +1,4 @@
-import { OnInit, Component, inject, AfterViewInit, effect } from '@angular/core';
+import { OnInit, Component, inject, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, Event, NavigationStart, NavigationEnd, RouterOutlet } from '@angular/router';
 import { LoginComponent } from "./login/login.component";

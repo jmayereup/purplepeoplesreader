@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "pb-demo": {
+    "purplepeoplesreader": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/pb-demo",
+            "outputPath": "dist/ppr",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "pb-demo:build:production"
+              "buildTarget": "purplepeoplesreader:build:production"
             },
             "development": {
-              "buildTarget": "pb-demo:build:development"
+              "buildTarget": "purplepeoplesreader:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "pb-demo:build"
+            "buildTarget": "purplepeoplesreader:build"
           }
         },
         "test": {
