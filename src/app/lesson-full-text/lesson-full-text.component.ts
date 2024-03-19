@@ -8,21 +8,22 @@ import { LessonsLanguageOptions } from '../shared/pocketbase-types';
 import { VideoPlayerComponent } from "../video-player/video-player.component";
 
 @Component({
-    selector: 'app-lesson-full-text',
-    standalone: true,
-    templateUrl: './lesson-full-text.component.html',
-    styleUrl: './lesson-full-text.component.css',
-    imports: [CommonModule, MarkdownPipe, ChangeSettingsComponent, PlayButtonComponent, VideoPlayerComponent]
+  selector: 'app-lesson-full-text',
+  standalone: true,
+  templateUrl: './lesson-full-text.component.html',
+  styleUrl: './lesson-full-text.component.css',
+  imports: [CommonModule, MarkdownPipe, ChangeSettingsComponent, PlayButtonComponent, VideoPlayerComponent]
 })
 export class LessonDetailsComponent {
 
   store = inject(StoreService);
   document = inject(DOCUMENT);
   showTranslation = true;
-
+  
   itemDetails = this.store.lessons.details;
   audioPlaying = this.store.tts.audioPlaying;
   baseUrl = this.store.app.baseUrl;
+  languageReactorUrl = 'https://www.languagereactor.com/text'; // Replace with your actual URL
 
   textOrUrl = '';
 
@@ -32,11 +33,11 @@ export class LessonDetailsComponent {
     effect(() => {
       this.itemDetails();
       this.textOrUrl = this.itemDetails()?.audioUrl || '';
-      
+
     });
   }
-  
- 
+
+
   readThis($event: any) {
     const myText = $event.target.closest("div");
     const points = Math.ceil((myText.textContent?.length || 100) / 100);
@@ -82,5 +83,19 @@ export class LessonDetailsComponent {
       return `${this.baseUrl}apps/assets/purple-people-eater.jpeg`;
   }
 
+  openLanguageReactor() {
+    const articleText = this.document.getElementById('full-text')?.textContent || "";
+    navigator.clipboard.writeText(articleText)
+      .then(() => {
+        console.log('Text copied to clipboard');
+        const confirmed = window.confirm("Text copied. Please paste it into Language Reactor which will open in a new window.");
+        if (confirmed) window.open(this.languageReactorUrl, "_blank");
+      })
+      .catch(err => {
+        console.error('Failed to copy: ', err);
+        alert("Failed to Copy.");
+      });
+
+  }
 
 }
