@@ -13,8 +13,6 @@
   <div #fullText translate="no" class="max-h-[60vh] overflow-y-auto">
     <div class="flex flex-row flex-wrap justify-around">
       <h2 class="m-0 font-bold text-center">{{itemDetails()?.title}}</h2>
-      <button type="button" class="flex items-center sm:w-fit button" (click)="openLanguageReactor()">Use Language
-        Reactor</button>
     </div>
     <div id='full-text' class="full-text" [innerHTML]="(itemDetails()?.content || '') | markdown | async"></div>
   </div>
@@ -46,6 +44,8 @@
     </button> -->
     <button class="flex items-center justify-center gap-2 sm:w-fit button" type="button"
       (click)="showTranslation = !showTranslation">Toggle Translations</button>
+    <button type="button" class="flex items-center sm:w-fit button" (click)="openLanguageReactor()">Use Language
+      Reactor</button>
     <button type="button" class="flex items-center sm:w-fit button" (click)="addToPlaylist()">Add to
       Playlist</button>
     @if (textOrUrl) {
