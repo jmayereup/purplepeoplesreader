@@ -78,7 +78,7 @@ export class FormLessonComponent implements OnInit, OnChanges, OnDestroy {
       vocabulary: lesson?.vocabulary,
       tags: lesson?.tags || ['A2'],
       language: lesson?.language || 'English',
-      shareable: lesson?.shareable || true,
+      shareable: lesson?.shareable,
       imageUrl: lesson?.imageUrl,
       audioUrl: lesson?.audioUrl,
       videoUrl: lesson?.videoUrl,
