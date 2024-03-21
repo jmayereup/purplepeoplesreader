@@ -3,7 +3,6 @@ import { StoreService } from './services/store.service';
 import { inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 
-
 export const dataResolver: ResolveFn<boolean> = (route, state) => {
   const storeService = inject(StoreService);
   const metaService = inject(Meta);
@@ -16,10 +15,10 @@ export const dataResolver: ResolveFn<boolean> = (route, state) => {
   if (!lessonId) return false;
   storeService.lessons.fetchDetails(lessonId).then((data) => {
     titleService.setTitle(data?.title || 'Lesson Details');
-    metaService.updateTag({ name: 'og:title', content: data?.title || "The Purple People's Reader" });
-    metaService.updateTag({ name: 'og:description', content: data?.content?.slice(0, 50).replace(/[#_*\[\]\(\)]/g, "") || "Learn languages through listenings and reading." });
+    metaService.updateTag({ name: 'og:title', content: data?.title || "The Purple People's Reader 1" });
+    metaService.updateTag({ name: 'og:description', content: data?.content?.slice(0, 50).replace(/[#_*\[\]\(\)]/g, "") || "1 Learn languages through listenings and reading." });
     metaService.updateTag({ name: 'og:image', content: getImage() });
-    console.log('fetched details in resolver');
+    console.log('fetched details in resolver - ', data?.title);
     
     function getImage(): string {
       const coverImage = data?.imageUrl;

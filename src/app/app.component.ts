@@ -20,7 +20,7 @@ import { StoreService } from './services/store.service';
 
 export class AppComponent implements OnInit, AfterViewInit {
 
-  title = 'Level Up:LBL';
+  title = "Purple People's Reader";
   store = inject(StoreService);
   router = inject(Router);
 

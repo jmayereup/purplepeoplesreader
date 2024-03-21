@@ -9,8 +9,6 @@ import bootstrap from './src/main.server';
 export function app(): express.Express {
   const server = express();
   const serverDistFolder = dirname(fileURLToPath(import.meta.url));
-  // console.log(serverDistFolder);
-  // const serverDistFolder = 'https://blog.teacherjake.com/purplepeoplesreader'
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   // console.log(browserDistFolder);
   const indexHtml = join(serverDistFolder, 'index.server.html');
@@ -21,8 +19,6 @@ export function app(): express.Express {
   server.set('views', browserDistFolder);
 
   // Example Express Rest API endpoints
-  // server.get('/api/**', (req, res) => { });
-  // Serve static files from /browser
   server.get('*.*', express.static(browserDistFolder, {
     maxAge: '1y'
   }));
