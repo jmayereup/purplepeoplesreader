@@ -1,22 +1,24 @@
-<section [ngStyle]="{'font-size': fSize()}">
-  <div class="flex flex-col gap-2 p-2">
-    <div class="flex flex-row justify-end -my-2">
-      <button class="flex justify-center mr-1 clear focus:bg-transparent" (click)="toggleShowEdit()" type="button">
-        <img src="../../assets/icons/edit.svg" alt="editbutton" class="w-5 h-5">Edit</button>
-    </div>
-    @if (showEdit()) {
-    <app-form-lesson (newID)="id = $event"></app-form-lesson>
-    }
-    @if (itemDetails()) {
-    <app-lesson-full-text></app-lesson-full-text>
+<article [lang]="lessonLanguage">
+  <section [ngStyle]="{'font-size': fSize()}">
+    <div class="flex flex-col gap-2 p-2">
+      <div class="flex flex-row justify-end -my-2">
+        <button class="flex justify-center mr-1 clear focus:bg-transparent" (click)="toggleShowEdit()" type="button">
+          <img src="../../assets/icons/edit.svg" alt="editbutton" class="w-5 h-5">Edit</button>
+        </div>
+        @if (showEdit()) {
+          <app-form-lesson (newID)="id = $event"></app-form-lesson>
+        }
+        @if (itemDetails()) {
+          <app-lesson-full-text></app-lesson-full-text>
     }
   </div>
     @if (!itemDetails()) {
       <div class="text-lbl-purple-700">
         <app-spinner></app-spinner>
-    </div>
+      </div>
   }
   <div class="flex justify-center mt-2 mb-4">
-      <button class="button" type="button" (click)="goBack()">Back</button>
+    <button class="button" type="button" (click)="goBack()">Back</button>
   </div>
 </section>
+</article>

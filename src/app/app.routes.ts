@@ -11,21 +11,29 @@ import { RoutesComponent } from './routes/routes.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { ProfileComponent } from './profile/profile.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { dataResolver } from './data.resolver';
+import { DataResolver } from './data.resolver';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/English/uh3a26d818fe08n', pathMatch: 'full' }, // Redirect home to /English/uh3a26d818fe08n
     {
-        path: 'German/:id', component: GermanComponent,
-        resolve: { data: dataResolver }
+        path: 'German/:id', component: LessonComponent,
+        resolve: { data: DataResolver }
     },
     {
-        path: 'Thai/:id', component: ThaiComponent,
-        resolve: { data: dataResolver }
+        path: 'Thai/:id', component: LessonComponent,
+        resolve: { data: DataResolver }
     },
     {
         path: 'English/:id', component: LessonComponent,
-        resolve: { data: dataResolver }
+        resolve: { data: DataResolver }
+    },
+    {
+        path: 'French/:id', component: LessonComponent,
+        resolve: { data: DataResolver }
+    },
+    {
+        path: 'Spanish/:id', component: LessonComponent,
+        resolve: { data: DataResolver }
     },
     { path: 'list', component: LessonListComponent },
     { path: 'list/:type', component: LessonListComponent },
