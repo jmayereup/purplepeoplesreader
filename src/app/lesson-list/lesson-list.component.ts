@@ -7,6 +7,7 @@ import { LessonsResponse } from '../shared/pocketbase-types';
 import { LangChooserComponent } from "../lang-chooser/lang-chooser.component";
 import { LessonLevelChooserComponent } from "../lesson-level-chooser/lesson-level-chooser.component";
 import { SpinnerComponent } from "../spinner/spinner.component";
+import { stripMarkdown } from '../shared/utils';
 
 @Component({
   selector: 'app-lesson-list',
@@ -78,10 +79,14 @@ export class LessonListComponent implements OnChanges, OnInit {
   
   
 
-  removeMarkdown(content: string): string {
-    if (!content) { return ''; } // Handle empty input
-    return content.slice(0, 50)
-                  .replace(/[#_*\[\]\(\)]/g, "");
+//   removeMarkdown(content: string): string {
+//     if (!content) { return ''; } // Handle empty input
+//     return content.slice(0, 50)
+//                   .replace(/[#_*\[\]\(\)]/g, "");
+// }
+
+removeMarkdown(content: string) {
+  return stripMarkdown(content);
 }
 
 }
