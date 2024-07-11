@@ -1,5 +1,16 @@
 import { LessonsLanguageOptions, LessonsTagsOptions } from "./pocketbase-types";
-import removeMD from 'remove-markdown';
+
+export function stripMarkdown(text: string): string {
+    return text
+        .replace(/!\[.*?\]\(.*?\)/g, '') // Remove image tags
+        .replace(/\[.*?\]\(.*?\)/g, '') // Remove link tags
+        .replace(/[`*_{}[\]()#+\-.!]/g, '') // Remove other Markdown characters
+        .replace(/(^|\s)(#{1,6}\s)(.*)/g, '$1$3') // Remove headers
+        .replace(/\*\*(.*?)\*\*/g, '$1') // Bold text
+        .replace(/\*(.*?)\*/g, '$1') // Italic text
+        .replace(/~~(.*?)~~/g, '$1') // Strikethrough
+        .replace(/>`+/g, ''); // Blockquotes
+}
 
 export function addLineBreaks(text: string): string {
     let result = text.replace(/(?<!Mr|Mrs|Dr|Ms)([.?!"])\s+/g, '$1\n');
@@ -11,10 +22,10 @@ export function addLineBreaks(text: string): string {
 export function addLineBreaksWithTranslatedDivs(text: string): string {
     
   
-    const cleanText = removeMD(text);
-    console.log(cleanText);
+    // const cleanText = removeMD(text);
+    const cleanText = stripMarkdown(text);
 
-    let result = cleanText.replace(/(?<!Mr|Mrs|Dr|Ms)([¿¡.?!"])\s+/g, '$1\n');
+    let result: string = cleanText.replace(/(?<!Mr|Mrs|Dr|Ms)([¿¡.?!"])\s+/g, '$1\n');
 
     // Duplicate each div and add class/attribute
     const translatedDivs: string[] = [];

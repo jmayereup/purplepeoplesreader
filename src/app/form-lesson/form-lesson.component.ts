@@ -102,7 +102,7 @@ export class FormLessonComponent implements OnInit, OnChanges, OnDestroy {
 
   async onSubmit() {
     const originalText = this.lessonForm.value.content || "none";
-    const wrappedText = addLineBreaksWithTranslatedDivs(originalText);
+    const wrappedText = await addLineBreaksWithTranslatedDivs(originalText);
     const lesson = {
       title: this.lessonForm.value.title,
       content: this.lessonForm.value.content,

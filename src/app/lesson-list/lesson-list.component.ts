@@ -26,7 +26,7 @@ export class LessonListComponent implements OnChanges, OnInit {
   itemDetails = this.store.lessons.details;
   resultList = this.store.lessons.results;
   loading = this.store.lessons.loading;
-  baseUrl = this.store.app.baseUrl + '/thumbnails/';
+  baseUrl = this.store.app.baseUrl;
 
   constructor() { }
 
@@ -69,12 +69,13 @@ export class LessonListComponent implements OnChanges, OnInit {
 
   getImage(item: LessonsResponse) {
     if (item.imageUrl) {
-      const baseName = item.imageUrl.substring(0, item.imageUrl.lastIndexOf('.'));
-      const thumbnailUrl = `${baseName}_thumbnail.png`;
+      const baseName = item.imageUrl.substring(item.imageUrl.lastIndexOf('/') + 1, item.imageUrl.lastIndexOf('.'));
+      const thumbnailUrl = `apps/assets/thumbnails/${baseName}_thumbnail.png`;
       return this.baseUrl + thumbnailUrl;
     }
-    return this.baseUrl + "apps/assets/purple-people-eater.jpeg";
+    return this.baseUrl + "apps/assets/thumbnails/purple-people-eater_thumbnail.png";
   }
+  
   
 
   removeMarkdown(content: string): string {
