@@ -1,15 +1,13 @@
 import { Component, Input, OnChanges, OnInit, inject } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { LessonDetailsComponent } from "../lesson-full-text/lesson-full-text.component";
-import { ActivatedRoute, ActivatedRouteSnapshot, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormLessonComponent } from '../form-lesson/form-lesson.component';
 import { StoreService } from '../services/store.service';
 import { ChangeSettingsComponent } from "../change-settings/change-settings.component";
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { Meta, Title } from '@angular/platform-browser';
 import { assignLanguageCode } from '../shared/utils';
-import { LessonsResponse } from '../shared/pocketbase-types';
-import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-lesson',
@@ -45,7 +43,7 @@ export class LessonComponent implements OnChanges, OnInit {
         this.titleService.setTitle(this.itemDetails()?.title || 'Lesson Details');
         this.metaService.updateTag({ name: 'og:title', content: this.itemDetails()?.title || "The Purple People's Reader 1" });
         this.metaService.updateTag({ name: 'og:description', content: this.itemDetails()?.content?.slice(0, 50).replace(/[#_*\[\]\(\)]/g, "") || "1 Learn languages through listenings and reading." });
-        this.metaService.updateTag({ name: 'og:image', content: this.getImage() });
+        this.metaService.updateTag({ name: 'og:image', content: this.getImageThumbnail() });
 
   }
 
@@ -72,5 +70,14 @@ export class LessonComponent implements OnChanges, OnInit {
       return `${this.baseUrl}apps/assets/purple-people-eater.jpeg`;
   }
 
+  getImageThumbnail() {
+    if (this.itemDetails()?.imageUrl) {
+      let imageUrl = this.itemDetails()?.imageUrl || 'app/assets/purple-people-eater.jpeg';
+      const baseName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1, imageUrl.lastIndexOf('.'));
+      const thumbnailUrl = `apps/assets/thumbnails/${baseName}_thumbnail.png`;
+      return this.baseUrl + thumbnailUrl;
+    }
+    return this.baseUrl + "apps/assets/thumbnails/purple-people-eater_thumbnail.png";
+  }
 
 }
