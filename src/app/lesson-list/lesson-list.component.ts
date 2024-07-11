@@ -26,7 +26,7 @@ export class LessonListComponent implements OnChanges, OnInit {
   itemDetails = this.store.lessons.details;
   resultList = this.store.lessons.results;
   loading = this.store.lessons.loading;
-  baseUrl = this.store.app.baseUrl;
+  baseUrl = this.store.app.baseUrl + '/thumbnails/';
 
   constructor() { }
 
@@ -68,9 +68,14 @@ export class LessonListComponent implements OnChanges, OnInit {
   }
 
   getImage(item: LessonsResponse) {
-    if (item.imageUrl) return this.baseUrl + item.imageUrl;
-    return this.baseUrl + "apps/assets/purple-people-eater.jpeg"
+    if (item.imageUrl) {
+      const baseName = item.imageUrl.substring(0, item.imageUrl.lastIndexOf('.'));
+      const thumbnailUrl = `${baseName}_thumbnail.png`;
+      return this.baseUrl + thumbnailUrl;
+    }
+    return this.baseUrl + "apps/assets/purple-people-eater.jpeg";
   }
+  
 
   removeMarkdown(content: string): string {
     if (!content) { return ''; } // Handle empty input
