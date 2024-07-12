@@ -23,7 +23,6 @@ export class PocketbaseService {
   }
 
   async fetchTagResults(type: string = 'A1', lang: string = 'English') {
-    console.log('fetching results', type, lang);
     this.db.collection('lessons').getFullList({
       filter: `tags~'${type}' && language='${lang}' && shareable=true`,
       sort: '-created',
@@ -36,7 +35,6 @@ export class PocketbaseService {
   }
 
   async fetchAllResults() {
-    console.log('fetching results');
     this.db.collection('lessons').getFullList({
       filter: `shareable=true`,
       sort: '-created',
@@ -51,7 +49,6 @@ export class PocketbaseService {
 
   async fetchUserCreatedLessons(userId: string) {
     if (!userId) return;
-    console.log('fetching results for', userId);
     await this.db.collection('lessons').getFullList({
       filter: `creatorId='${userId}'`,
       sort: '-created',
@@ -59,14 +56,12 @@ export class PocketbaseService {
     }).then(
       res => {
         this.userCreatedLessons.set(res);
-        console.log(this.userCreatedLessons());
         return res;
       }
     );
   }
 
   async fetchDetails(itemId: string): Promise<LessonsResponse | null> {
-    console.log('fetching details for', itemId);
     const lesson = await this.db.collection('lessons').getOne(itemId).then(
       res => {
         this.itemDetails.set(res);
@@ -117,7 +112,6 @@ export class PocketbaseService {
     if (userId === 'none') return;
     if (!playlist){
       const newPlaylist = [{ id: id, title: title, language: language}];
-      console.table(newPlaylist);
       const record = await this.db.collection('users').update(userId, { playlist: newPlaylist });
       return record;
     }

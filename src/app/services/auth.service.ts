@@ -24,7 +24,6 @@ export class AuthService {
   async loginWithEmail(username: string, password: string) {
     try {
       const authData = await this.db.collection('users').authWithPassword(username, password);
-      console.log('logged in with email', authData);
       this.setUserSignals(authData);
     } catch (error) {
       alert('Error logging in with email: ' + error);
@@ -35,7 +34,6 @@ export class AuthService {
   async loginWithGoogle() {
     try {
       const authData = await this.db.collection('users').authWithOAuth2({ provider: 'google' });
-      console.log('logged in with google', authData);
       this.setUserSignals(authData);
     } catch (error) {
       alert('Error logging in with Google: ' + error);
@@ -60,7 +58,6 @@ export class AuthService {
         return undefined;});
       if (!authData) return;
       await this.db.collection('users').requestVerification(authData.record.email);
-      console.log('registered with email', authData);
       this.setUserSignals(authData);
     } catch (error) {
       alert('Error registering with email: ' + error);
