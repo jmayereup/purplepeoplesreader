@@ -35,7 +35,7 @@ export class FormFilesComponent {
     if (event.target.files.length > 0) {
       this.selectedFile = event.target.files[0];
       if (this.selectedFile?.name) {
-        this.fileName = this.selectedFile.name;
+        // this.fileName = this.selectedFile.name;
         this.onSubmit();
       } else this.fileName = "No File Selected";
 
@@ -45,7 +45,8 @@ export class FormFilesComponent {
   onSubmit() {
     this.loading = true;
     const formData = new FormData();
-    const encodedFilename = encodeURIComponent(this.selectedFile!.name);
+    const encodedFilename = encodeURIComponent(this.selectedFile!.name.toLowerCase());
+    this.fileName = encodedFilename;
     formData.append('file', this.selectedFile!, encodedFilename);
 
     this.http.post('https://blog.teacherjake.com/upload', formData)
