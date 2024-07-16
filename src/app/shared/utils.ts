@@ -4,7 +4,7 @@ export function stripMarkdown(text: string): string {
     return text
         .replace(/!\[.*?\]\(.*?\)/g, '') // Remove image tags
         .replace(/\[.*?\]\(.*?\)/g, '') // Remove link tags
-        .replace(/[`*_{}[\]()#+\-.!]/g, '') // Remove other Markdown characters
+        .replace(/[`*_{}[\]()#+\-!]/g, '') // Remove other Markdown characters, but keep periods
         .replace(/(^|\s)(#{1,6}\s)(.*)/g, '$1$3') // Remove headers
         .replace(/\*\*(.*?)\*\*/g, '$1') // Bold text
         .replace(/\*(.*?)\*/g, '$1') // Italic text

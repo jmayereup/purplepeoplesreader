@@ -77,10 +77,11 @@ export class LessonDetailsComponent {
   }
 
   getImage(): string {
-    const coverImage = this.itemDetails()?.imageUrl;
-    if (coverImage) return `${this.baseUrl}${coverImage}`;
-    else
-      return `${this.baseUrl}apps/assets/purple-people-eater.jpeg`;
+    const imageUrl = this.itemDetails()?.imageUrl || 'purple-people-eater.png';
+    const coverImage = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+    console.log("cover image", coverImage);
+
+    return `${this.baseUrl}apps/assets/${coverImage}`;
   }
 
   openLanguageReactor() {

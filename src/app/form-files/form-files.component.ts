@@ -45,7 +45,8 @@ export class FormFilesComponent {
   onSubmit() {
     this.loading = true;
     const formData = new FormData();
-    formData.append('file', this.selectedFile!);
+    const encodedFilename = encodeURIComponent(this.selectedFile!.name);
+    formData.append('file', this.selectedFile!, encodedFilename);
 
     this.http.post('https://blog.teacherjake.com/upload', formData)
       .subscribe({

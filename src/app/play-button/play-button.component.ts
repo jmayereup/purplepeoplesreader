@@ -34,7 +34,8 @@ export class PlayButtonComponent implements OnChanges {
     if (t < data.length) {
       if (data[t].endsWith('.mp3')) {
         console.log('reading', data[t]);
-        this.playAudio(`https://www.purplepeoplesreader.com/${data[t]}`).then(() => {
+        const dataFile = data[t].substring(data[t].lastIndexOf('/') + 1);
+        this.playAudio(`https://www.purplepeoplesreader.com/apps/assets/${dataFile}`).then(() => {
           this.playTextArray(data, t + 1);
           return;
         });

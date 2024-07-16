@@ -63,12 +63,7 @@ export class LessonComponent implements OnChanges, OnInit {
     this.location.back();
   }
 
-  getImage(): string {
-    const coverImage = this.itemDetails()?.imageUrl;
-    if (coverImage) return `${this.baseUrl}${coverImage}`;
-    else
-      return `${this.baseUrl}apps/assets/purple-people-eater.jpeg`;
-  }
+
 
   getImageThumbnail() {
     if (this.itemDetails()?.imageUrl) {
