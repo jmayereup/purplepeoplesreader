@@ -1,0 +1,15 @@
+    <div class="grid max-h-screen grid-cols-1 gap-1 px-2 my-2 overflow-y-auto sm:grid-cols-2">
+        @for (item of allLessons(); track item.id) {
+        <div
+            class="grid items-center self-center justify-between w-full grid-cols-8 gap-2 p-2 mx-auto rounded-md shadow-md overflow-clip bg-lbl-purple-200">
+            <img class="self-center object-cover h-16 min-w-full col-span-2 mx-auto rounded-md shadow-md"
+                [src]="getImageThumbnail(item)" [routerLink]="['/', item.language, item.id]" queryParamsHandling="preserve"
+                loading="lazy" alt="thumbnail">
+            <div class="col-span-5" [routerLink]="['/', item.language, item.id]" queryParamsHandling="preserve">
+                <h2 class="p-0 m-0 text-sm font-semibold text-gray-800 overflow-clip whitespace-nowrap">
+                    {{item.title.slice(0,80)}}</h2>
+                <p class="text-sm whitespace-nowrap overflow-clip">{{removeMarkdown(item.content.slice(0,50))}}</p>
+            </div>
+        </div>
+        }
+    </div>
