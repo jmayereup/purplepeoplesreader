@@ -81,6 +81,7 @@ export class LessonListComponent implements OnChanges, OnInit {
   getImageThumbnail(item: LessonsResponse) {
     if (item.imageUrl) {
       const baseName = item.imageUrl.substring(item.imageUrl.lastIndexOf('/') + 1, item.imageUrl.lastIndexOf('.'));
+      console.log(baseName);
       const thumbnailUrl = `apps/assets/thumbnails/${baseName}_thumbnail.png`;
       return this.baseUrl + thumbnailUrl;
     }
