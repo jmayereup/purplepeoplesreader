@@ -72,12 +72,14 @@ export class DataResolver implements Resolve<LessonsResponse | null> {
         // this.itemDetails.set(data);
         console.log('fetched details in resolver - ', data?.title);
     
-        function getImage(): string {
-          const coverImage = data?.imageUrl;
-          if (coverImage) return `${baseUrl}${coverImage}`;
-          else
-            return `${baseUrl}apps/assets/purple-people-eater.jpeg`;
+         function getImage(): string {
+          const imageUrl = data?.imageUrl || 'purple-people-eater.png';
+          const coverImage = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+          console.log("cover image", coverImage);
+      
+          return `${baseUrl}apps/assets/${coverImage}`;
         }
+
         observer.next(data); // Emit the data through Observable
         observer.complete();
       }).catch(err => {

@@ -1,4 +1,4 @@
-import { Component, Input, inject, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, inject, OnChanges, OnInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { TagChooserComponent } from "../tag-chooser/tag-chooser.component";
@@ -29,25 +29,35 @@ export class LessonListComponent implements OnChanges, OnInit {
   loading = this.store.lessons.loading;
   baseUrl = this.store.app.baseUrl;
 
-  constructor() { }
+  constructor() {
+    // effect(() => {
+    //   this.store.lessons.results();
+    //   this.loadLessons();
+    // })
+  }
 
   ngOnInit() {
-    if (this.type == "user") this.resultList = this.store.lessons.userResults;
+    this.resultList.set(null);
     this.loadLessons();
   }
 
   ngOnChanges() {
+    this.resultList.set(null)
     this.loadLessons();
     console.log("ngOnChanges");
   }
 
   loadLessons() {
     console.log("Loading lessons");
-    if (this.resultList && this.resultList()!.length > 0) {
-      return;
+    if (this.type == "user") {
+      this.store.lessons.fetchUserCreatedLessons(this.store.user.userId()!).then(() => {
+        this.resultList = this.store.lessons.userResults;
+      });
+      }
+    else {
+      this.store.lessons.fetchTagResults();
+      this.resultList = this.store.lessons.results;
     }
-    if (this.type == "user") this.store.lessons.fetchUserCreatedLessons(this.store.user.userId()!);
-    else this.store.lessons.fetchTagResults();
   }
 
 
@@ -68,7 +78,7 @@ export class LessonListComponent implements OnChanges, OnInit {
     }
   }
 
-  getImage(item: LessonsResponse) {
+  getImageThumbnail(item: LessonsResponse) {
     if (item.imageUrl) {
       const baseName = item.imageUrl.substring(item.imageUrl.lastIndexOf('/') + 1, item.imageUrl.lastIndexOf('.'));
       const thumbnailUrl = `apps/assets/thumbnails/${baseName}_thumbnail.png`;
@@ -77,13 +87,7 @@ export class LessonListComponent implements OnChanges, OnInit {
     return this.baseUrl + "apps/assets/thumbnails/purple-people-eater_thumbnail.png";
   }
   
-  
 
-//   removeMarkdown(content: string): string {
-//     if (!content) { return ''; } // Handle empty input
-//     return content.slice(0, 50)
-//                   .replace(/[#_*\[\]\(\)]/g, "");
-// }
 
 removeMarkdown(content: string) {
   return stripMarkdown(content);

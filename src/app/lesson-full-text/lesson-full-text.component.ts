@@ -26,6 +26,7 @@ export class LessonDetailsComponent {
   languageReactorUrl = 'https://www.languagereactor.com/text'; // Replace with your actual URL
 
   textOrUrl = '';
+  imageUrl = '';
 
   @ViewChild(PlayButtonComponent) playButton!: PlayButtonComponent;
 
@@ -33,7 +34,7 @@ export class LessonDetailsComponent {
     effect(() => {
       this.itemDetails();
       this.textOrUrl = this.itemDetails()?.audioUrl || '';
-
+      this.imageUrl = this.getImage();
     });
   }
 
@@ -77,8 +78,8 @@ export class LessonDetailsComponent {
   }
 
   getImage(): string {
-    const imageUrl = this.itemDetails()?.imageUrl || 'purple-people-eater.png';
-    const coverImage = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+    this.imageUrl = this.itemDetails()?.imageUrl || 'purple-people-eater.png';
+    const coverImage = this.imageUrl.substring(this.imageUrl.lastIndexOf('/') + 1);
     console.log("cover image", coverImage);
 
     return `${this.baseUrl}apps/assets/${coverImage}`;
