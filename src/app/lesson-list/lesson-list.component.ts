@@ -1,4 +1,4 @@
-import { Component, Input, inject, OnChanges, OnInit, effect } from '@angular/core';
+import { Component, Input, inject, OnChanges, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { TagChooserComponent } from "../tag-chooser/tag-chooser.component";
@@ -30,10 +30,7 @@ export class LessonListComponent implements OnChanges, OnInit {
   baseUrl = this.store.app.baseUrl;
 
   constructor() {
-    // effect(() => {
-    //   this.store.lessons.results();
-    //   this.loadLessons();
-    // })
+
   }
 
   ngOnInit() {
@@ -42,20 +39,15 @@ export class LessonListComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges() {
-    this.resultList.set(null)
-    this.loadLessons();
     console.log("ngOnChanges");
   }
 
   loadLessons() {
     console.log("Loading lessons");
     if (this.type == "user") {
-      this.store.lessons.fetchUserCreatedLessons(this.store.user.userId()!).then(() => {
-        this.resultList = this.store.lessons.userResults;
-      });
+      this.resultList = this.store.lessons.userResults;
       }
     else {
-      this.store.lessons.fetchTagResults();
       this.resultList = this.store.lessons.results;
     }
   }
@@ -81,7 +73,6 @@ export class LessonListComponent implements OnChanges, OnInit {
   getImageThumbnail(item: LessonsResponse) {
     if (item.imageUrl) {
       const baseName = item.imageUrl.substring(item.imageUrl.lastIndexOf('/') + 1, item.imageUrl.lastIndexOf('.'));
-      console.log(baseName);
       const thumbnailUrl = `apps/assets/thumbnails/${baseName}_thumbnail.png`;
       return this.baseUrl + thumbnailUrl;
     }
