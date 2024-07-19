@@ -10,6 +10,7 @@ export class DbService {
   db = new PocketBase('https://www.purplepeoplesreader.com') as TypedPocketBase;
 
   allLessons = signal<LessonsResponse[] | null>(null);
+  lesson = signal<LessonsRecord | null>(null);
   baseUrl = `https://www.purplepeoplesreader.com/`;
 
   constructor() {
@@ -25,6 +26,14 @@ export class DbService {
         this.allLessons.set(res);
         console.log('lessonlist', res);}
     );
+
+  }
+
+  async fetchLesson(id: string) {
+    this.db.collection('lessons').getOne(id).then((res) => {
+      console.log("fetching", id);
+      this.lesson.set(res);
+    })
 
   }
 

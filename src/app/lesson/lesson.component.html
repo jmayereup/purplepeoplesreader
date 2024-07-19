@@ -1,0 +1,94 @@
+<h1>
+    {{lesson()?.title}}
+</h1>
+<p>
+    {{lesson()?.content}}
+</p>
+<article [lang]="lesson()?.language">
+    <section>
+        <div class="flex flex-col gap-2 p-2">
+            <div class="flex flex-row justify-end -my-2">
+                @if (lesson()) {
+                @if (lesson()?.videoUrl) {
+                <div class="-ml-2 -mr-2">
+                    <!-- <video-player [videoUrl]='lesson()?.videoUrl!'></video-player> -->
+                </div>
+                } @else {
+                <section class="p-4 mx-auto mb-2 rounded-lg reading">
+                    <img class="mx-auto rounded-lg" [src]="imageUrl" alt="cover image">
+                </section>
+                }
+
+
+                <section class="flex flex-col flex-wrap p-4 mb-2 rounded-lg reading">
+                    <div #fullText translate="no" class="max-h-[60vh] overflow-y-auto">
+                        <div class="flex flex-row flex-wrap justify-around">
+                            <h2 class="m-0 font-bold text-center">{{lesson()?.title}}</h2>
+                        </div>
+                        <div id='full-text' class="full-text"
+                            [innerHTML]="(lesson()?.content || '') | markdown | async"></div>
+                    </div>
+                    <p class="mt-2 text-sm">
+                        Tags:
+                        {{lesson()?.tags}}
+                    </p>
+                </section>
+                <!-- <section>
+                    <div class="flex flex-row justify-between mb-2 rounded-lg bg-slate-300">
+                        <details class="w-full m-1 text-black bg-transparent">
+                            <summary class="w-full">Settings</summary>
+                            <app-change-settings></app-change-settings>
+                        </details>
+                    </div>
+                </section> -->
+                <section class="p-4 rounded-lg reading">
+                    <h2 class="mb-0 text-center">Line-By-Line</h2>
+                    <p class="mb-0 text-xs text-center" translate="yes">You can use a web browser like Chrome or Edge to
+                        provide
+                        translations. คุณสามารถใช้เว็บเบราว์เซอร์เช่น Chrome หรือ Edge เพื่อแปลได้ <a
+                            href="https://youtu.be/Jfv9bKDYxvM">(Instructions)</a> Clicking on a line will also play
+                        audio in
+                        most
+                        browsers.</p>
+
+                    <div class="flex flex-row flex-wrap justify-around gap-1">
+                        <!-- <button class="flex justify-center gap-2 mt-2 button" (click)="readAll()">
+                          <img class="h-5" alt="play-pause button" src="../../assets/icons/headphones.svg"> 
+                          @if(audioPlaying()) { Playing...}
+                          @else {Full Text}
+                        </button> -->
+                        <button class="flex items-center justify-center gap-2 sm:w-fit button" type="button"
+                            (click)="showTranslation = !showTranslation">Toggle Translations</button>
+                        <button type="button" class="flex items-center sm:w-fit button"
+                            (click)="openLanguageReactor()">Use Language
+                            Reactor</button>
+                        <!-- <button type="button" class="flex items-center sm:w-fit button" (click)="addToPlaylist()">Add to
+                            Playlist</button> -->
+                        @if (textOrUrl) {
+                        <!-- <app-play-button #playButton [textSource]="textOrUrl"></app-play-button> -->
+                        } @else {
+                        <button type="button" class="button" (click)="readAll()">Read (TTS)</button>
+                        }
+                    </div>
+                    <div class="flex flex-row flex-wrap justify-around">
+                        <h2 class="m-0 font-bold text-center">{{lesson()?.title}}</h2>
+                    </div>
+
+                    <div [innerHTML]="(lesson()?.contentLines || '') | markdown | async" (click)="readThis($event)"
+                        [ngClass]="showTranslation ? 'shown' : 'hide-translations'"></div>
+                </section>
+
+
+
+
+                <!-- <app-lesson-full-text></app-lesson-full-text> -->
+                }
+            </div>
+            @if (!lesson()) {
+            <div class="text-lbl-purple-700">
+                <app-spinner></app-spinner>
+            </div>
+            }
+        </div>
+    </section>
+</article>

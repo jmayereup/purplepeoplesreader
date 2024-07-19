@@ -3,11 +3,13 @@ import { DbService } from '../services/db.service';
 import { LessonsResponse } from '../shared/pocketbase-types';
 import { stripMarkdown } from '../shared/utils';
 import { RouterLink } from '@angular/router';
+import { SpinnerComponent } from "../spinner/spinner.component";
+import { NavPillsComponent } from "../nav-pills/nav-pills.component";
 
 @Component({
   selector: 'app-lesson-list',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, SpinnerComponent, NavPillsComponent],
   templateUrl: './lesson-list.component.html',
   styleUrl: './lesson-list.component.css'
 })
