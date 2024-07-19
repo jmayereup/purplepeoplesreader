@@ -1,4 +1,4 @@
-import { Component, effect, inject, input } from '@angular/core';
+import { Component, effect, inject, input, signal } from '@angular/core';
 import { DbService } from '../services/db.service';
 import { SpinnerComponent } from "../spinner/spinner.component";
 import { AsyncPipe, DOCUMENT, NgClass } from '@angular/common';
@@ -14,14 +14,13 @@ import { PlayButtonComponent } from "../play-button/play-button.component";
 })
 export class LessonComponent {
 
-  id = input<string>()
+  id = input<string>();
   db = inject(DbService);
   document = inject(DOCUMENT);
   lesson = this.db.lesson;
   baseUrl = this.db.baseUrl;
-  imageUrl: string = 'purple-peoples-reader';
+  imageUrl = signal<string>('purple-peoples-reader.png');
   showTranslation = true;
-  textOrUrl = "";
   languageReactorUrl = 'https://www.languagereactor.com/text'; 
 
   constructor() {
@@ -34,12 +33,14 @@ export class LessonComponent {
     })
   }
 
-  getImage(): string {
-    this.imageUrl = this.lesson()?.imageUrl || 'purple-people-eater.png';
-    const coverImage = this.imageUrl.substring(this.imageUrl.lastIndexOf('/') + 1);
-    console.log("cover image", coverImage);
-
-    return `${this.baseUrl}apps/assets/${coverImage}`;
+  getImage() {
+    if (!(this.lesson()?.imageUrl)) {
+      this.imageUrl.set(`${this.baseUrl}apps/assets/purple-people-eater.jpg`);
+      return
+    }
+    const imageFile = this.lesson()?.imageUrl!.substring(this.lesson()!.imageUrl!.lastIndexOf('/') + 1);
+    this.imageUrl.set(`${this.baseUrl}apps/assets/${imageFile}`);
+    return
   }
 
   openLanguageReactor() {
@@ -61,8 +62,8 @@ export class LessonComponent {
 
   }
 
-  readAll(){
+  // readAll(text: string = 'No Text Found') {
 
-  }
+  // }
 
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { LANG_VALUES, TAG_VALUES } from '../shared/utils';
 import { RouterLink } from '@angular/router';
 import { UpperCasePipe } from '@angular/common';
@@ -12,6 +12,7 @@ import { UpperCasePipe } from '@angular/common';
 })
 export class NavPillsComponent {
    tags = TAG_VALUES;
-   langs = LANG_VALUES
+   langs = LANG_VALUES;
+
 
 }

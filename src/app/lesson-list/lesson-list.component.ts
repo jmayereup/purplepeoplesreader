@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { DbService } from '../services/db.service';
 import { LessonsResponse } from '../shared/pocketbase-types';
 import { stripMarkdown } from '../shared/utils';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SpinnerComponent } from "../spinner/spinner.component";
 import { NavPillsComponent } from "../nav-pills/nav-pills.component";
 
@@ -13,13 +13,26 @@ import { NavPillsComponent } from "../nav-pills/nav-pills.component";
   templateUrl: './lesson-list.component.html',
   styleUrl: './lesson-list.component.css'
 })
-export class LessonListComponent {
+export class LessonListComponent implements OnInit {
 
   db = inject(DbService);
+  route = inject(ActivatedRoute);
   allLessons = this.db.allLessons;
   baseUrl = this.db.baseUrl;
 
+  language = "";
+  tag = "";
+  
   constructor() {
+
+  }
+
+  ngOnInit() {
+    this.route.queryParamMap.subscribe(params => {
+      this.language = params.get('lang') || 'English';
+      this.tag = params.get('tag') || 'A1';
+      this.db.fetchLessons(this.language, this.tag);
+    })
 
   }
 

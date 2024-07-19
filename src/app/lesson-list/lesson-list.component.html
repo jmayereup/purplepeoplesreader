@@ -1,6 +1,3 @@
-<div class="w-full p-1 my-0 bg-purple-100">
-    <app-nav-pills></app-nav-pills>
-</div>
 <div class="grid grid-cols-1 gap-1 px-2 my-0 overflow-y-auto bg-purple-100 sm:grid-cols-2 lg:grid-cols-3">
         
         @if (allLessons()) {
@@ -8,9 +5,9 @@
             <div
                 class="grid items-center self-center justify-between w-full grid-cols-8 gap-2 p-2 mx-auto rounded-md shadow-md overflow-clip bg-lbl-purple-200">
                 <img class="self-center object-cover h-16 min-w-full col-span-2 mx-auto rounded-md shadow-md"
-                    [src]="getImageThumbnail(item)" [routerLink]="['/list-english/', item.id]" queryParamsHandling="preserve"
+                    [src]="getImageThumbnail(item)" [routerLink]="['/lesson/', item.id]"
                     loading="lazy" alt="thumbnail">
-                <div class="col-span-5" [routerLink]="['/lesson/', item.id]" queryParamsHandling="preserve">
+                <div class="col-span-5" [routerLink]="['/lesson/', item.id]">
                     <h2 class="p-0 m-0 text-sm font-semibold text-purple-900 overflow-clip whitespace-nowrap">
                         {{item.title.slice(0,80)}}</h2>
                     <p class="text-sm text-purple-800 whitespace-nowrap overflow-clip">{{removeMarkdown(item.content.slice(0,50))}}</p>

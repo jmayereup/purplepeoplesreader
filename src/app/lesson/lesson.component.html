@@ -4,12 +4,13 @@
             <div class="justify-end -my-2">
                 @if (lesson()?.videoUrl) {
                 <div class="-ml-2 -mr-2">
+                    <p>Implement Video Player</p>
                     <!-- <video-player [videoUrl]='lesson()?.videoUrl!'></video-player> -->
                 </div>
                 }
                 @else {
                 <section class="p-4 mx-auto mb-2 rounded-lg reading">
-                    <img class="mx-auto rounded-lg" [src]="imageUrl" alt="cover image">
+                    <img class="mx-auto rounded-lg" [src]="imageUrl()" alt="cover image">
                 </section>
                 }
 
@@ -26,19 +27,10 @@
                         {{lesson()?.tags}}
                     </p>
                 </section>
-                <!-- <section>
-                    <div class="flex flex-row justify-between mb-2 rounded-lg bg-slate-300">
-                        <details class="w-full m-1 text-black bg-transparent">
-                            <summary class="w-full">Settings</summary>
-                            <app-change-settings></app-change-settings>
-                        </details>
-                    </div>
-                </section> -->
                 <section class="p-4 rounded-lg reading">
                     <h2 class="mb-0 text-center">Line-By-Line</h2>
-                    <p class="mb-0 text-xs text-center" translate="yes">You can use a web browser like Chrome or Edge to
-                        provide
-                        translations. คุณสามารถใช้เว็บเบราว์เซอร์เช่น Chrome หรือ Edge เพื่อแปลได้ <a
+                    <p class="mb-0 text-xs text-center" translate="yes">You can use a web browser like Chrome to
+                        provide translations. คุณสามารถใช้เว็บเบราว์เซอร์เช่น Chrome เพื่อแปลได้ <a
                             href="https://youtu.be/Jfv9bKDYxvM">(Instructions)</a> Clicking on a line will also play
                         audio in
                         most
@@ -53,15 +45,15 @@
                         <button class="flex items-center justify-center gap-2 sm:w-fit button" type="button"
                             (click)="showTranslation = !showTranslation">Toggle Translations</button>
                         <button type="button" class="flex items-center sm:w-fit button"
-                            (click)="openLanguageReactor()">Use Language
-                            Reactor</button>
+                            (click)="openLanguageReactor()">Read in Language Reactor</button>
                         <!-- <button type="button" class="flex items-center sm:w-fit button" (click)="addToPlaylist()">Add to
                             Playlist</button> -->
-                        @if (textOrUrl) {
-                        <!-- <app-play-button #playButton [textSource]="textOrUrl"></app-play-button> -->
-                        } @else {
-                        <button type="button" class="button" (click)="readAll()">Read (TTS)</button>
-                        }
+                        @if (lesson()?.audioUrl) {
+                        <app-play-button #playButton [audioUrl]="lesson()?.audioUrl"></app-play-button>
+                        } 
+                        <!-- @else {
+                        <button type="button" class="button" (click)="readAll(lesson()?.content)">Read (TTS)</button>
+                        } -->
                     </div>
                     <div class="flex flex-row flex-wrap justify-around">
                         <h2 class="m-0 font-bold text-center">{{lesson()?.title}}</h2>

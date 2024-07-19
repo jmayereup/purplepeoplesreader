@@ -38,16 +38,11 @@ export enum LessonsTagsOptions {
 	"A1" = "A1",
 	"A2" = "A2",
 	"B1" = "B1",
-	"B2" = "B2",
-	"CONVERSATION" = "CONVERSATION",
 	"STORY" = "STORY",
-	"SCHOOL" = "SCHOOL",
+	"CONVERSATION" = "CONVERSATION",
 	"GRAMMAR" = "GRAMMAR",
 	"NON-FICTION" = "NON-FICTION",
-	"SCIENCE" = "SCIENCE",
-	"NEWS" = "NEWS",
 	"VIDEO" = "VIDEO",
-	"OTHER" = "OTHER",
 }
 
 export enum LessonsLanguageOptions {
@@ -55,7 +50,7 @@ export enum LessonsLanguageOptions {
 	"Thai" = "Thai",
 	"German" = "German",
 	"French" = "French",
-	"spanish" = "Spanish",
+	"Spanish" = "Spanish",
 }
 export type LessonsRecord = {
 	content?: HTMLString
