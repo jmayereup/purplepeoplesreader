@@ -1,24 +1,17 @@
-<h1>
-    {{lesson()?.title}}
-</h1>
-<p>
-    {{lesson()?.content}}
-</p>
 <article [lang]="lesson()?.language">
     <section>
         <div class="flex flex-col gap-2 p-2">
-            <div class="flex flex-row justify-end -my-2">
-                @if (lesson()) {
+            <div class="justify-end -my-2">
                 @if (lesson()?.videoUrl) {
                 <div class="-ml-2 -mr-2">
                     <!-- <video-player [videoUrl]='lesson()?.videoUrl!'></video-player> -->
                 </div>
-                } @else {
+                }
+                @else {
                 <section class="p-4 mx-auto mb-2 rounded-lg reading">
                     <img class="mx-auto rounded-lg" [src]="imageUrl" alt="cover image">
                 </section>
                 }
-
 
                 <section class="flex flex-col flex-wrap p-4 mb-2 rounded-lg reading">
                     <div #fullText translate="no" class="max-h-[60vh] overflow-y-auto">
@@ -82,13 +75,7 @@
 
 
                 <!-- <app-lesson-full-text></app-lesson-full-text> -->
-                }
-            </div>
-            @if (!lesson()) {
-            <div class="text-lbl-purple-700">
-                <app-spinner></app-spinner>
-            </div>
-            }
+            </div> 
         </div>
     </section>
 </article>

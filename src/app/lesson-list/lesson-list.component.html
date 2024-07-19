@@ -8,7 +8,7 @@
             <div
                 class="grid items-center self-center justify-between w-full grid-cols-8 gap-2 p-2 mx-auto rounded-md shadow-md overflow-clip bg-lbl-purple-200">
                 <img class="self-center object-cover h-16 min-w-full col-span-2 mx-auto rounded-md shadow-md"
-                    [src]="getImageThumbnail(item)" [routerLink]="['/', item.language, item.id]" queryParamsHandling="preserve"
+                    [src]="getImageThumbnail(item)" [routerLink]="['/list-english/', item.id]" queryParamsHandling="preserve"
                     loading="lazy" alt="thumbnail">
                 <div class="col-span-5" [routerLink]="['/lesson/', item.id]" queryParamsHandling="preserve">
                     <h2 class="p-0 m-0 text-sm font-semibold text-purple-900 overflow-clip whitespace-nowrap">

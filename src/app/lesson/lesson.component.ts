@@ -1,14 +1,14 @@
 import { Component, effect, inject, input } from '@angular/core';
 import { DbService } from '../services/db.service';
 import { SpinnerComponent } from "../spinner/spinner.component";
-import { AsyncPipe, NgClass } from '@angular/common';
+import { AsyncPipe, DOCUMENT, NgClass } from '@angular/common';
 import { MarkdownPipe } from 'ngx-markdown';
 import { PlayButtonComponent } from "../play-button/play-button.component";
 
 @Component({
   selector: 'app-lesson',
   standalone: true,
-  imports: [SpinnerComponent, AsyncPipe, MarkdownPipe, PlayButtonComponent, NgClass],
+  imports: [SpinnerComponent, AsyncPipe, PlayButtonComponent, NgClass, MarkdownPipe],
   templateUrl: './lesson.component.html',
   styleUrl: './lesson.component.css'
 })
@@ -16,7 +16,7 @@ export class LessonComponent {
 
   id = input<string>()
   db = inject(DbService);
-  document = inject(Document);
+  document = inject(DOCUMENT);
   lesson = this.db.lesson;
   baseUrl = this.db.baseUrl;
   imageUrl: string = 'purple-peoples-reader';
