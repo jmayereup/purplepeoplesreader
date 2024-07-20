@@ -19,7 +19,7 @@ export class LessonComponent {
   document = inject(DOCUMENT);
   lesson = this.db.lesson;
   baseUrl = this.db.baseUrl;
-  imageUrl = signal<string>('purple-peoples-reader.png');
+  imageUrl = this.db.imageUrl;
   showTranslation = true;
   languageReactorUrl = 'https://www.languagereactor.com/text'; 
 
@@ -27,20 +27,8 @@ export class LessonComponent {
 
     effect(() => {
       this.id();
-      this.db.fetchLesson(this.id() || 'none').then(() => {
-        this.getImage();
-      });
+      this.db.fetchLesson(this.id() || 'none')
     })
-  }
-
-  getImage() {
-    if (!(this.lesson()?.imageUrl)) {
-      this.imageUrl.set(`${this.baseUrl}apps/assets/purple-people-eater.jpg`);
-      return
-    }
-    const imageFile = this.lesson()?.imageUrl!.substring(this.lesson()!.imageUrl!.lastIndexOf('/') + 1);
-    this.imageUrl.set(`${this.baseUrl}apps/assets/${imageFile}`);
-    return
   }
 
   openLanguageReactor() {

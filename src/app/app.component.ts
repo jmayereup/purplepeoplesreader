@@ -21,7 +21,7 @@ export class AppComponent {
   }
   
   ngOnInit() {
-    // this.db.fetchAllLessons();
+    // this.db.fetchLessons
   }
 
 }

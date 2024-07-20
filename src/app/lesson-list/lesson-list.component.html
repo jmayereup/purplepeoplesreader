@@ -9,7 +9,7 @@
                     loading="lazy" alt="thumbnail">
                 <div class="col-span-5" [routerLink]="['/lesson/', item.id]">
                     <h2 class="p-0 m-0 text-sm font-semibold text-purple-900 overflow-clip whitespace-nowrap">
-                        {{item.title.slice(0,80)}}</h2>
+                        {{(item.title.slice(0,80))}}</h2>
                     <p class="text-sm text-purple-800 whitespace-nowrap overflow-clip">{{removeMarkdown(item.content.slice(0,50))}}</p>
                 </div>
             </div>
