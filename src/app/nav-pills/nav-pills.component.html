@@ -1,14 +1,14 @@
 <div class="flex flex-row flex-wrap justify-center gap-1 mx-auto mt-2">
-    @for (lang of langs; track $index) {
-      <a [routerLink]="['/list']" [queryParams]="{lang: lang}" queryParamsHandling="merge" class="m-0">
-          <button class="text-gray-200 bg-lbl-purple-500 pills border-blue focus:bg-blue-700 hover:bg-blue-700 ">{{lang | uppercase }}</button>
+    @for (l of langs; track $index) {
+      <a [routerLink]="['/list/', l]" [queryParams]="{lang: l}" queryParamsHandling="" class="m-0">
+          <button class="text-gray-200 bg-lbl-purple-500 pills border-blue focus:bg-blue-700 hover:bg-blue-700 ">{{l | uppercase }}</button>
       </a>
     }
 </div>
 <div class="flex flex-row flex-wrap justify-center gap-1 mx-auto my-1">
-    @for (tag of tags; track $index) {
-      <a [routerLink]="['/list']" [queryParams]="{tag: tag}" queryParamsHandling="merge" class="m-0">
-          <button class="text-gray-200 bg-lbl-purple-500 pills border-blue focus:bg-blue-600 hover:bg-blue-600 ">{{tag}}</button>
+    @for (t of tags; track $index) {
+      <a [routerLink]="['/list', lang(), t]" [queryParams]="{tag: t}" queryParamsHandling="" class="m-0">
+          <button class="text-gray-200 bg-lbl-purple-500 pills border-blue focus:bg-blue-600 hover:bg-blue-600 ">{{t}}</button>
       </a>
     }
   </div>

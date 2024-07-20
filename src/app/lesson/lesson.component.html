@@ -4,13 +4,12 @@
             <div class="justify-end -my-2">
                 @if (lesson()?.videoUrl) {
                 <div class="-ml-2 -mr-2">
-                    <p>Implement Video Player</p>
-                    <!-- <video-player [videoUrl]='lesson()?.videoUrl!'></video-player> -->
+                    <app-play-video [videoUrl]="lesson()?.videoUrl"></app-play-video>
                 </div>
                 }
                 @else {
-                <section class="p-4 mx-auto mb-2 rounded-lg reading">
-                    <img class="mx-auto rounded-lg" [src]="imageUrl()" alt="cover image">
+                <section class="p-4 mx-auto my-2 rounded-lg reading">
+                        <img class="mx-auto rounded-lg" [ngSrc]="imageUrl()" alt="cover image" width="400" height="400">
                 </section>
                 }
 
@@ -37,23 +36,13 @@
                         browsers.</p>
 
                     <div class="flex flex-row flex-wrap justify-around gap-1">
-                        <!-- <button class="flex justify-center gap-2 mt-2 button" (click)="readAll()">
-                          <img class="h-5" alt="play-pause button" src="../../assets/icons/headphones.svg"> 
-                          @if(audioPlaying()) { Playing...}
-                          @else {Full Text}
-                        </button> -->
                         <button class="flex items-center justify-center gap-2 sm:w-fit button" type="button"
                             (click)="showTranslation = !showTranslation">Toggle Translations</button>
                         <button type="button" class="flex items-center sm:w-fit button"
                             (click)="openLanguageReactor()">Read in Language Reactor</button>
-                        <!-- <button type="button" class="flex items-center sm:w-fit button" (click)="addToPlaylist()">Add to
-                            Playlist</button> -->
-                        @if (lesson()?.audioUrl) {
-                        <app-play-button #playButton [audioUrl]="lesson()?.audioUrl"></app-play-button>
-                        } 
-                        <!-- @else {
-                        <button type="button" class="button" (click)="readAll(lesson()?.content)">Read (TTS)</button>
-                        } -->
+                            @if (this.audioUrl()) {
+                                <app-play-button #playButton [audioUrl]="this.audioUrl()!"></app-play-button>
+                            }
                     </div>
                     <div class="flex flex-row flex-wrap justify-around">
                         <h2 class="m-0 font-bold text-center">{{lesson()?.title}}</h2>
@@ -62,12 +51,10 @@
                     <div [innerHTML]="(lesson()?.contentLines || '') | markdown | async" (click)="readThis($event)"
                         [ngClass]="showTranslation ? 'shown' : 'hide-translations'"></div>
                 </section>
-
-
-
-
-                <!-- <app-lesson-full-text></app-lesson-full-text> -->
             </div> 
         </div>
+        <div class="flex justify-center mt-2 mb-4">
+            <button class="button" type="button" (click)="goBack()">Back</button>
+          </div>
     </section>
 </article>

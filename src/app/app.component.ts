@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { DbService } from './services/db.service';
 import { LessonListComponent } from "./lesson-list/lesson-list.component";
 import { NavPillsComponent } from "./nav-pills/nav-pills.component";
+import { debounceTime, shareReplay } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -15,13 +16,26 @@ export class AppComponent {
   title = 'ppr';
 
   db = inject(DbService);
-  lang = this.db.lesson()?.language?.toLowerCase();
+  route = inject(ActivatedRoute);
+  lang = this.db.language;
+  tag = this.db.tag;
 
   constructor() {
   }
   
   ngOnInit() {
-    // this.db.fetchLessons
+    const queryParamsSub = this.route.queryParamMap.pipe(
+      shareReplay(1)
+    )
+    .subscribe(
+      params => {
+      let lang = params.get('lang') || this.lang();
+      let tag = params.get('tag') || this.tag();
+      this.lang.set(lang);
+      this.tag.set(tag);
+      }
+    )
+    
   }
 
 }

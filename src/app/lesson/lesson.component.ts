@@ -1,14 +1,15 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
 import { DbService } from '../services/db.service';
 import { SpinnerComponent } from "../spinner/spinner.component";
-import { AsyncPipe, DOCUMENT, NgClass } from '@angular/common';
+import { AsyncPipe, DOCUMENT, Location, NgClass, NgOptimizedImage } from '@angular/common';
 import { MarkdownPipe } from 'ngx-markdown';
 import { PlayButtonComponent } from "../play-button/play-button.component";
+import { PlayVideoComponent } from "../play-video/play-video.component";
 
 @Component({
   selector: 'app-lesson',
   standalone: true,
-  imports: [SpinnerComponent, AsyncPipe, PlayButtonComponent, NgClass, MarkdownPipe],
+  imports: [SpinnerComponent, AsyncPipe, PlayButtonComponent, NgClass, MarkdownPipe, NgOptimizedImage, PlayVideoComponent],
   templateUrl: './lesson.component.html',
   styleUrl: './lesson.component.css'
 })
@@ -17,9 +18,11 @@ export class LessonComponent {
   id = input<string>();
   db = inject(DbService);
   document = inject(DOCUMENT);
+  location = inject(Location);
   lesson = this.db.lesson;
   baseUrl = this.db.baseUrl;
   imageUrl = this.db.imageUrl;
+  audioUrl = this.db.audioUrl;
   showTranslation = true;
   languageReactorUrl = 'https://www.languagereactor.com/text'; 
 
@@ -27,7 +30,7 @@ export class LessonComponent {
 
     effect(() => {
       this.id();
-      this.db.fetchLesson(this.id() || 'none')
+      this.db.fetchLesson(this.id() || 'none');
     })
   }
 
@@ -44,6 +47,10 @@ export class LessonComponent {
         alert("Failed to Copy.");
       });
 
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   readThis(ev: Event) {
