@@ -4,11 +4,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "npm run fetch-data && ng build",
+    "build": "npm run fetch-data && generate-routes && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:ppr": "node dist/ppr/server/server.mjs",
-    "fetch-data": "node fetch-json.js"
+    "fetch-data": "node fetch-json.js",
+    "generate-routes": "node generate-routes.js"
   },
   "private": true,
   "dependencies": {

@@ -24,7 +24,7 @@ export class DbService {
 
   async fetchLessons(lang: string = 'English', tag: string = "A1") {
     try {
-      const lessons = await lastValueFrom(this.http.get<any>('assets/all-records.json'));
+      const lessons = await lastValueFrom(this.http.get<any>(`assets/all-records.json`));
       const filteredLessons = lessons?.items.filter((lesson: LessonsResponse) =>
         lesson.language === lang && lesson.tags.toString().includes(tag) && lesson.shareable
       ).sort((a: { created: string | number | Date; }, b: { created: string | number | Date; }) => new Date(b.created).getTime() - new Date(a.created).getTime());
@@ -61,28 +61,5 @@ export class DbService {
     return
   }
 
-
-  // async fetchLessons(lang: string = 'English', tag: string = "A1") {
-  //   const lessons = await this.db.collection('lessons').getFullList({
-  //     filter: `language='${lang}' && tags~'${tag}' && shareable=true`,
-  //     sort: '-created',
-  //   })
-  //   this.allLessons.set(lessons);
-  //   return lessons;
-  // }
-
-  // async fetchLesson(id: string) {
-  //   const lesson = await this.db.collection('lessons').getOne(id)
-  //   this.lesson.set(lesson);
-  //   return lesson;
-  // }
-
-  async fetchAllRoutes() {
-    // const routes = await this.db.collection('lessons').getFullList({
-    //   fields: 'id',
-    // })
-    // this.allRoutes.set(routes);
-    // return routes;
-  }
 
 }
