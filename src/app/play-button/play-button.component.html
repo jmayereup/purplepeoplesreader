@@ -1,5 +1,5 @@
-@if (path()) {
-    <audio #audioButton controls [src]="path()"></audio>
+@if (audioUrl()) {
+    <audio #audioButton controls [src]="audioUrl()"></audio>
 }
 @else {
     <button class="text-red-500">No Audio Found</button>

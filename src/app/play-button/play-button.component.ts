@@ -1,5 +1,4 @@
-import { Component, effect, inject, input, OnChanges, Signal, signal } from '@angular/core';
-import { DbService } from '../services/db.service';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-play-button',
@@ -8,23 +7,13 @@ import { DbService } from '../services/db.service';
   templateUrl: './play-button.component.html',
   styleUrl: './play-button.component.css'
 })
-export class PlayButtonComponent implements OnChanges {
+export class PlayButtonComponent {
 
-  db = inject(DbService);
-  audioUrl = input<string>("");
-  path = signal<string | undefined>(undefined);
+  audioUrl = input<string | undefined>(undefined);
 
   constructor() {
   }
 
-  ngOnChanges() {
-    this.fixUrl(this.audioUrl());
-  }
-
-  fixUrl(audioUrl: string | undefined) {
-    const audioFile = audioUrl?.substring(audioUrl.lastIndexOf('/') +1);
-    if (audioFile) this.path.set(`https://www.purplepeoplesreader.com/apps/assets/${audioFile}`);
-  }
 
 
 

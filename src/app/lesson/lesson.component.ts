@@ -1,10 +1,11 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { Component, effect, inject, input } from '@angular/core';
 import { DbService } from '../services/db.service';
 import { SpinnerComponent } from "../spinner/spinner.component";
 import { AsyncPipe, DOCUMENT, Location, NgClass, NgOptimizedImage } from '@angular/common';
 import { MarkdownPipe } from 'ngx-markdown';
 import { PlayButtonComponent } from "../play-button/play-button.component";
 import { PlayVideoComponent } from "../play-video/play-video.component";
+import { MetaService } from '../services/meta.service';
 
 @Component({
   selector: 'app-lesson',
@@ -17,21 +18,23 @@ export class LessonComponent {
 
   id = input<string>();
   db = inject(DbService);
+  meta = inject(MetaService);
   document = inject(DOCUMENT);
   location = inject(Location);
   lesson = this.db.lesson;
   baseUrl = this.db.baseUrl;
   imageUrl = this.db.imageUrl;
   audioUrl = this.db.audioUrl;
+  lessonTitle = this.db.lessonTitle;
   showTranslation = true;
   languageReactorUrl = 'https://www.languagereactor.com/text'; 
 
   constructor() {
 
-    effect(() => {
-      this.id();
-      this.db.fetchLesson(this.id() || 'none');
-    })
+  }
+  
+  ngOnInit() {
+    this.db.fetchLesson(this.id() || 'none').then(() => this.meta.setMetaTags());
   }
 
   openLanguageReactor() {

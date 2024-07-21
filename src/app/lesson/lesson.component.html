@@ -40,9 +40,7 @@
                             (click)="showTranslation = !showTranslation">Toggle Translations</button>
                         <button type="button" class="flex items-center sm:w-fit button"
                             (click)="openLanguageReactor()">Read in Language Reactor</button>
-                            @if (this.audioUrl()) {
-                                <app-play-button #playButton [audioUrl]="this.audioUrl()!"></app-play-button>
-                            }
+                                <app-play-button #playButton [audioUrl]="audioUrl()"></app-play-button>
                     </div>
                     <div class="flex flex-row flex-wrap justify-around">
                         <h2 class="m-0 font-bold text-center">{{lesson()?.title}}</h2>
