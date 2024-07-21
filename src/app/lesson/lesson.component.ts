@@ -7,6 +7,7 @@ import { PlayButtonComponent } from "../play-button/play-button.component";
 import { PlayVideoComponent } from "../play-video/play-video.component";
 import { MetaService } from '../services/meta.service';
 import { SpeakService } from '../services/speak.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-lesson',
@@ -23,20 +24,23 @@ export class LessonComponent implements OnChanges {
   document = inject(DOCUMENT);
   location = inject(Location);
   speakService = inject(SpeakService);
+  route = inject(ActivatedRoute);
   lesson = this.db.lesson;
   baseUrl = this.db.baseUrl;
   imageUrl = this.db.imageUrl;
   audioUrl = this.db.audioUrl;
   lessonTitle = this.db.lessonTitle;
   showTranslation = true;
-  languageReactorUrl = 'https://www.languagereactor.com/text'; 
+  languageReactorUrl = 'https://www.languagereactor.com/text';
+
+  data = { lesson: {}, lang: "", path: "" }
 
   constructor() {
 
   }
-  
+
   ngOnChanges() {
-    this.db.fetchLesson(this.id() || 'none').then(() => this.meta.setMetaTags());
+    console.log('onchanges called', this.id());
   }
 
   openLanguageReactor() {

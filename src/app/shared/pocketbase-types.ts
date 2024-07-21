@@ -49,8 +49,6 @@ export enum LessonsLanguageOptions {
 	"English" = "English",
 	"Thai" = "Thai",
 	"German" = "German",
-	"French" = "French",
-	"Spanish" = "Spanish",
 }
 export type LessonsRecord = {
 	content?: HTMLString

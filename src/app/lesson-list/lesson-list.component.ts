@@ -23,15 +23,16 @@ export class LessonListComponent implements OnChanges {
   allLessons = this.db.allLessons;
   baseUrl = this.db.baseUrl;
 
-  lang = input<string>()
-  tag = input<string>()
+  lang = input<string>('English');
+  tag = input<string>('A1');
   
   constructor() {
 
   }
 
   ngOnChanges() {
-    this.db.fetchLessons(this.lang(), this.tag()).then(() => this.meta.setMetaTags());
+    this.db.fetchLessons(this.lang(), this.tag()).then(() => 
+      this.meta.setMetaTags({title: this.lang().toUpperCase() + " " + this.tag() || "", image: this.baseUrl + "apps/assets/purple-people-eat.jpg", path: this.db.currentPath()},));
   }
 
   getImageThumbnail(item: LessonsResponse) {
