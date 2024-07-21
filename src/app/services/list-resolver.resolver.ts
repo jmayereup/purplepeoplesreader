@@ -9,5 +9,11 @@ export const listResolverResolver: ResolveFn<boolean> = (route, state) => {
   const lang = route.paramMap.get('lang') || "English";
   const tag = route.paramMap.get('tag') || "A1";
 
-  return db.fetchLessons(lang, tag).then(() => {return true});
+  return db.fetchLessons(lang, tag).then(() => {
+    console.log('Fetch completed');
+    return true;
+  }).catch(error => {
+    console.error('Fetch failed:', error);
+    return false;
+  });
 };

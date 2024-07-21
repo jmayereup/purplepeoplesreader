@@ -25,14 +25,19 @@ export class LessonListComponent implements OnChanges {
 
   lang = input<string>('English');
   tag = input<string>('A1');
-  
+
   constructor() {
 
   }
 
+  ngOnInit() {
+    this.db.language.set(this.lang());
+    (this.tag()) ? this.db.tag.set(this.tag()): this.db.tag.set('A1');
+  }
+
   ngOnChanges() {
     this.db.fetchLessons(this.lang(), this.tag()).then(() => 
-      this.meta.setMetaTags({title: this.lang().toUpperCase() + " " + this.tag() || "", image: this.baseUrl + "apps/assets/purple-people-eat.jpg", path: this.db.currentPath()},));
+      this.meta.setMetaTags({title: this.lang()?.toUpperCase() + " " + this.tag() || "", image: this.baseUrl + "/apps/assets/purple-people-eat.jpg", path: this.db.currentPath()},));
   }
 
   getImageThumbnail(item: LessonsResponse) {

@@ -1,27 +1,31 @@
-<div class="grid grid-cols-1 gap-1 px-2 my-0 overflow-y-auto bg-purple-100 sm:grid-cols-2 lg:grid-cols-3">
-        
-        @if (allLessons()) {
-            @for (item of allLessons(); track item.id) {
-            <div
-                class="grid items-center self-center justify-between w-full h-20 grid-cols-8 gap-2 p-2 mx-auto rounded-md shadow-md overflow-clip bg-lbl-purple-200">
-                <img class="self-center object-cover col-span-2 mx-auto rounded-md shadow-md" width="64" height="64"
-                    [ngSrc]="getImageThumbnail(item)" [routerLink]="['/lesson/', item.id]"
-                    loading="lazy" alt="thumbnail">
-                <div class="col-span-5" [routerLink]="['/lesson/', item.id]">
-                    <h2 class="p-0 m-0 text-sm font-semibold text-purple-900 overflow-clip whitespace-nowrap">
-                        {{(item.title.slice(0,80))}}</h2>
-                    <p class="text-sm text-purple-800 whitespace-nowrap overflow-clip">{{removeMarkdown(item.content.slice(0,50))}}</p>
-                </div>
-            </div>
-            }
-        }
-        @else {
-            <div class="flex items-center justify-center min-h-screen bg-purple-100">
-                <div class="text-center">
-                  <p class="mb-4 text-3xl font-bold text-purple-700">Sorry</p>
-                  <p class="text-2xl text-purple-500">I can't find any content with that tag.</p>
-                </div>
-              </div>
-        }
-        
+<div class="grid w-full grid-cols-1 gap-1 px-2 my-0 overflow-y-auto bg-purple-100 sm:grid-cols-2 lg:grid-cols-3">
+
+    @if (allLessons()) {
+    @for (item of allLessons(); track item.id) {
+    <div
+        class="grid items-center self-center justify-between w-full grid-cols-8 gap-2 p-2 mx-auto rounded-md shadow-md min-h-20 overflow-clip bg-lbl-purple-200">
+        <img class="self-center object-cover col-span-2 mx-auto rounded-md shadow-md" width="64" height="64"
+            [ngSrc]="getImageThumbnail(item)" [routerLink]="['/lesson/', item.id]" loading="lazy" alt="thumbnail">
+        <div class="col-span-5" [routerLink]="['/lesson/', item.id]">
+            <h2 class="p-0 m-0 text-sm font-semibold text-purple-900 overflow-clip whitespace-nowrap">
+                {{(item.title.slice(0,80))}}</h2>
+            <p class="text-sm text-purple-800 whitespace-nowrap overflow-clip">
+                {{removeMarkdown(item.content.slice(0,50))}}</p>
+        </div>
     </div>
+    }
+    }
+    @else {
+        <div class="items-center justify-center w-full col-span-3">
+            <div class="text-center text-purple-700">
+                <app-spinner></app-spinner>
+            </div>
+        </div>
+    }
+    @if (allLessons()?.length == 0) {
+        <div class="items-center justify-center w-full col-span-3 text-center text-purple-700">
+            <h1>No Lessons Available</h1>
+        </div>
+    }
+</div>
+

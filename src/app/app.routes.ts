@@ -6,10 +6,12 @@ import { dataResolverResolver } from './services/data-resolver.resolver';
 import { listResolverResolver } from './services/list-resolver.resolver';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'lesson/uh3a26d818fe08n', pathMatch: 'full'},
-    { path: 'list/:lang/:tag', 
+    { path: '', 
         component: LessonListComponent,
         resolve: {data: listResolverResolver}
+    },
+    { path: 'list/:lang/:tag', 
+        component: LessonListComponent
     },
     { path: 'list/:lang', component: LessonListComponent,
         resolve: {data: listResolverResolver}

@@ -1,19 +1,21 @@
 <div class="flex flex-row flex-wrap justify-center gap-1 mx-auto mt-2">
     @for (l of langs; track $index) {
-      <a [routerLink]="['/list/', l]" routerLinkActive="active-link" 
-      [routerLinkActiveOptions]="{exact: true}"
-      [queryParams]="{lang: l}" queryParamsHandling="" class="m-0">
-          <button class="text-gray-200 bg-lbl-purple-500 pills border-blue focus:bg-blue-700 hover:bg-blue-700 ">
+      <a [routerLink]="['/list/', l]"
+      class="m-0">
+          <button class="text-gray-200 bg-lbl-purple-500 pills border-blue focus:bg-blue-700 hover:bg-blue-700 "
+          [ngClass]="{'bg-blue-700': l == lang()}"
+          (click)="updateLang(l)">
             {{l | uppercase }}</button>
       </a>
     }
 </div>
 <div class="flex flex-row flex-wrap justify-center gap-1 mx-auto my-1">
     @for (t of tags; track $index) {
-      <a [routerLink]="['/list', lang(), t]" routerLinkActive="active-link" 
-      [routerLinkActiveOptions]="{exact: true}"
-      [queryParams]="{tag: t}" queryParamsHandling=""  class="m-0" >
-          <button class="text-gray-200 bg-lbl-purple-500 pills border-blue focus:bg-blue-600 hover:bg-blue-600">
+      <a [routerLink]="['/list', lang(), t]"  
+      class="m-0" >
+          <button class="text-gray-200 bg-lbl-purple-500 pills border-blue focus:bg-blue-700 hover:bg-blue-700"
+          [ngClass]="{'bg-blue-700': t == tag()}"
+          (click)="updateTag(t)">
             {{t}}</button>
       </a>
     }

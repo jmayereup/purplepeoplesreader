@@ -11,5 +11,8 @@ export const dataResolverResolver: ResolveFn<boolean> = (route, state) => {
   return db.fetchLesson(lessonId || "").then(
     () => {
       return true
+    }).catch(error => {
+      console.error('Fetch failed:', error);
+      return false;
     });
 };

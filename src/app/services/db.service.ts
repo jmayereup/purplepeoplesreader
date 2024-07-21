@@ -2,7 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { LessonsResponse } from '../shared/pocketbase-types';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
-import { assignLanguageCode } from '../shared/utils';
+import { addLineBreaksWithTranslatedDivs, assignLanguageCode } from '../shared/utils';
 import { Router } from '@angular/router';
 import { MetaService } from './meta.service';
 
@@ -28,6 +28,7 @@ export class DbService {
   langCode = signal<string>("en_US");
   tag = signal<string>("A1");
   currentPath = signal<string>(this.router.url);
+  
 
 
   
@@ -38,9 +39,10 @@ export class DbService {
 
   async fetchLessons(lang: string = 'English', tag: string = "A1") {
     try {
+      console.log('fetching lessons');
       const partialPath = this.router.url.split('?')[0];
       this.currentPath.set(this.baseUrl + partialPath);
-      this.imageUrl.set(this.baseUrl + 'apps/assets/purple-people-eater.jpg');
+      this.imageUrl.set(this.baseUrl + '/apps/assets/purple-people-eater.jpg');
       this.langCode.set(assignLanguageCode(lang || 'English'));
       this.lessonTitle.set(lang + ' - ' + tag + ' - The Purple Peoples Reader');
       const lessons = await lastValueFrom(this.http.get<any>(`assets/all-records.json`));
@@ -49,7 +51,7 @@ export class DbService {
         lesson.language === lang && lesson.tags.toString().includes(tag) && lesson.shareable
       ).sort((a: { created: string | number | Date; }, b: { created: string | number | Date; }) => new Date(b.created).getTime() - new Date(a.created).getTime());
 
-      (filteredLessons.length > 1) ? this.allLessons.set(filteredLessons): this.allLessons.set(null);
+      (filteredLessons.length > 1) ? this.allLessons.set(filteredLessons): this.allLessons.set([]);
       return filteredLessons as LessonsResponse[];
     } catch (error) {
       console.error('Error fetching lessons:', error);
@@ -63,6 +65,8 @@ export class DbService {
       const lessons = await lastValueFrom(this.http.get<{ items: LessonsResponse[] }>('assets/all-records.json'));
       const lesson = lessons?.items.find(lesson => lesson.id === id) || null;
       if (lesson) {
+        const formattedContentLines = addLineBreaksWithTranslatedDivs(lesson.content);
+        lesson.contentLines = formattedContentLines;
         this.lesson.set(lesson);
         this.imageUrl.set(this.formatImageUrl() || "");
         this.audioUrl.set(this.formatAudioUrl() || "");
