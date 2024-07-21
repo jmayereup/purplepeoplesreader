@@ -1,4 +1,4 @@
-import { Component, effect, inject, input } from '@angular/core';
+import { Component, inject, input, OnChanges } from '@angular/core';
 import { DbService } from '../services/db.service';
 import { SpinnerComponent } from "../spinner/spinner.component";
 import { AsyncPipe, DOCUMENT, Location, NgClass, NgOptimizedImage } from '@angular/common';
@@ -6,6 +6,7 @@ import { MarkdownPipe } from 'ngx-markdown';
 import { PlayButtonComponent } from "../play-button/play-button.component";
 import { PlayVideoComponent } from "../play-video/play-video.component";
 import { MetaService } from '../services/meta.service';
+import { SpeakService } from '../services/speak.service';
 
 @Component({
   selector: 'app-lesson',
@@ -14,13 +15,14 @@ import { MetaService } from '../services/meta.service';
   templateUrl: './lesson.component.html',
   styleUrl: './lesson.component.css'
 })
-export class LessonComponent {
+export class LessonComponent implements OnChanges {
 
   id = input<string>();
   db = inject(DbService);
   meta = inject(MetaService);
   document = inject(DOCUMENT);
   location = inject(Location);
+  speakService = inject(SpeakService);
   lesson = this.db.lesson;
   baseUrl = this.db.baseUrl;
   imageUrl = this.db.imageUrl;
@@ -33,7 +35,7 @@ export class LessonComponent {
 
   }
   
-  ngOnInit() {
+  ngOnChanges() {
     this.db.fetchLesson(this.id() || 'none').then(() => this.meta.setMetaTags());
   }
 
@@ -56,12 +58,15 @@ export class LessonComponent {
     this.location.back();
   }
 
-  readThis(ev: Event) {
+  readThis(event: Event): void {
+    const targetElement = event.target as HTMLElement;
+    const closestDiv = targetElement.closest('div');
+    console.log('readthis', targetElement, closestDiv?.textContent);
 
+    if (closestDiv) {
+      const textContent = closestDiv.textContent?.trim() || 'No text found';
+      this.speakService.speak(textContent);
+    }
   }
-
-  // readAll(text: string = 'No Text Found') {
-
-  // }
 
 }

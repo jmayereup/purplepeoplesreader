@@ -28,22 +28,21 @@
                 </section>
                 <section class="p-4 rounded-lg reading">
                     <h2 class="mb-0 text-center">Line-By-Line</h2>
-                    <p class="mb-0 text-xs text-center" translate="yes">You can use a web browser like Chrome to
-                        provide translations. คุณสามารถใช้เว็บเบราว์เซอร์เช่น Chrome เพื่อแปลได้ <a
-                            href="https://youtu.be/Jfv9bKDYxvM">(Instructions)</a> Clicking on a line will also play
-                        audio in
-                        most
-                        browsers.</p>
+                    <p class="mb-0 text-xs text-center" translate="yes">Choose translate from your browser menu for bilingual texts.
+                        เลือกแปลจากเมนูเบราว์เซอร์ของคุณสำหรับข้อความสองภาษา
+                          Clicking on a line will also play audio in some browsers.</p>
 
                     <div class="flex flex-row flex-wrap justify-around gap-1">
                         <button class="flex items-center justify-center gap-2 sm:w-fit button" type="button"
                             (click)="showTranslation = !showTranslation">Toggle Translations</button>
                         <button type="button" class="flex items-center sm:w-fit button"
                             (click)="openLanguageReactor()">Read in Language Reactor</button>
+                            @if(audioUrl()){
                                 <app-play-button #playButton [audioUrl]="audioUrl()"></app-play-button>
+                            }
                     </div>
                     <div class="flex flex-row flex-wrap justify-around">
-                        <h2 class="m-0 font-bold text-center">{{lesson()?.title}}</h2>
+                        <h2 class="m-0 font-bold text-center" translate="no">{{lesson()?.title}}</h2>
                     </div>
 
                     <div [innerHTML]="(lesson()?.contentLines || '') | markdown | async" (click)="readThis($event)"
