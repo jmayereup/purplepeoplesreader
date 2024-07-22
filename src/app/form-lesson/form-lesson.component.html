@@ -1,0 +1,108 @@
+@if (authService.isAuthenticated()) {
+
+    <section class="w-full p-6 m-0 mx-auto rounded-lg shadow-md ">
+        <h2 class="text-lg font-semibold capitalize">CREATE/EDIT</h2>
+        <p class="form-label">Lesson ID: {{lesson()?.id || 'New Lesson'}} Created By: {{lesson()?.creatorId}} </p>
+        <form [formGroup]="lessonForm">
+            <div class="grid grid-cols-1 gap-6 mt-4">
+                <div>
+                    <label class="form-label" for="title">Title</label>
+                    <input id="title" formControlName="title" type="text" class="form-input">
+                </div>
+                <div>
+                    <label class="form-label" for="content">Body</label>
+                    <textarea height="20" id="content" formControlName="content" type="text"
+                    class="form-input h-60"></textarea>
+                </div>
+                <div>
+                    <label class="form-label" for="vocabulary">Vocabulary</label>
+                    <input id="vocabulary" formControlName="vocabulary" type="text" class="form-input"
+                    placeholder="cat, dog, mouse">
+                </div>
+        </div>
+        <div class="grid grid-cols-2 grid-rows-6 gap-2 mt-4 grid-flow-dense">
+            <!-- <app-form-files (imagePath)="setImagePath($event)" (audioPath)="setAudioPath($event)"></app-form-files> -->
+            <div>
+                <label class="form-label" for="imageUrl">Image URL</label>
+                <input id="imageUrl" formControlName="imageUrl" type="text" class="form-input"
+                placeholder="https://unsplash.com/cat">
+            </div>
+            <div>
+                <label class="form-label" for="imageUrl">YouTube URL</label>
+                <input id="videoUrl" formControlName="videoUrl" type="text" class="form-input"
+                placeholder="https://unsplash.com/cat">
+            </div>
+            <div>
+                <label class="form-label" for="audioUrl">Audio URL</label>
+                <input id="audioUrl" formControlName="audioUrl" type="text" class="form-input"
+                placeholder="https://blog.teacherjake.com/cat-sounds.mp3">
+            </div>
+            <div>
+                <label class="form-label" for="shareable">Share</label>
+                <select id="shareable" formControlName="shareable" type="text" class="form-input">
+                    <option value=true>YES</option>
+                    <option value=false>NO</option>
+                </select>
+            </div>
+            <div class="row-span-1">
+                <label class="form-label" for="lang" required>Language</label>
+                <select id="lang" formControlName="language" type="text" class="form-input">
+                    <option value="English">English</option>
+                    <option value="French">French</option>
+                    <option value="German">German</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="Thai">Thai</option>
+                </select>
+            </div>
+            <div class="row-span-4">
+                <label class="form-label" for="tags" required>Tags (Hold CTRL to select more than one.)</label>
+                <select id="tags" formControlName="tags" type="dropdown" size='13' class="form-input" multiple>
+                    @for (tag of tags; track $index) {
+                        <option value="{{tag}}">{{tag}}</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </form>
+    <div class="flex items-center justify-end mt-6">
+        @if (lesson()?.id) {
+            <button type="button"
+            class="px-4 py-2 font-bold rounded button disabled:bg-red-200 hover:bg-blue-500 focus:bg-blue-500"
+            (click)="onSubmit()" [disabled]="!lessonForm.valid">SAVE</button>    
+        }
+        @else {
+            <button type="button"
+            class="px-4 py-2 font-bold rounded button disabled:bg-red-200 hover:bg-blue-500 focus:bg-blue-500"
+            (click)="onSubmit()" [disabled]="!lessonForm.valid">CREATE</button>
+        }
+        @if (saved) {
+            <span class="text-green-700">Saved!</span>
+        }
+    </div>
+    <div class="container w-full p-4 mx-4 overflow-y-auto max-h-96 text-purple-950">
+        <h1 class="mb-4 text-3xl font-bold">Lessons</h1>
+        <ul class="list-disc list-inside">
+            @for (lesson of lessons(); track lesson.id ){
+                <li class="mb-2">
+                    <span class="text-lg font-semibold">{{ lesson.title }}</span>
+                    <button (click)="selectLesson(lesson.id)" class="px-4 py-2 ml-4 text-white bg-blue-500 rounded hover:bg-blue-600">View</button>
+                    <button (click)="removeLesson(lesson.id)" class="px-4 py-2 ml-2 text-white bg-red-500 rounded hover:bg-red-600">Delete</button>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="container w-full p-4 m-4 overflow-y-auto max-h-96 text-purple-950">
+        @if (lesson()) {
+            <div class="p-4 mt-6 bg-white border rounded shadow-lg">
+                <h2 class="text-2xl font-semibold">{{ lesson()?.title }}</h2>
+                <p class="mt-2">{{ lesson()?.content }}</p>
+            </div>
+        }
+    </div>
+</section>
+} @else {
+    <div class="flex justify-center">
+        <h2 class="my-4 text-lg font-semibold capitalize">Please Login to Create/Edit</h2>
+    </div>
+}
+<app-auth></app-auth>

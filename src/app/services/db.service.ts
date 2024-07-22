@@ -5,7 +5,6 @@ import { lastValueFrom } from 'rxjs';
 import { addLineBreaksWithTranslatedDivs, assignLanguageCode } from '../shared/utils';
 import { Router } from '@angular/router';
 import { MetaService } from './meta.service';
-import { sign } from 'crypto';
 
 @Injectable({
   providedIn: 'root'
@@ -76,7 +75,7 @@ export class DbService {
         this.langCode.set(assignLanguageCode(lesson?.language || 'English'));
         this.currentPath.set(this.baseUrl + this.router.url);
         this.lessonTitle.set(lesson?.title.toUpperCase() || 'PPR Lesson');
-        this.meta.setMetaTags({title: this.lessonTitle()?.toUpperCase() || "PPR", image: this.imageUrl(), path: this.currentPath() })
+        this.meta.setMetaTags({title: this.lessonTitle() || "PPR", image: this.imageUrl(), path: this.currentPath() })
         return;
       } else return
     } catch (error) {
