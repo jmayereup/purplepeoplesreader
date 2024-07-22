@@ -32,7 +32,7 @@ async function fetchLessonIds() {
       sort: '-created', // Adjust sorting if needed
     });
 
-    const ids = records.map(record => record.id);
+    const ids = records.map(record => 'lesson/' + record.id);
 
     // Create the routes file content
     const routesFromEnums = generateRoutesFromEnums()

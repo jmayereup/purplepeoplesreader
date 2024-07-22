@@ -1,4 +1,4 @@
-import { Component, inject, input, OnChanges } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { DbService } from '../services/db.service';
 import { SpinnerComponent } from "../spinner/spinner.component";
 import { AsyncPipe, DOCUMENT, Location, NgClass, NgOptimizedImage } from '@angular/common';
@@ -16,7 +16,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './lesson.component.html',
   styleUrl: './lesson.component.css'
 })
-export class LessonComponent implements OnChanges {
+export class LessonComponent implements OnInit {
 
   id = input<string>();
   db = inject(DbService);
@@ -39,8 +39,9 @@ export class LessonComponent implements OnChanges {
 
   }
 
-  ngOnChanges() {
-    console.log('onchanges called', this.id());
+  ngOnInit() {
+    console.log('oninit called', this.id());
+    if (this.id()) this.db.fetchLesson(this.id()!)
   }
 
   openLanguageReactor() {

@@ -65,6 +65,7 @@ export class DbService {
       const lessons = await lastValueFrom(this.http.get<{ items: LessonsResponse[] }>('assets/all-records.json'));
       const lesson = lessons?.items.find(lesson => lesson.id === id) || null;
       if (lesson) {
+        console.log('FETCHING LESSON');
         const formattedContentLines = addLineBreaksWithTranslatedDivs(lesson.content);
         lesson.contentLines = formattedContentLines;
         this.lesson.set(lesson);
