@@ -14,9 +14,9 @@
             }
 
             <section class="flex flex-col flex-wrap p-4 mb-2 rounded-lg reading">
-                <div #fullText translate="no" class="max-h-[60vh] overflow-y-auto">
-                    <h2 class="m-0 font-bold text-center">{{lesson()?.title}}</h2>
-                    <div class="flex flex-row flex-wrap justify-around gap-1">
+                <div #fullText translate="no">
+                    <div class="flex flex-row flex-wrap justify-around gap-2 mb-2">
+                        <h2 class="m-0 font-bold text-center">{{lesson()?.title}}</h2>
                         @if(audioUrl()){
                         <app-play-button #playButton [audioUrl]="audioUrl()"></app-play-button>
                         }
@@ -34,17 +34,19 @@
             <section class="p-4 rounded-lg reading">
                 <h2 class="mb-1 text-center">Line-By-Line</h2>
                 @if (isChrome()) {
-                <div class="w-full p-1 m-1 text-center bg-yellow-200 rounded-lg" translate="yes">
-                    Choose translate from the browser menu to get bilingual texts. You can click on a sentence to hear
-                    it.
+                <div class="w-full p-2 m-1 text-left bg-yellow-200 rounded-lg" translate="yes">
+                    Chrome Users: Choose translate from the browser menu to get bilingual texts. You can click on a sentence to hear
+                    it. <br>
                     เลือกแปลจากเมนูเบราว์เซอร์เพื่อรับข้อความสองภาษา คุณสามารถคลิกที่ประโยคเพื่อฟังได้
                 </div>
                 }
                 @else {
-                <div class="w-full p-1 m-1 text-center bg-yellow-200 rounded-lg" translate="yes">
-                    If you open this website in Chrome, you can choose translate from the browser menu to get bilingual
-                    texts.
-                    หากคุณเปิดเว็บไซต์นี้ใน Chrome คุณสามารถเลือกแปลจากเมนูเบราว์เซอร์เพื่อรับข้อความสองภาษาได้
+                <div class="w-full p-2 m-1 text-center bg-yellow-200 rounded-lg" translate="yes">
+                    <div class="text-left lin">
+                        If you open this website in Chrome, you can choose translate from the browser menu to get bilingual texts.
+                        <br>หากคุณเปิดเว็บไซต์นี้ใน Chrome คุณสามารถเลือกแปลจากเมนูเบราว์เซอร์เพื่อรับข้อความสองภาษาได้
+                    </div>
+                    
                 </div>
                 }
                 <button class="w-full p-1 m-1 button" type="button"

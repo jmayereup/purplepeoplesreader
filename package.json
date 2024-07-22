@@ -9,7 +9,8 @@
     "serve:ssr:ppr": "node dist/ppr/server/server.mjs",
     "fetch-data": "node fetch-json.js",
     "generate-routes": "node generate-routes.js",
-    "fetch-build": "npm run fetch-data && npm run generate-routes && ng build"
+    "sync" : "node sync.js",
+    "super-build": "npm run fetch-data && npm run generate-routes && ng build && npm run sync"
   },
   "private": true,
   "dependencies": {
@@ -24,6 +25,7 @@
     "@angular/platform-server": "^18.1.0",
     "@angular/router": "^18.1.0",
     "@angular/ssr": "^18.1.1",
+    "archiver": "^7.0.1",
     "express": "^4.18.2",
     "marked": "^12.0.2",
     "ngx-markdown": "^18.0.0",
