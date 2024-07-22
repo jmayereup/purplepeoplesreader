@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { LANG_VALUES, TAG_VALUES } from '../shared/utils';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NgClass, NgStyle, UpperCasePipe } from '@angular/common';
@@ -19,19 +19,19 @@ export class NavPillsComponent {
   lang = this.db.language;
   tag = this.db.tag;
 
-  updateLang(lang:string) {
-    if (lang != this.lang()) {
-      this.lang.set(lang);
-      this.tag.set('A1');
-      this.db.allLessons.set(null);
-    }
-  }
+  // updateLang(lang:string) {
+  //   if (lang != this.lang()) {
+  //     this.lang.set(lang);
+  //     this.tag.set('A1');
+  //     this.db.allLessons.set(null);
+  //   }
+  // }
 
-  updateTag(tag: string) {
-    if (tag != this.tag()) {
-      this.tag.set(tag);
-      this.db.allLessons.set(null);
-    }
-  }
+  // updateTag(tag: string) {
+  //   if (tag != this.tag()) {
+  //     this.tag.set(tag);
+  //     this.db.allLessons.set(null);
+  //   }
+  // }
 
 }

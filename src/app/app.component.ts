@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { DbService } from './services/db.service';
 import { LessonListComponent } from "./lesson-list/lesson-list.component";
 import { NavPillsComponent } from "./nav-pills/nav-pills.component";
-import { debounceTime, shareReplay } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -12,30 +12,27 @@ import { debounceTime, shareReplay } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'ppr';
 
   db = inject(DbService);
   route = inject(ActivatedRoute);
+  platformId = inject(PLATFORM_ID);
   lang = this.db.language;
   tag = this.db.tag;
 
   constructor() {
   }
-  
+
   ngOnInit() {
-    const queryParamsSub = this.route.queryParamMap.pipe(
-      shareReplay(1)
-    )
-    .subscribe(
-      params => {
-      let lang = params.get('lang') || this.lang();
-      let tag = params.get('tag') || this.tag();
-      this.lang.set(lang);
-      this.tag.set(tag);
+    if (isPlatformBrowser(this.platformId)) {
+      const userAgent = navigator?.userAgent?.toLowerCase();
+      if (userAgent?.includes('chrome')) {
+        this.db.isChrome.set(true);
       }
-    )
-    
+    }
+
   }
+  
 
 }

@@ -5,6 +5,7 @@ import { lastValueFrom } from 'rxjs';
 import { addLineBreaksWithTranslatedDivs, assignLanguageCode } from '../shared/utils';
 import { Router } from '@angular/router';
 import { MetaService } from './meta.service';
+import { sign } from 'crypto';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,7 @@ export class DbService {
   langCode = signal<string>("en_US");
   tag = signal<string>("A1");
   currentPath = signal<string>(this.router.url);
+  isChrome = signal<boolean>(false);
   
 
 

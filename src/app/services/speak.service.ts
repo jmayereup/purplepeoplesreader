@@ -14,6 +14,7 @@ export class SpeakService {
 
   
   async speak(line:string, lang: string = this.lang()) {
+    window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(line);
 
     const selectedVoice = await this.getMatchingVoice(this.lang());

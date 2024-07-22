@@ -1,10 +1,10 @@
 <div class="flex flex-row flex-wrap justify-center gap-1 mx-auto mt-2">
     @for (l of langs; track $index) {
-      <a [routerLink]="['/list/', l]"
+      <a [routerLink]="['/list/', l, 'A1']"
       class="m-0">
           <button class="text-gray-200 bg-lbl-purple-500 pills border-blue focus:bg-blue-700 hover:bg-blue-700 "
-          [ngClass]="{'bg-blue-700': l == lang()}"
-          (click)="updateLang(l)">
+          [ngClass]="{'active-link': l == lang()}"
+          >
             {{l | uppercase }}</button>
       </a>
     }
@@ -14,8 +14,8 @@
       <a [routerLink]="['/list', lang(), t]"  
       class="m-0" >
           <button class="text-gray-200 bg-lbl-purple-500 pills border-blue focus:bg-blue-700 hover:bg-blue-700"
-          [ngClass]="{'bg-blue-700': t == tag()}"
-          (click)="updateTag(t)">
+          [ngClass]="{'active-link': t == tag()}"
+          >
             {{t}}</button>
       </a>
     }

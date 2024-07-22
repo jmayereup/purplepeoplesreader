@@ -1,4 +1,4 @@
-import { Component, inject, input, OnChanges } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DbService } from '../services/db.service';
 import { LessonsResponse } from '../shared/pocketbase-types';
 import { stripMarkdown } from '../shared/utils';
@@ -7,6 +7,7 @@ import { SpinnerComponent } from "../spinner/spinner.component";
 import { NavPillsComponent } from "../nav-pills/nav-pills.component";
 import { NgOptimizedImage } from '@angular/common';
 import { MetaService } from '../services/meta.service';
+import { shareReplay, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lesson-list',
@@ -15,7 +16,7 @@ import { MetaService } from '../services/meta.service';
   templateUrl: './lesson-list.component.html',
   styleUrl: './lesson-list.component.css'
 })
-export class LessonListComponent implements OnChanges {
+export class LessonListComponent {
 
   db = inject(DbService);
   meta = inject(MetaService);
@@ -23,22 +24,40 @@ export class LessonListComponent implements OnChanges {
   allLessons = this.db.allLessons;
   baseUrl = this.db.baseUrl;
 
-  lang = input<string>('English');
-  tag = input<string>('A1');
+  lang = this.db.language;
+  tag = this.db.tag;
+
+  paramSub: Subscription;
 
   constructor() {
+    this.paramSub = this.route.paramMap.pipe(
+      shareReplay(1)
+    )
+      .subscribe(
+        params => {
+          const currentLang = params.get('lang');
+          const currentTag = params.get('tag');
+          if (currentLang != this.lang()) {
+            this.tag.set('A1');
+            this.lang.set(currentLang || 'English')
+            this.db.fetchLessons(currentLang || 'English', currentTag || 'A1').then(() => {
+              this.meta.setMetaTags({ title: this.lang()?.toUpperCase() + " " + this.tag() || "", image: this.baseUrl + "/apps/assets/purple-people-eat.jpg", path: this.db.currentPath() });
+            });
+            return
+          }
+          else if (currentTag != this.tag()) {
+            this.lang.set(currentLang);
+            this.tag.set(currentTag || 'A1');
+            this.db.fetchLessons(currentLang, currentTag || 'A1').then(() => {
+              this.meta.setMetaTags({ title: this.lang()?.toUpperCase() + " " + this.tag() || "", image: this.baseUrl + "/apps/assets/purple-people-eat.jpg", path: this.db.currentPath() });
+            });
+            return
+          }
+        }
+      )
 
   }
 
-  ngOnInit() {
-    this.db.language.set(this.lang());
-    (this.tag()) ? this.db.tag.set(this.tag()): this.db.tag.set('A1');
-  }
-
-  ngOnChanges() {
-    this.db.fetchLessons(this.lang(), this.tag()).then(() => 
-      this.meta.setMetaTags({title: this.lang()?.toUpperCase() + " " + this.tag() || "", image: this.baseUrl + "/apps/assets/purple-people-eat.jpg", path: this.db.currentPath()},));
-  }
 
   getImageThumbnail(item: LessonsResponse) {
     if (item.imageUrl) {

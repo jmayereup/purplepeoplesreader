@@ -12,7 +12,8 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-lesson',
   standalone: true,
-  imports: [SpinnerComponent, AsyncPipe, PlayButtonComponent, NgClass, MarkdownPipe, NgOptimizedImage, PlayVideoComponent],
+  imports: [SpinnerComponent, AsyncPipe, PlayButtonComponent, 
+    NgClass, MarkdownPipe, NgOptimizedImage, PlayVideoComponent],
   templateUrl: './lesson.component.html',
   styleUrl: './lesson.component.css'
 })
@@ -30,8 +31,9 @@ export class LessonComponent implements OnInit {
   imageUrl = this.db.imageUrl;
   audioUrl = this.db.audioUrl;
   lessonTitle = this.db.lessonTitle;
+  isChrome = this.db.isChrome;
   showTranslation = true;
-  languageReactorUrl = 'https://www.languagereactor.com/text';
+    languageReactorUrl = 'https://www.languagereactor.com/text';
 
   data = { lesson: {}, lang: "", path: "" }
 
