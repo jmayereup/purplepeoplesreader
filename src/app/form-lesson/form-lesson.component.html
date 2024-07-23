@@ -1,6 +1,6 @@
 @if (authService.isAuthenticated()) {
 
-    <section class="w-full p-6 m-0 mx-auto rounded-lg shadow-md ">
+    <section class="w-full p-6 m-0 rounded-lg shadow-md ">
         <h2 class="text-lg font-semibold capitalize">CREATE/EDIT</h2>
         <p class="form-label">Lesson ID: {{lesson()?.id || 'New Lesson'}} Created By: {{lesson()?.creatorId}} </p>
         <form [formGroup]="lessonForm">
@@ -79,26 +79,23 @@
             <span class="text-green-700">Saved!</span>
         }
     </div>
-    <div class="container w-full p-4 mx-4 overflow-y-auto max-h-96 text-purple-950">
-        <h1 class="mb-4 text-3xl font-bold">Lessons</h1>
+    <!-- Lesson List -->
+    <h2 class="mb-4 text-3xl font-bold">Lessons</h2>
+    <div class="w-full p-4 pl-0 m-4 ml-0 overflow-y-auto max-h-96 text-purple-950">
         <ul class="list-disc list-inside">
             @for (lesson of lessons(); track lesson.id ){
-                <li class="mb-2">
+                <li class="flex flex-row items-center justify-between w-full p-1 mb-2 rounded-lg odd:bg-purple-200 even:bg-slate-200">
                     <span class="text-lg font-semibold">{{ lesson.title }}</span>
-                    <button (click)="selectLesson(lesson.id)" class="px-4 py-2 ml-4 text-white bg-blue-500 rounded hover:bg-blue-600">View</button>
-                    <button (click)="removeLesson(lesson.id)" class="px-4 py-2 ml-2 text-white bg-red-500 rounded hover:bg-red-600">Delete</button>
+                    <span>
+                        <button (click)="selectLesson(lesson.id)" class="px-4 py-2 ml-4 text-white bg-blue-500 rounded hover:bg-blue-600">View</button>
+                        <button (click)="removeLesson(lesson.id)" class="px-4 py-2 ml-2 text-white bg-red-500 rounded hover:bg-red-600">Delete</button>
+                    </span>
                 </li>
             }
         </ul>
     </div>
-    <div class="container w-full p-4 m-4 overflow-y-auto max-h-96 text-purple-950">
-        @if (lesson()) {
-            <div class="p-4 mt-6 bg-white border rounded shadow-lg">
-                <h2 class="text-2xl font-semibold">{{ lesson()?.title }}</h2>
-                <p class="mt-2">{{ lesson()?.content }}</p>
-            </div>
-        }
-    </div>
+    <!-- Lesson Preview -->
+     <app-lesson-full-text [lesson]="lesson() || undefined" [baseImage]="baseImage"></app-lesson-full-text>
 </section>
 } @else {
     <div class="flex justify-center">

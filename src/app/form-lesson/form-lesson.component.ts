@@ -8,13 +8,14 @@ import { AuthService } from '../services/auth.service';
 import { LessonsService } from '../services/lessons.service';
 import { LessonsRecord, LessonsResponse } from '../shared/pocketbase-types';
 import { AuthComponent } from "../auth/auth.component";
+import { LessonFullTextComponent } from "../lesson-full-text/lesson-full-text.component";
 
 @Component({
   selector: 'app-form-lesson',
   standalone: true,
   templateUrl: './form-lesson.component.html',
   styleUrl: './form-lesson.component.css',
-  imports: [CommonModule, FormFilesComponent, ReactiveFormsModule, FormFilesComponent, LoginComponent, AuthComponent]
+  imports: [CommonModule, FormFilesComponent, ReactiveFormsModule, FormFilesComponent, LoginComponent, AuthComponent, LessonFullTextComponent]
 })
 export class FormLessonComponent implements OnInit, OnDestroy {
 
@@ -23,6 +24,7 @@ export class FormLessonComponent implements OnInit, OnDestroy {
   lessonsService = inject(LessonsService);
   fb = inject(FormBuilder);
   authService = inject(AuthService);
+  baseImage = this.lessonsService.baseImage;
 
   lessons = this.lessonsService.lessons;
 

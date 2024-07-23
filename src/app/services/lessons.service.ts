@@ -1,6 +1,7 @@
-import { Injectable, Signal, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import PocketBase from 'pocketbase';
 import { TypedPocketBase, LessonsResponse, LessonsRecord, Collections, LessonsLanguageOptions, LessonsTagsOptions } from '../shared/pocketbase-types'; // Adjust the import path accordingly
+import { DbService } from './db.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,14 +11,10 @@ export class LessonsService {
   lessons = signal<LessonsResponse[]>([]);
   lesson = signal<LessonsResponse | null>(null);
 
-  // get lessons(): Signal<LessonsResponse[]> {
-  //   return this._lessons;
-  // }
+  db = inject(DbService);
 
-  // get lesson(): Signal<LessonsResponse | null> {
-  //   return this._lesson;
-  // }
-
+  baseImage = this.db.baseImage;
+  baseUrl = this.db.baseUrl
 
   async fetchAllLessons(lang?: LessonsLanguageOptions, tag?: LessonsTagsOptions): Promise<void> {
     try {
@@ -48,6 +45,8 @@ export class LessonsService {
   async fetchLessonById(id: string): Promise<void> {
     try {
       const result = await this.pb.collection(Collections.Lessons).getOne<LessonsResponse>(id);
+      result.imageUrl = this.formatImageUrl();
+      result.audioUrl = this.formatAudioUrl();
       this.lesson.set(result);
     } catch (error) {
       console.error('Error fetching lesson', error);
@@ -82,4 +81,20 @@ export class LessonsService {
       console.error('Error deleting lesson', error);
     }
   }
+
+  formatImageUrl() {
+    if (!(this.lesson()?.imageUrl)) {
+      return this.baseImage;
+    }
+    const imageFile = this.lesson()?.imageUrl!.substring(this.lesson()!.imageUrl!.lastIndexOf('/') + 1);
+    return `${this.baseUrl}/apps/assets/${imageFile}`
+  }
+
+  formatAudioUrl() {
+    if (this.lesson()?.audioUrl) {
+      const audioFile = this.lesson()?.audioUrl!.substring(this.lesson()!.audioUrl!.lastIndexOf('/') + 1);
+      return `${this.baseUrl}/apps/assets/${audioFile}`
+    } else return "";
+  }
+
 }

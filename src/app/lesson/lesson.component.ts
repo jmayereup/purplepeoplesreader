@@ -1,19 +1,18 @@
 import { Component, inject, input, OnInit } from '@angular/core';
 import { DbService } from '../services/db.service';
 import { SpinnerComponent } from "../spinner/spinner.component";
-import { AsyncPipe, DOCUMENT, Location, NgClass, NgOptimizedImage } from '@angular/common';
+import { AsyncPipe, DOCUMENT, Location, NgClass } from '@angular/common';
 import { MarkdownPipe } from 'ngx-markdown';
-import { PlayButtonComponent } from "../play-button/play-button.component";
-import { PlayVideoComponent } from "../play-video/play-video.component";
 import { MetaService } from '../services/meta.service';
 import { SpeakService } from '../services/speak.service';
 import { ActivatedRoute } from '@angular/router';
+import { LessonFullTextComponent } from "../lesson-full-text/lesson-full-text.component";
 
 @Component({
   selector: 'app-lesson',
   standalone: true,
-  imports: [SpinnerComponent, AsyncPipe, PlayButtonComponent, 
-    NgClass, MarkdownPipe, NgOptimizedImage, PlayVideoComponent],
+  imports: [SpinnerComponent, AsyncPipe,
+    NgClass, MarkdownPipe, LessonFullTextComponent],
   templateUrl: './lesson.component.html',
   styleUrl: './lesson.component.css'
 })
@@ -27,13 +26,11 @@ export class LessonComponent implements OnInit {
   speakService = inject(SpeakService);
   route = inject(ActivatedRoute);
   lesson = this.db.lesson;
-  baseUrl = this.db.baseUrl;
-  imageUrl = this.db.imageUrl;
-  audioUrl = this.db.audioUrl;
   lessonTitle = this.db.lessonTitle;
   isChrome = this.db.isChrome;
   showTranslation = true;
-    languageReactorUrl = 'https://www.languagereactor.com/text';
+  baseImage = this.db.baseImage;
+  languageReactorUrl = 'https://www.languagereactor.com/text';
 
   data = { lesson: {}, lang: "", path: "" }
 
@@ -44,21 +41,6 @@ export class LessonComponent implements OnInit {
   ngOnInit() {
     console.log('oninit called', this.id());
     if (this.id()) this.db.fetchLesson(this.id()!)
-  }
-
-  openLanguageReactor() {
-    const articleText = this.document.getElementById('full-text')?.textContent || "";
-    navigator.clipboard.writeText(articleText)
-      .then(() => {
-        console.log('Text copied to clipboard');
-        const confirmed = window.confirm("Text copied. Please paste it into Language Reactor which will open in a new window.");
-        if (confirmed) window.open(this.languageReactorUrl, "_blank");
-      })
-      .catch(err => {
-        console.error('Failed to copy: ', err);
-        alert("Failed to Copy.");
-      });
-
   }
 
   goBack() {
