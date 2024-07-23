@@ -31,6 +31,7 @@ export class LessonComponent implements OnInit {
   showTranslation = true;
   baseImage = this.db.baseImage;
   languageReactorUrl = 'https://www.languagereactor.com/text';
+  waiting = true;
 
   data = { lesson: {}, lang: "", path: "" }
 
@@ -39,8 +40,27 @@ export class LessonComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('oninit called', this.id());
-    if (this.id()) this.db.fetchLesson(this.id()!)
+    this.fetchLesson();
+  }
+  
+  async fetchLesson() {
+    const lessons = this.db.allLessons();
+    const id = this.id();
+    if (!lessons) {
+      await this.db.fetchLessons()
+        if(id) {
+          await this.db.fetchLesson(id);
+          this.waiting = false;
+        }
+        return
+    }
+    else {
+      if(id) {
+        await this.db.fetchLesson(id);
+        this.waiting = false;
+        return
+      }
+    }
   }
 
   goBack() {

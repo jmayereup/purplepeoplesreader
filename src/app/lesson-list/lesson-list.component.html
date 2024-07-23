@@ -1,7 +1,7 @@
 <div class="grid w-full grid-cols-1 gap-1 px-2 my-0 overflow-y-auto bg-purple-100 sm:grid-cols-2 lg:grid-cols-3">
 
-    @if (allLessons()) {
-    @for (item of allLessons(); track item.id) {
+    @if (lessons()) {
+    @for (item of lessons(); track item.id) {
     <div
         class="grid items-center self-center justify-between w-full grid-cols-8 gap-2 p-2 mx-auto rounded-md shadow-md min-h-20 overflow-clip bg-lbl-purple-200">
         <img class="self-center object-cover col-span-2 mx-auto rounded-md shadow-md" width="64" height="64"
@@ -22,7 +22,7 @@
             </div>
         </div>
     }
-    @if (allLessons()?.length == 0) {
+    @if (lessons()?.length == 0) {
         <div class="items-center justify-center w-full col-span-3 text-center text-purple-700">
             <h1>No Lessons Available</h1>
         </div>

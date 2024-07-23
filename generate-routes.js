@@ -12,7 +12,7 @@ const ROUTES_FILE_PATH = path.join(__dirname, 'routes.txt');
 
 function generateRoutesFromEnums() {
   const routes = [];
-  const languages = ['English', 'Thai', 'German', 'Spanish', 'French'];
+  const languages = ['English', 'Thai', 'German'];
   const tags = ['A1', 'A2', 'B1', 'STORY', 'CONVERSATION', 'GRAMMAR', 'NON-FICTION', 'VIDEO']
 
 

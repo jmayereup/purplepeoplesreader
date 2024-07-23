@@ -5,7 +5,7 @@
     }
     @else {
     <section class="p-4 mx-auto my-2 rounded-lg reading">
-        <img class="mx-auto rounded-lg" [ngSrc]="lesson()?.imageUrl || baseImage()" alt="cover image" width="400" height="400"
+        <img class="mx-auto rounded-lg" [ngSrc]="lesson()?.imageUrl || baseImage" alt="cover image" width="400" height="400"
             priority>
     </section>
     }
@@ -14,7 +14,7 @@
         <div #fullText translate="no">
             <div class="flex flex-row flex-wrap justify-around gap-2 mb-2">
                 <h2 class="m-0 font-bold text-center">{{lesson()?.title}}</h2>
-                @if(audioUrl){
+                @if(lesson()?.audioUrl){
                 <app-play-button #playButton [audioUrl]="lesson()?.audioUrl"></app-play-button>
                 }
                 <button type="button" class="flex items-center sm:w-fit button"

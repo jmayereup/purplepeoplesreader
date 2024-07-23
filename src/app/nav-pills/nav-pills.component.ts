@@ -19,19 +19,4 @@ export class NavPillsComponent {
   lang = this.db.language;
   tag = this.db.tag;
 
-  // updateLang(lang:string) {
-  //   if (lang != this.lang()) {
-  //     this.lang.set(lang);
-  //     this.tag.set('A1');
-  //     this.db.allLessons.set(null);
-  //   }
-  // }
-
-  // updateTag(tag: string) {
-  //   if (tag != this.tag()) {
-  //     this.tag.set(tag);
-  //     this.db.allLessons.set(null);
-  //   }
-  // }
-
 }

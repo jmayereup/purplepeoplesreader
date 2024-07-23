@@ -21,7 +21,7 @@ export class LessonListComponent {
   db = inject(DbService);
   meta = inject(MetaService);
   route = inject(ActivatedRoute);
-  allLessons = this.db.allLessons;
+  lessons = this.db.lessons;
   baseUrl = this.db.baseUrl;
 
   lang = this.db.language;

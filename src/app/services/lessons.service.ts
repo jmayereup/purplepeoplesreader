@@ -1,7 +1,7 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import PocketBase from 'pocketbase';
-import { TypedPocketBase, LessonsResponse, LessonsRecord, Collections, LessonsLanguageOptions, LessonsTagsOptions } from '../shared/pocketbase-types'; // Adjust the import path accordingly
-import { DbService } from './db.service';
+import { TypedPocketBase, LessonsResponse, LessonsRecord, Collections } from '../shared/pocketbase-types'; // Adjust the import path accordingly
+import { BASE } from '../shared/utils';
 
 @Injectable({
   providedIn: 'root',
@@ -11,43 +11,33 @@ export class LessonsService {
   lessons = signal<LessonsResponse[]>([]);
   lesson = signal<LessonsResponse | null>(null);
 
-  db = inject(DbService);
+  // db = inject(DbService);
 
-  baseImage = this.db.baseImage;
-  baseUrl = this.db.baseUrl
+  baseImage = BASE.baseImage;
+  baseUrl = BASE.baseUrl;
 
-  async fetchAllLessons(lang?: LessonsLanguageOptions, tag?: LessonsTagsOptions): Promise<void> {
+  async fetchLessons(): Promise<LessonsResponse[] | null> {
     try {
-      const filters: string[] = [];
-  
-      if (lang) {
-        filters.push(`language = '${lang}'`);
-      }
-  
-      if (tag) {
-        filters.push(`tags ?= '${tag}'`);
-      }
-  
-      const filterQuery = filters.length ? filters.join(' && ') : '';
-  
       const result = await this.pb.collection(Collections.Lessons).getFullList<LessonsResponse>({
         sort: '-created',
-        filter: filterQuery,
       });
-      
       this.lessons.set(result);
+      return result;
     } catch (error) {
       console.error('Error fetching lessons', error);
+      return null;
     }
   }
   
 
-  async fetchLessonById(id: string): Promise<void> {
+  async fetchLessonById(id: string): Promise<LessonsResponse | void> {
     try {
       const result = await this.pb.collection(Collections.Lessons).getOne<LessonsResponse>(id);
+      this.lesson.set(result);
       result.imageUrl = this.formatImageUrl();
       result.audioUrl = this.formatAudioUrl();
       this.lesson.set(result);
+      return result;
     } catch (error) {
       console.error('Error fetching lesson', error);
     }
@@ -73,10 +63,14 @@ export class LessonsService {
     }
   }
 
-  async deleteLesson(id: string): Promise<void> {
+  async deleteLesson(id: string): Promise<string | void> {
     try {
-      await this.pb.collection(Collections.Lessons).delete(id);
-      this.lessons.set(this.lessons().filter(lesson => lesson.id !== id));
+      const success = await this.pb.collection(Collections.Lessons).delete(id);
+      if (success) {
+        this.lessons.set(this.lessons().filter(lesson => lesson.id !== id));
+        return id;
+      }
+      return;
     } catch (error) {
       console.error('Error deleting lesson', error);
     }
@@ -84,7 +78,7 @@ export class LessonsService {
 
   formatImageUrl() {
     if (!(this.lesson()?.imageUrl)) {
-      return this.baseImage;
+      return ''
     }
     const imageFile = this.lesson()?.imageUrl!.substring(this.lesson()!.imageUrl!.lastIndexOf('/') + 1);
     return `${this.baseUrl}/apps/assets/${imageFile}`

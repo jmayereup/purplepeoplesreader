@@ -86,4 +86,7 @@ export function assignLanguageCode(languageName: string) {
 export const TAG_VALUES = Object.values(LessonsTagsOptions);
 export const LANG_VALUES = Object.values(LessonsLanguageOptions);
 
-
+export const BASE = {
+    baseUrl: 'https://www.purplepeoplesreader.com',
+    baseImage: 'https://www.purplepeoplesreader.com/apps/assets/purple-people-eater.jpg'
+}

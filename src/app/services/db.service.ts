@@ -2,9 +2,10 @@ import { inject, Injectable, signal } from '@angular/core';
 import { LessonsResponse } from '../shared/pocketbase-types';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
-import { addLineBreaksWithTranslatedDivs, assignLanguageCode } from '../shared/utils';
+import { addLineBreaksWithTranslatedDivs, assignLanguageCode, BASE } from '../shared/utils';
 import { Router } from '@angular/router';
 import { MetaService } from './meta.service';
+import { LessonsService } from './lessons.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +15,13 @@ export class DbService {
   http = inject(HttpClient);
   router = inject(Router);
   meta = inject(MetaService);
+  lessonsService = inject(LessonsService);
 
-  
   allLessons = signal<LessonsResponse[] | null>(null);
   lesson = signal<LessonsResponse | null>(null);
-  baseUrl = `https://www.purplepeoplesreader.com`;
-  baseImage = this.baseUrl + "/apps/assets/purple-people-eater.jpg";
+  lessons = signal<LessonsResponse[] | null>(null);
+  baseUrl = BASE.baseUrl;
+  baseImage = BASE.baseImage;
   allRoutes = signal<LessonsResponse[] | null>(null);
   lessonTitle = signal<string | null>(null);
   language = signal<string>("English");
@@ -27,14 +29,6 @@ export class DbService {
   tag = signal<string>("A1");
   currentPath = signal<string>(this.router.url);
   isChrome = signal<boolean>(false);
-  
-
-
-  
-
-  constructor() {
-
-  }
 
   async fetchLessons(lang: string = 'English', tag: string = "A1") {
     try {
@@ -49,11 +43,11 @@ export class DbService {
         lesson.language === lang && lesson.tags.toString().includes(tag) && lesson.shareable
       ).sort((a: { created: string | number | Date; }, b: { created: string | number | Date; }) => new Date(b.created).getTime() - new Date(a.created).getTime());
 
-      (filteredLessons.length > 1) ? this.allLessons.set(filteredLessons): this.allLessons.set([]);
+      (filteredLessons.length > 1) ? this.lessons.set(filteredLessons): this.lessons.set([]);
       return filteredLessons as LessonsResponse[];
     } catch (error) {
       console.error('Error fetching lessons:', error);
-      this.allLessons.set(null);
+      this.lessons.set(null);
       return null;
     }
   }
@@ -66,6 +60,7 @@ export class DbService {
         console.log('FETCHING LESSON');
         const formattedContentLines = addLineBreaksWithTranslatedDivs(lesson.content);
         lesson.contentLines = formattedContentLines;
+        this.lesson.set(lesson);
         lesson.audioUrl = this.formatAudioUrl() || "";
         lesson.imageUrl = this.formatImageUrl() || "";
         this.lesson.set(lesson);

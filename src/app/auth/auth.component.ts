@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { FormsModule } from '@angular/forms';
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, SpinnerComponent],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css'
 })
@@ -17,15 +18,20 @@ export class AuthComponent {
   password: string = '';
   isAuthenticated = this.authService.isAuthenticated;
   user = this.authService.user;
+  waiting = false;
 
   constructor() {}
 
-  loginWithEmail(): void {
-    this.authService.loginWithEmail(this.email, this.password);
+  async loginWithEmail() {
+    this.waiting = true;
+    await this.authService.loginWithEmail(this.email, this.password);
+    this.waiting = false;
   }
 
-  loginWithGoogle(): void {
-    this.authService.loginWithGoogle();
+  async loginWithGoogle() {
+    this.waiting = true;
+    await this.authService.loginWithGoogle();
+    this.waiting = false;
   }
 
   logout(): void {

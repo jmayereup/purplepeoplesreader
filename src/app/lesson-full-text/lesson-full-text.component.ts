@@ -4,6 +4,7 @@ import { PlayVideoComponent } from '../play-video/play-video.component';
 import { PlayButtonComponent } from '../play-button/play-button.component';
 import { AsyncPipe, DOCUMENT, NgOptimizedImage } from '@angular/common';
 import { MarkdownPipe } from 'ngx-markdown';
+import { BASE } from '../shared/utils';
 
 @Component({
   selector: 'app-lesson-full-text',
@@ -15,12 +16,11 @@ import { MarkdownPipe } from 'ngx-markdown';
 export class LessonFullTextComponent {
 
   lesson = input<LessonsResponse>();
-  baseImage = input.required<string>()
-
+  baseImage = BASE.baseImage;
   document = inject(DOCUMENT);
 
-  audioUrl = this.lesson()?.audioUrl;
-  imageUrl = this.lesson()?.imageUrl;
+  // audioUrl = this.lesson()?.audioUrl;
+  // imageUrl = this.lesson()?.imageUrl;
   languageReactorUrl = 'https://www.languagereactor.com/text';
   
 

@@ -2,13 +2,14 @@ import { Component, OnInit, Output, EventEmitter, inject, OnDestroy } from '@ang
 import { CommonModule } from '@angular/common';
 import { FormFilesComponent } from '../form-files/form-files.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TAG_VALUES } from '../shared/utils';
+import { BASE, TAG_VALUES } from '../shared/utils';
 import { LoginComponent } from "../login/login.component";
 import { AuthService } from '../services/auth.service';
 import { LessonsService } from '../services/lessons.service';
 import { LessonsRecord, LessonsResponse } from '../shared/pocketbase-types';
 import { AuthComponent } from "../auth/auth.component";
 import { LessonFullTextComponent } from "../lesson-full-text/lesson-full-text.component";
+import { DbService } from '../services/db.service';
 
 @Component({
   selector: 'app-form-lesson',
@@ -24,11 +25,9 @@ export class FormLessonComponent implements OnInit, OnDestroy {
   lessonsService = inject(LessonsService);
   fb = inject(FormBuilder);
   authService = inject(AuthService);
-  baseImage = this.lessonsService.baseImage;
+  baseImage = BASE.baseImage;
 
   lessons = this.lessonsService.lessons;
-
-
   lesson = this.lessonsService.lesson;
   tags = TAG_VALUES;
   saved = false;
@@ -58,8 +57,7 @@ export class FormLessonComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     console.log('on Init called');
-    // this.store.user.checkUser();
-    this.lessonsService.fetchAllLessons();
+    this.lessonsService.fetchLessons();
     this.lesson.set(null);
 
   }
