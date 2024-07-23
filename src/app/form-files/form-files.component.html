@@ -1,1 +1,18 @@
-<p>form-files works!</p>
+<form [formGroup]="form" class="flex flex-wrap">
+    <div class="w-full">
+        <label for="image" class="form-label">Upload Image or Audio</label>
+        <input type="file" id="file" formControlName="file" (change)="onFileSelected($event)" class="file-input form-input"
+            #fileUpload>
+    </div>
+    @if (errorMessage) {
+    <div class="warning">
+        <br>
+        There was an error uploading the file.
+    </div>
+    }
+    @if (successMessage) {
+    {{successMessage}} 👍
+    <p>{{fileName}}</p>
+    }
+    @if (loading) { <p>Please Wait...</p> }
+</form>
