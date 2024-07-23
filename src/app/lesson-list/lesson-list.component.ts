@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { DbService } from '../services/db.service';
 import { LessonsResponse } from '../shared/pocketbase-types';
 import { stripMarkdown } from '../shared/utils';
@@ -21,11 +21,13 @@ export class LessonListComponent {
   db = inject(DbService);
   meta = inject(MetaService);
   route = inject(ActivatedRoute);
+  lang = input<string>();
+  tag = input<string>();
   lessons = this.db.lessons;
   baseUrl = this.db.baseUrl;
 
-  lang = this.db.language;
-  tag = this.db.tag;
+  langNav = this.db.language;
+  tagNav = this.db.tag;
 
   paramSub: Subscription;
 
@@ -38,16 +40,16 @@ export class LessonListComponent {
           const currentLang = params.get('lang');
           const currentTag = params.get('tag');
           if (currentLang != this.lang()) {
-            this.tag.set('A1');
-            this.lang.set(currentLang || 'English')
+            this.tagNav.set('A1');
+            this.langNav.set(currentLang || 'English')
             this.db.fetchLessons(currentLang || 'English', currentTag || 'A1').then(() => {
               this.meta.setMetaTags({ title: this.lang()?.toUpperCase() + " " + this.tag() || "", image: this.baseUrl + "/apps/assets/purple-people-eat.jpg", path: this.db.currentPath() });
             });
             return
           }
           else if (currentTag != this.tag()) {
-            this.lang.set(currentLang);
-            this.tag.set(currentTag || 'A1');
+            this.langNav.set(currentLang);
+            this.tagNav.set(currentTag || 'A1');
             this.db.fetchLessons(currentLang, currentTag || 'A1').then(() => {
               this.meta.setMetaTags({ title: this.lang()?.toUpperCase() + " " + this.tag() || "", image: this.baseUrl + "/apps/assets/purple-people-eat.jpg", path: this.db.currentPath() });
             });
@@ -56,6 +58,12 @@ export class LessonListComponent {
         }
       )
 
+  }
+
+  ngOnInit() {
+    this.db.fetchLessons(this.lang(), this.tag());
+    this.langNav.set(this.lang() || 'English');
+    this.tagNav.set(this.tag() || 'A1');
   }
 
 

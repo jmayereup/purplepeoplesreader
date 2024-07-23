@@ -19,8 +19,6 @@ export class LessonFullTextComponent {
   baseImage = BASE.baseImage;
   document = inject(DOCUMENT);
 
-  // audioUrl = this.lesson()?.audioUrl;
-  // imageUrl = this.lesson()?.imageUrl;
   languageReactorUrl = 'https://www.languagereactor.com/text';
   
 
