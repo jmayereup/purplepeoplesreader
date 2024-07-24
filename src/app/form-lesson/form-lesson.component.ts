@@ -38,7 +38,7 @@ export class FormLessonComponent implements OnInit, OnDestroy {
     title: this.fb.control(''),
     content: this.fb.control('', Validators.required),
     vocabulary: this.fb.control(''),
-    language: this.fb.control('', Validators.required),
+    language: this.fb.control('English', Validators.required),
     tags: this.fb.control([''], Validators.required),
     shareable: this.fb.control(true, Validators.required),
     imageUrl: this.fb.control(''),
@@ -82,6 +82,11 @@ export class FormLessonComponent implements OnInit, OnDestroy {
       videoUrl: lesson?.videoUrl,
       creatorId: lesson?.creatorId
     })
+  }
+
+  resetForm() {
+    this.lesson.set(null);
+    this.loadLesson();
   }
 
   setImagePath(val: string) {
