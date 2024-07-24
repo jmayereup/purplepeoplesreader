@@ -1,11 +1,13 @@
-import { Injectable, Signal, signal } from '@angular/core';
+import { inject, Injectable, Signal, signal } from '@angular/core';
 import { TypedPocketBase } from '../shared/pocketbase-types';
 import PocketBase from 'pocketbase';
+import { LessonsService } from './lessons.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+
   private pb = new PocketBase('https://purplepeoplesreader.com') as TypedPocketBase;
   private _isAuthenticated = signal(false);
   private _user = signal<any>(null);
@@ -18,14 +20,17 @@ export class AuthService {
     return this._user;
   }
 
-  async loginWithEmail(email: string, password: string): Promise<void> {
+  async loginWithEmail(email: string, password: string) {
     try {
-      const authData = await this.pb.collection('users').authWithPassword(email, password);
+      let authData;
+      authData = await this.pb.collection('users').authWithPassword(email, password);
       this._user.set(authData.record);
       this._isAuthenticated.set(true);
+      return true
     } catch (error) {
-      console.error('Login failed', error);
+      console.error('Login failed:', error);
       this._isAuthenticated.set(false);
+      return false
     }
   }
 

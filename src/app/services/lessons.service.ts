@@ -1,17 +1,17 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import PocketBase from 'pocketbase';
 import { TypedPocketBase, LessonsResponse, LessonsRecord, Collections } from '../shared/pocketbase-types'; // Adjust the import path accordingly
 import { BASE } from '../shared/utils';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LessonsService {
-  private pb: TypedPocketBase = new PocketBase('https://purplepeoplesreader.com') as TypedPocketBase;
+  pb: TypedPocketBase = new PocketBase('https://purplepeoplesreader.com') as TypedPocketBase;
+  authService = inject(AuthService);
   lessons = signal<LessonsResponse[]>([]);
   lesson = signal<LessonsResponse | null>(null);
-
-  // db = inject(DbService);
 
   baseImage = BASE.baseImage;
   baseUrl = BASE.baseUrl;
@@ -45,8 +45,9 @@ export class LessonsService {
 
   async createLesson(lessonData: LessonsRecord): Promise<LessonsResponse | void> {
     try {
+      console.log('create called', lessonData);
       const newLesson = await this.pb.collection(Collections.Lessons).create<LessonsResponse>(lessonData);
-      this.lessons.set([...this.lessons(), newLesson]);
+      this.lessons.set([newLesson, ...this.lessons()]);
       return newLesson;
     } catch (error) {
       console.error('Error creating lesson', error);

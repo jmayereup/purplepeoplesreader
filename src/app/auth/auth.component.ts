@@ -13,6 +13,7 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 
 export class AuthComponent {
   authService = inject(AuthService);
+  
 
   email: string = '';
   password: string = '';
@@ -26,6 +27,7 @@ export class AuthComponent {
     this.waiting = true;
     await this.authService.loginWithEmail(this.email, this.password);
     this.waiting = false;
+    
   }
 
   async loginWithGoogle() {
