@@ -1,0 +1,18 @@
+<h2 class="mb-4 text-3xl font-bold">Lessons</h2>
+<input type="text" class="w-full p-2 mb-4 border border-gray-300 rounded" placeholder="Search lessons" [formControl]="searchControl">
+<div class="w-full p-4 pl-0 m-4 ml-0 overflow-y-auto max-h-96 text-purple-950">
+    <ul class="list-disc list-inside">
+        @for (lesson of filteredLessons; track lesson.id) {
+        <li
+            class="flex flex-row items-center justify-between w-full grid-cols-8 p-1 mb-2 rounded-lg flex-nowrap odd:bg-purple-200 even:bg-slate-200">
+            <span class="flex text-lg font-semibold">{{ lesson.title }}</span>
+            <span class="flex flex-row flex-nowrap">
+                <button (click)="selectLesson.emit(lesson.id)"
+                    class="col-span-1 px-4 py-2 ml-4 text-white bg-blue-500 rounded hover:bg-blue-600">View</button>
+                <button (click)="removeLesson.emit(lesson.id)"
+                    class="col-span-1 px-4 py-2 ml-2 text-white bg-red-500 rounded hover:bg-red-600">Delete</button>
+            </span>
+        </li>
+        }
+    </ul>
+</div>

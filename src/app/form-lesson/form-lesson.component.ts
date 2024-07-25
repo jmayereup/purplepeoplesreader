@@ -9,14 +9,15 @@ import { LessonsService } from '../services/lessons.service';
 import { LessonsRecord, LessonsResponse } from '../shared/pocketbase-types';
 import { AuthComponent } from "../auth/auth.component";
 import { LessonFullTextComponent } from "../lesson-full-text/lesson-full-text.component";
-import { DbService } from '../services/db.service';
+import { LessonListSimpleComponent } from "../lesson-list-simple/lesson-list-simple.component";
 
 @Component({
   selector: 'app-form-lesson',
   standalone: true,
   templateUrl: './form-lesson.component.html',
   styleUrl: './form-lesson.component.css',
-  imports: [CommonModule, FormFilesComponent, ReactiveFormsModule, FormFilesComponent, LoginComponent, AuthComponent, LessonFullTextComponent]
+  imports: [CommonModule, FormFilesComponent, ReactiveFormsModule, FormFilesComponent, 
+    LoginComponent, AuthComponent, LessonFullTextComponent, LessonListSimpleComponent]
 })
 export class FormLessonComponent implements OnInit, OnDestroy {
 

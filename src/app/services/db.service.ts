@@ -38,12 +38,14 @@ export class DbService {
       this.langCode.set(assignLanguageCode(lang || 'English'));
       this.lessonTitle.set(lang + ' - ' + tag + ' - The Purple Peoples Reader');
       const lessons = await lastValueFrom(this.http.get<any>(`assets/all-records.json`));
-      this.meta.setMetaTags({title: this.lessonTitle() || 'List', image: this.baseImage, path: this.currentPath() })
+      this.meta.setMetaTags({ title: this.lessonTitle() || 'List', image: this.baseImage, path: this.currentPath() })
+      // const filteredLessons: LessonsResponse[] = lessons?.items.filter((lesson: LessonsResponse) =>
+      //   lesson.language === lang && lesson.tags.toString().includes(tag) && lesson.shareable
+      // ).sort((a: { created: string | number | Date; }, b: { created: string | number | Date; }) => new Date(b.created).getTime() - new Date(a.created).getTime());
       const filteredLessons: LessonsResponse[] = lessons?.items.filter((lesson: LessonsResponse) =>
         lesson.language === lang && lesson.tags.toString().includes(tag) && lesson.shareable
-      ).sort((a: { created: string | number | Date; }, b: { created: string | number | Date; }) => new Date(b.created).getTime() - new Date(a.created).getTime());
-
-      (filteredLessons.length > 1) ? this.lessons.set(filteredLessons): this.lessons.set([]);
+      ).sort((a: { title: string }, b: { title: string }) => a.title.localeCompare(b.title));
+      (filteredLessons.length > 1) ? this.lessons.set(filteredLessons) : this.lessons.set([]);
       return filteredLessons as LessonsResponse[];
     } catch (error) {
       console.error('Error fetching lessons:', error);
@@ -67,7 +69,7 @@ export class DbService {
         this.langCode.set(assignLanguageCode(lesson?.language || 'English'));
         this.currentPath.set(this.baseUrl + this.router.url);
         this.lessonTitle.set(lesson?.title.toUpperCase() || 'PPR Lesson');
-        this.meta.setMetaTags({title: this.lessonTitle() || "PPR", image: lesson.imageUrl, path: this.currentPath() })
+        this.meta.setMetaTags({ title: this.lessonTitle() || "PPR", image: lesson.imageUrl, path: this.currentPath() })
         return;
       } else return
     } catch (error) {

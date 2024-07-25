@@ -83,8 +83,11 @@
         <span class="text-green-700">Saved!</span>
         }
     </div>
+    <app-lesson-list-simple [lessons]="lessons()" (selectLesson)="selectLesson($event)"
+        (removeLesson)="removeLesson($event)">
+    </app-lesson-list-simple>
     <!-- Lesson List -->
-    <h2 class="mb-4 text-3xl font-bold">Lessons</h2>
+    <!-- <h2 class="mb-4 text-3xl font-bold">Lessons</h2>
     <div class="w-full p-4 pl-0 m-4 ml-0 overflow-y-auto max-h-96 text-purple-950">
         <ul class="list-disc list-inside">
             @for (lesson of lessons(); track lesson.id ){
@@ -100,7 +103,7 @@
             </li>
             }
         </ul>
-    </div>
+    </div> -->
     <!-- Lesson Preview -->
     <app-lesson-full-text [lesson]="lesson() || undefined"></app-lesson-full-text>
 </section>
