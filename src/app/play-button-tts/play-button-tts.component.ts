@@ -19,8 +19,6 @@ export class PlayButtonTtsComponent {
     this.speakService.speak(content, lang);
 
   }
-
-  readAloud
-  
+ 
 
 }

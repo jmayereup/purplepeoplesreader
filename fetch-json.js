@@ -16,7 +16,7 @@ async function fetchAllRecords() {
     for (const lang of languages) {
       const records = await pb.collection('lessons').getList(1, 500, {
         filter: `language="${lang}"`,
-        sort: '-created', // Adjust sorting if needed
+        sort: 'title', // Adjust sorting if needed
       });
       allRecords.push(...records.items);
     }

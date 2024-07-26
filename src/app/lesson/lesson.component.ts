@@ -1,7 +1,7 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnChanges } from '@angular/core';
 import { DbService } from '../services/db.service';
 import { SpinnerComponent } from "../spinner/spinner.component";
-import { AsyncPipe, DOCUMENT, Location, NgClass } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { MarkdownPipe } from 'ngx-markdown';
 import { MetaService } from '../services/meta.service';
 import { SpeakService } from '../services/speak.service';
@@ -16,13 +16,11 @@ import { LessonFullTextComponent } from "../lesson-full-text/lesson-full-text.co
   templateUrl: './lesson.component.html',
   styleUrl: './lesson.component.css'
 })
-export class LessonComponent implements OnInit {
+export class LessonComponent implements OnChanges {
 
   id = input<string>();
   db = inject(DbService);
   meta = inject(MetaService);
-  document = inject(DOCUMENT);
-  location = inject(Location);
   speakService = inject(SpeakService);
   route = inject(ActivatedRoute);
   lesson = this.db.lesson;
@@ -39,7 +37,7 @@ export class LessonComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngOnChanges() {
     this.fetchLesson();
   }
   
@@ -61,10 +59,7 @@ export class LessonComponent implements OnInit {
         return
       }
     }
-  }
-
-  goBack() {
-    this.location.back();
+    
   }
 
   readThis(event: Event): void {

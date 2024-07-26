@@ -19,6 +19,7 @@ export class DbService {
 
   allLessons = signal<LessonsResponse[] | null>(null);
   lesson = signal<LessonsResponse | null>(null);
+  currentIndex = -1;
   lessons = signal<LessonsResponse[] | null>(null);
   baseUrl = BASE.baseUrl;
   baseImage = BASE.baseImage;
@@ -46,6 +47,7 @@ export class DbService {
         lesson.language === lang && lesson.tags.toString().includes(tag) && lesson.shareable
       ).sort((a: { title: string }, b: { title: string }) => a.title.localeCompare(b.title));
       (filteredLessons.length > 1) ? this.lessons.set(filteredLessons) : this.lessons.set([]);
+      // this.lessons.set(filteredLessons);
       return filteredLessons as LessonsResponse[];
     } catch (error) {
       console.error('Error fetching lessons:', error);
@@ -57,8 +59,10 @@ export class DbService {
   async fetchLesson(id: string) {
     try {
       const lessons = await lastValueFrom(this.http.get<{ items: LessonsResponse[] }>('assets/all-records.json'));
-      const lesson = lessons?.items.find(lesson => lesson.id === id) || null;
+      this.lessons.set(lessons.items);
+      const lesson = this.lessons()?.find(lesson => lesson.id === id) || null;
       if (lesson) {
+        this.currentIndex = (this.lessons()?.indexOf(lesson) || -1);
         console.log('FETCHING LESSON');
         const formattedContentLines = addLineBreaksWithTranslatedDivs(lesson.content);
         lesson.contentLines = formattedContentLines;
@@ -76,6 +80,25 @@ export class DbService {
       console.error('Error fetching lesson:', error);
       this.lesson.set(null);
       return null;
+    }
+  }
+
+  nextLesson() {
+    if (!this.lessons()?.length) return;
+    if (this.currentIndex < this.lessons()?.length! - 1) {
+      this.currentIndex++;
+      const id = this.lessons()?.[this.currentIndex].id!;
+      this.router.navigate(['lesson', id]);
+      // this.fetchLesson(this.lessons()?.[this.currentIndex].id!);
+    }
+  }
+
+  previousLesson() {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+      const id = this.lessons()?.[this.currentIndex].id!;
+      this.router.navigate(['lesson', id]);
+      // this.fetchLesson(this.lessons()?.[this.currentIndex].id!);
     }
   }
 
