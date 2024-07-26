@@ -1,1 +1,11 @@
-<button class="button" (click)="play(content(), lang())">Listen</button>
+<script async src="https://assets.readaloudwidget.com/embed/js/readaloud.min.js"></script>
+
+<div #raplayer id="ra-player" data-skin="https://assets.readaloudwidget.com/embed/skins/default">
+    <div #rabutton class="ra-button"
+        onclick="readAloud(this.rabutton, this.raplayer)"><svg
+            viewBox="0 0 80 100">
+            <polygon points="80,50 0,100 0,0 80,50" fill="#484848" />
+        </svg>Listen</div>
+</div>
+<audio id="ra-audio" data-lang="de-DE" data-voice="Amazon Hans" data-key="31f16315abf1d6ca6a874fb60dbc59bf"></audio>
+

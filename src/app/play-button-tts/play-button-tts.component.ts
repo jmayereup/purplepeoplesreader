@@ -10,8 +10,8 @@ import { SpeakService } from '../services/speak.service';
 })
 export class PlayButtonTtsComponent {
 
-  content = input.required<string>();
-  lang = input.required<string>();
+  content = input<string>();
+  lang = input<string>();
   speakService = inject(SpeakService);
   
   play(content: string, lang: string) {
@@ -19,5 +19,8 @@ export class PlayButtonTtsComponent {
     this.speakService.speak(content, lang);
 
   }
+
+  readAloud
+  
 
 }

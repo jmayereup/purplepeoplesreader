@@ -4,7 +4,7 @@ import { PlayVideoComponent } from '../play-video/play-video.component';
 import { PlayButtonComponent } from '../play-button/play-button.component';
 import { AsyncPipe, DOCUMENT, NgOptimizedImage } from '@angular/common';
 import { MarkdownPipe } from 'ngx-markdown';
-import { BASE, assignLanguageCode } from '../shared/utils';
+import { BASE } from '../shared/utils';
 import { PlayButtonTtsComponent } from "../play-button-tts/play-button-tts.component";
 
 @Component({
