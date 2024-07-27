@@ -5,6 +5,7 @@ import { addLineBreaksWithTranslatedDivs, assignLanguageCode, BASE } from '../sh
 import { Router } from '@angular/router';
 import { MetaService } from './meta.service';
 import { LessonsService } from './lessons.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class DbService {
   router = inject(Router);
   meta = inject(MetaService);
   lessonsService = inject(LessonsService);
+  authServe = inject(AuthService);
 
   allLessons = signal<LessonsResponse[] | null>(null);
   lesson = signal<LessonsResponse | null>(null);
@@ -31,6 +33,7 @@ export class DbService {
   currentPath = signal<string>(this.router.url);
   isChrome = signal<boolean>(false);
   waiting = signal<boolean>(true);
+  isAuthenticated = this.authServe.isAuthenticated;
 
   async fetchLessons(lang: string = 'English', tag: string = "A1") {
     try {

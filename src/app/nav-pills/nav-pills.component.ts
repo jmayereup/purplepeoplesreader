@@ -19,4 +19,6 @@ export class NavPillsComponent {
   lang = this.db.language;
   tag = this.db.tag;
 
+  isAuthenticated = this.db.isAuthenticated;
+
 }
