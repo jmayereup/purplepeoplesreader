@@ -15,14 +15,14 @@
     </div>
     }
     }
-    @else {
+    @if (waiting()) {
         <div class="items-center justify-center w-full col-span-3">
             <div class="text-center text-purple-700">
                 <app-spinner></app-spinner>
             </div>
         </div>
     }
-    @if (lessons()?.length == 0) {
+    @if (lessons()?.length == 0 && !waiting()) {
         <div class="items-center justify-center w-full col-span-3 text-center text-purple-700">
             <h1>No Lessons Available</h1>
         </div>

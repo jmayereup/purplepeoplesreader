@@ -31,7 +31,6 @@ export class AppComponent implements OnInit {
         this.db.isChrome.set(true);
       }
     }
-
   }
   
 

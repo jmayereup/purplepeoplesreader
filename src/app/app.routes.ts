@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { LessonListComponent } from './lesson-list/lesson-list.component';
 import { LessonComponent } from './lesson/lesson.component';
+import { lessonResolver } from './lesson.resolver';
+import { lessonsResolver } from './lessons.resolver';
 
 export const routes: Routes = [
     {
@@ -9,14 +11,21 @@ export const routes: Routes = [
     },
     {
         path: 'list/:lang/:tag',
-        component: LessonListComponent
+        component: LessonListComponent,
+        resolve: {
+            lessons: lessonsResolver
+        }
     },
     {
-        path: 'list/:lang', component: LessonListComponent
+        path: 'list/:lang', 
+        redirectTo: 'list/:lang/A1' , pathMatch: 'full'
     },
     {
         path: 'lesson/:id',
-        component: LessonComponent
+        component: LessonComponent,
+        resolve: {
+            lesson: lessonResolver
+        }
     },
     {
         path: 'create',

@@ -22,6 +22,7 @@ export class LessonsService {
         sort: '-created',
       });
       this.lessons.set(result);
+      console.log('fetching from pocketbase');
       return result;
     } catch (error) {
       console.error('Error fetching lessons', error);

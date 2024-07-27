@@ -1,7 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { LessonsResponse } from '../shared/pocketbase-types';
 import { HttpClient } from '@angular/common/http';
-import { lastValueFrom } from 'rxjs';
 import { addLineBreaksWithTranslatedDivs, assignLanguageCode, BASE } from '../shared/utils';
 import { Router } from '@angular/router';
 import { MetaService } from './meta.service';
@@ -21,6 +20,7 @@ export class DbService {
   lesson = signal<LessonsResponse | null>(null);
   currentIndex = -1;
   lessons = signal<LessonsResponse[] | null>(null);
+  filteredLessons = signal<LessonsResponse[] | null>(null);
   baseUrl = BASE.baseUrl;
   baseImage = BASE.baseImage;
   allRoutes = signal<LessonsResponse[] | null>(null);
@@ -30,50 +30,65 @@ export class DbService {
   tag = signal<string>("A1");
   currentPath = signal<string>(this.router.url);
   isChrome = signal<boolean>(false);
+  waiting = signal<boolean>(true);
 
   async fetchLessons(lang: string = 'English', tag: string = "A1") {
     try {
-      console.log('fetching lessons');
+      let lessons: LessonsResponse[];
+      if (!this.lessons()) {
+        // const newLessons = await lastValueFrom(this.http.get<{ items: LessonsResponse[] }>('assets/all-records.json'));
+        lessons = await this.lessonsService.fetchLessons() || [];
+        this.lessons.set(lessons);
+        this.filteredLessons.set(lessons);
+        console.log('fetching lessons');
+      } else {
+        lessons = this.lessons() || [];
+        console.log('using prior lessons');
+      }
       const partialPath = this.router.url.split('?')[0];
       this.currentPath.set(this.baseUrl + partialPath);
       this.langCode.set(assignLanguageCode(lang || 'English'));
       this.lessonTitle.set(lang + ' - ' + tag + ' - The Purple Peoples Reader');
-      const lessons = await lastValueFrom(this.http.get<any>(`assets/all-records.json`));
       this.meta.setMetaTags({ title: this.lessonTitle() || 'List', image: this.baseImage, path: this.currentPath() })
+      
+      // lessons = await lastValueFrom(this.http.get<any>(`assets/all-records.json`));
       // const filteredLessons: LessonsResponse[] = lessons?.items.filter((lesson: LessonsResponse) =>
       //   lesson.language === lang && lesson.tags.toString().includes(tag) && lesson.shareable
       // ).sort((a: { created: string | number | Date; }, b: { created: string | number | Date; }) => new Date(b.created).getTime() - new Date(a.created).getTime());
-      const filteredLessons: LessonsResponse[] = lessons?.items.filter((lesson: LessonsResponse) =>
+      
+      const filteredLessons: LessonsResponse[] = lessons.filter((lesson: LessonsResponse) =>
         lesson.language === lang && lesson.tags.toString().includes(tag) && lesson.shareable
-      ).sort((a: { title: string }, b: { title: string }) => a.title.localeCompare(b.title));
-      (filteredLessons.length > 1) ? this.lessons.set(filteredLessons) : this.lessons.set([]);
-      // this.lessons.set(filteredLessons);
+      ).sort((a: { title: string }, b: { title: string }) => a.title.localeCompare(b.title)) || [];
+
+      (filteredLessons.length) ? this.filteredLessons.set(filteredLessons) : this.filteredLessons.set([]);
       return filteredLessons as LessonsResponse[];
     } catch (error) {
       console.error('Error fetching lessons:', error);
-      this.lessons.set(null);
+      this.filteredLessons.set(null);
       return null;
     }
   }
 
   async fetchLesson(id: string) {
     try {
-      const lessons = await lastValueFrom(this.http.get<{ items: LessonsResponse[] }>('assets/all-records.json'));
-      this.lessons.set(lessons.items);
-      const lesson = this.lessons()?.find(lesson => lesson.id === id) || null;
+      const lesson = this.filteredLessons()?.find(lesson => lesson.id === id) || null;
       if (lesson) {
-        this.currentIndex = (this.lessons()?.indexOf(lesson) || -1);
-        console.log('FETCHING LESSON');
+        this.currentIndex = (this.filteredLessons()?.indexOf(lesson) || -1);
         const formattedContentLines = addLineBreaksWithTranslatedDivs(lesson.content);
         lesson.contentLines = formattedContentLines;
         this.lesson.set(lesson);
         lesson.audioUrl = this.formatAudioUrl() || "";
         lesson.imageUrl = this.formatImageUrl() || "";
         this.lesson.set(lesson);
+        
         this.langCode.set(assignLanguageCode(lesson?.language || 'English'));
+        this.language.set(lesson?.language || 'English');
+        this.tag.set(lesson.tags[0]);
         this.currentPath.set(this.baseUrl + this.router.url);
         this.lessonTitle.set(lesson?.title.toUpperCase() || 'PPR Lesson');
-        this.meta.setMetaTags({ title: this.lessonTitle() || "PPR", image: lesson.imageUrl, path: this.currentPath() })
+        this.meta.setMetaTags({ title: this.lessonTitle() || "PPR", image: lesson.imageUrl, path: this.currentPath() });
+        
+        this.waiting.set(false);
         return;
       } else return
     } catch (error) {

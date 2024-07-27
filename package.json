@@ -10,7 +10,7 @@
     "fetch-data": "node fetch-json.js",
     "generate-routes": "node generate-routes.js",
     "sync": "node sync.js",
-    "build-deploy": "npm run fetch-data && npm run generate-routes && ng build && npm run sync"
+    "build-deploy": "npm run generate-routes && ng build && npm run sync"
   },
   "private": true,
   "dependencies": {
