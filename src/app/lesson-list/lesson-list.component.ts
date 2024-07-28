@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input, OnChanges } from '@angular/core';
 import { DbService } from '../services/db.service';
 import { LessonsResponse } from '../shared/pocketbase-types';
 import { stripMarkdown } from '../shared/utils';
@@ -14,18 +14,26 @@ import { NgOptimizedImage } from '@angular/common';
   templateUrl: './lesson-list.component.html',
   styleUrl: './lesson-list.component.css'
 })
-export class LessonListComponent {
+export class LessonListComponent implements OnChanges {
 
   db = inject(DbService);
+  lang = input<string>('English');
+  tag = input<string>('A1');
   lessons = this.db.filteredLessons;
   baseUrl = this.db.baseUrl;
 
   langNav = this.db.language;
   tagNav = this.db.tag;
-  waiting = this.db.waiting;
 
-
+  
   constructor() {}
+  
+  ngOnChanges(): void {
+    this.db.language.set(this.lang());
+    this.db.tag.set(this.tag());
+    this.db.fetchLessons(this.lang(), this.tag());
+    
+  }
 
 
   getImageThumbnail(item: LessonsResponse) {

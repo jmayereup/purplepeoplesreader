@@ -38,15 +38,18 @@ export class DbService {
   async fetchLessons(lang: string = 'English', tag: string = "A1") {
     try {
       let lessons: LessonsResponse[];
-      if (!this.lessons()) {
+      if (!this.lessons() || !this.lessons()?.length) {
+        this.waiting.set(true);
         // const newLessons = await lastValueFrom(this.http.get<{ items: LessonsResponse[] }>('assets/all-records.json'));
         lessons = await this.lessonsService.fetchLessons() || [];
         lessons.sort((a: { title: string }, b: { title: string }) => a.title.localeCompare(b.title));
         this.lessons.set(lessons);
-        this.filteredLessons.set(lessons);
+        // this.waiting.set(false);
+        // this.filteredLessons.set(lessons);
         console.log('fetching lessons');
       } else {
         lessons = this.lessons() || [];
+        
         console.log('using prior lessons');
       }
       const partialPath = this.router.url.split('?')[0];
@@ -65,6 +68,7 @@ export class DbService {
       ) || [];
 
       (filteredLessons.length) ? this.filteredLessons.set(filteredLessons) : this.filteredLessons.set([]);
+      this.waiting.set(false);
       return filteredLessons as LessonsResponse[];
     } catch (error) {
       console.error('Error fetching lessons:', error);

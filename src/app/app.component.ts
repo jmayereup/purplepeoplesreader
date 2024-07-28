@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { DbService } from './services/db.service';
 import { LessonListComponent } from "./lesson-list/lesson-list.component";
@@ -20,7 +20,6 @@ export class AppComponent implements OnInit {
   platformId = inject(PLATFORM_ID);
   lang = this.db.language;
   tag = this.db.tag;
-
   constructor() {
   }
 

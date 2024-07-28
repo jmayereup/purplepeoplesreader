@@ -11,10 +11,7 @@ export const routes: Routes = [
     },
     {
         path: 'list/:lang/:tag',
-        component: LessonListComponent,
-        resolve: {
-            lessons: lessonsResolver
-        }
+        component: LessonListComponent
     },
     {
         path: 'list/:lang', 
