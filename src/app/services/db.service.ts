@@ -41,6 +41,7 @@ export class DbService {
       if (!this.lessons()) {
         // const newLessons = await lastValueFrom(this.http.get<{ items: LessonsResponse[] }>('assets/all-records.json'));
         lessons = await this.lessonsService.fetchLessons() || [];
+        lessons.sort((a: { title: string }, b: { title: string }) => a.title.localeCompare(b.title));
         this.lessons.set(lessons);
         this.filteredLessons.set(lessons);
         console.log('fetching lessons');
@@ -61,7 +62,7 @@ export class DbService {
       
       const filteredLessons: LessonsResponse[] = lessons.filter((lesson: LessonsResponse) =>
         lesson.language === lang && lesson.tags.toString().includes(tag) && lesson.shareable
-      ).sort((a: { title: string }, b: { title: string }) => a.title.localeCompare(b.title)) || [];
+      ) || [];
 
       (filteredLessons.length) ? this.filteredLessons.set(filteredLessons) : this.filteredLessons.set([]);
       return filteredLessons as LessonsResponse[];

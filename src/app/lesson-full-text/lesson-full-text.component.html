@@ -17,9 +17,6 @@
                 @if(lesson()?.audioUrl){
                 <app-play-button #playButton [audioUrl]="lesson()?.audioUrl"></app-play-button>
                 }
-                @else {
-                    <app-play-button-tts></app-play-button-tts>
-                }
                 <button type="button" class="flex items-center sm:w-fit button"
                     (click)="openLanguageReactor()">Read in Language Reactor</button>
             </div>
