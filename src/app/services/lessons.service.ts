@@ -3,7 +3,7 @@ import PocketBase from 'pocketbase';
 import { TypedPocketBase, LessonsResponse, LessonsRecord, Collections } from '../shared/pocketbase-types'; // Adjust the import path accordingly
 import { BASE } from '../shared/utils';
 import { AuthService } from './auth.service';
-import { isPlatformServer } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -20,19 +20,20 @@ export class LessonsService {
 
   async fetchLessons(): Promise<LessonsResponse[] | null> {
     try {
-      if(isPlatformServer(this.platformId)) {
-        const lessons: {items: LessonsResponse[]} = require('../../../lessons.json')
-        this.lessons.set(lessons.items);
-        console.log('server fetch');
-        return lessons.items;
-      }
-      console.log('fetching from pocketbase');
-      const result = await this.pb.collection(Collections.Lessons).getFullList<LessonsResponse>({
-        sort: '-created',
-      });
-      console.log('fetched');
-      this.lessons.set(result);
-      return result;
+      // if(isPlatformServer(this.platformId)) {
+      //   const lessons: {items: LessonsResponse[]} = require('../../../lessons.json')
+      //   this.lessons.set(lessons.items);
+      //   console.log('server fetch');
+      //   return lessons.items;
+      // } else if (isPlatformBrowser(this.platformId)) {
+        console.log('fetching from pocketbase');
+        const result = await this.pb.collection(Collections.Lessons).getFullList<LessonsResponse>({
+          sort: '-created',
+        });
+        console.log('fetched');
+        this.lessons.set(result);
+        return result;
+      // } else return null
     } catch (error) {
       console.error('Error fetching lessons', error);
       return null;

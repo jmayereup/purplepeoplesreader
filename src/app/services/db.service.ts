@@ -18,7 +18,6 @@ export class DbService {
   lessonsService = inject(LessonsService);
   authServe = inject(AuthService);
 
-  allLessons = signal<LessonsResponse[] | null>(null);
   lesson = signal<LessonsResponse | null>(null);
   currentIndex = -1;
   lessons = signal<LessonsResponse[] | null>(null);

@@ -23,7 +23,7 @@ export const routes: Routes = [
     },
     {
         path: 'lesson/:id',
-        component: LessonComponent,
+        loadComponent: () => import('./lesson/lesson.component').then(m => m.LessonComponent),
         resolve: {
             lesson: lessonResolver
         }
