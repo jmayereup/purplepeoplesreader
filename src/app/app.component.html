@@ -1,18 +1,13 @@
 <div class="flex flex-col items-center">
     <div class="w-full max-w-5xl p-1 my-0 bg-purple-100">
+        @if (db.lessons()) {
         <app-nav-pills></app-nav-pills>
-        <div class="text-black">
-
-            @if (!db.waiting()) {
-            <!-- read-tool-horizontal -->
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7358177326858018"
-                data-ad-slot="9907518562" data-ad-format="auto" data-full-width-responsive="true"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-            }
-        </div>
+        } @else { <app-spinner></app-spinner>}
+       
         <router-outlet></router-outlet>
-        <app-nav-pills></app-nav-pills>
+
+        @if (db.lessons()) {
+            <app-nav-pills></app-nav-pills>
+            } @else  { <h2>Loading Lesson List</h2>}
     </div>
 </div>

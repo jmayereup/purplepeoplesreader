@@ -4,11 +4,12 @@ import { DbService } from './services/db.service';
 import { LessonListComponent } from "./lesson-list/lesson-list.component";
 import { NavPillsComponent } from "./nav-pills/nav-pills.component";
 import { isPlatformBrowser } from '@angular/common';
+import { SpinnerComponent } from "./spinner/spinner.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LessonListComponent, NavPillsComponent],
+  imports: [RouterOutlet, LessonListComponent, NavPillsComponent, SpinnerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

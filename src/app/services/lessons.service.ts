@@ -18,11 +18,12 @@ export class LessonsService {
 
   async fetchLessons(): Promise<LessonsResponse[] | null> {
     try {
+      console.log('fetching from pocketbase');
       const result = await this.pb.collection(Collections.Lessons).getFullList<LessonsResponse>({
         sort: '-created',
       });
+      console.log('fetched');
       this.lessons.set(result);
-      console.log('fetching from pocketbase');
       return result;
     } catch (error) {
       console.error('Error fetching lessons', error);

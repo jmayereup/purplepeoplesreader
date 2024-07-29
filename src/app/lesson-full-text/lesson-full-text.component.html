@@ -10,7 +10,7 @@
     </section>
     }
 
-    <section class="flex flex-col flex-wrap p-4 mb-2 rounded-lg reading">
+    <section class="flex flex-col flex-wrap p-4 mb-2 rounded-lg reading" [lang]="langCode()">
         <div #fullText translate="no">
             <div class="flex flex-row flex-wrap justify-around gap-2 mb-2">
                 <h2 class="m-0 font-bold text-center">{{lesson()?.title}}</h2>

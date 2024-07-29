@@ -40,16 +40,13 @@ export class DbService {
       let lessons: LessonsResponse[];
       if (!this.lessons() || !this.lessons()?.length) {
         this.waiting.set(true);
+        console.log('fetching lessons');
         // const newLessons = await lastValueFrom(this.http.get<{ items: LessonsResponse[] }>('assets/all-records.json'));
         lessons = await this.lessonsService.fetchLessons() || [];
         lessons.sort((a: { title: string }, b: { title: string }) => a.title.localeCompare(b.title));
         this.lessons.set(lessons);
-        // this.waiting.set(false);
-        // this.filteredLessons.set(lessons);
-        console.log('fetching lessons');
       } else {
         lessons = this.lessons() || [];
-        
         console.log('using prior lessons');
       }
       const partialPath = this.router.url.split('?')[0];
@@ -57,12 +54,12 @@ export class DbService {
       this.langCode.set(assignLanguageCode(lang || 'English'));
       this.lessonTitle.set(lang + ' - ' + tag + ' - The Purple Peoples Reader');
       this.meta.setMetaTags({ title: this.lessonTitle() || 'List', image: this.baseImage, path: this.currentPath() })
-      
+
       // lessons = await lastValueFrom(this.http.get<any>(`assets/all-records.json`));
       // const filteredLessons: LessonsResponse[] = lessons?.items.filter((lesson: LessonsResponse) =>
       //   lesson.language === lang && lesson.tags.toString().includes(tag) && lesson.shareable
       // ).sort((a: { created: string | number | Date; }, b: { created: string | number | Date; }) => new Date(b.created).getTime() - new Date(a.created).getTime());
-      
+
       const filteredLessons: LessonsResponse[] = lessons.filter((lesson: LessonsResponse) =>
         lesson.language === lang && lesson.tags.toString().includes(tag) && lesson.shareable
       ) || [];
@@ -88,14 +85,14 @@ export class DbService {
         lesson.audioUrl = this.formatAudioUrl() || "";
         lesson.imageUrl = this.formatImageUrl() || "";
         this.lesson.set(lesson);
-        
+
         this.langCode.set(assignLanguageCode(lesson?.language || 'English'));
         this.language.set(lesson?.language || 'English');
         this.tag.set(lesson.tags[0]);
         this.currentPath.set(this.baseUrl + this.router.url);
         this.lessonTitle.set(lesson?.title.toUpperCase() || 'PPR Lesson');
         this.meta.setMetaTags({ title: this.lessonTitle() || "PPR", image: lesson.imageUrl, path: this.currentPath() });
-        
+
         this.waiting.set(false);
         return;
       } else return

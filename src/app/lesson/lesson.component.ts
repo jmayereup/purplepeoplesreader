@@ -1,12 +1,11 @@
-import { Component, inject, input, OnChanges } from '@angular/core';
+import { Component, inject, OnChanges } from '@angular/core';
 import { DbService } from '../services/db.service';
 import { SpinnerComponent } from "../spinner/spinner.component";
 import { AsyncPipe, NgClass } from '@angular/common';
 import { MarkdownPipe } from 'ngx-markdown';
 import { SpeakService } from '../services/speak.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { LessonFullTextComponent } from "../lesson-full-text/lesson-full-text.component";
-import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-lesson',
@@ -36,7 +35,7 @@ export class LessonComponent implements OnChanges {
 
   
   ngOnChanges() {
-    console.log('lessson on changes');
+    console.log('lesson on changes');
     // this.router.events.pipe(
     //   filter(event => event instanceof NavigationEnd)
     // ).subscribe(() => {
@@ -52,7 +51,7 @@ readThis(event: Event): void {
 
   if(closestDiv) {
     const textContent = closestDiv.textContent?.trim() || 'No text found';
-    this.speakService.speak(textContent);
+    this.speakService.speak(textContent, this.db.langCode());
   }
 }
 

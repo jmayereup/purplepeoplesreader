@@ -35,10 +35,9 @@ async function fetchLessonIds() {
     const ids = records.map(record => 'lesson/' + record.id);
 
     // Create the routes file content
-    // const routesFromEnums = generateRoutesFromEnums()
+    const routesFromEnums = generateRoutesFromEnums()
 
-    // const allRoutes = [...routesFromEnums, ...ids];
-    const allRoutes = ids;
+    const allRoutes = [...routesFromEnums, ...ids];
     const routesContent = allRoutes.join('\n');
 
 

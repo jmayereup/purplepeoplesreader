@@ -15,11 +15,6 @@ export const lessonResolver: ResolveFn<boolean> = async (route, state) => {
     db.filteredLessons.set(db.lessons());
     await db.fetchLesson(lessonId);
     db.waiting.set(false);
-    
-    // const title = db.lesson()?.title || 'PPR';
-    // const imageUrl = db.lesson()?.imageUrl || '';
-    // const currentPath = db.currentPath();
-    // meta.setMetaTags({ title: title, image: imageUrl, path: currentPath });
   }
 
   return true;

@@ -14,7 +14,7 @@
                 </div>
             }
     }
-    @if (lessons() && !lessons()?.length && !db.waiting()) {
+    @if (!lessons()?.length) {
         <div class="items-center justify-center w-full col-span-3 text-center text-purple-700">
             <h1>No Lessons Available Yet</h1>
         </div>

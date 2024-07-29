@@ -11,11 +11,15 @@ export const routes: Routes = [
     },
     {
         path: 'list/:lang/:tag',
-        component: LessonListComponent
+        loadComponent: () => import('./lesson-list/lesson-list.component').then(m => m.LessonListComponent),
+        resolve: {
+            lesson: lessonsResolver
+        }
     },
     {
         path: 'list/:lang', 
         redirectTo: 'list/:lang/A1' , pathMatch: 'full'
+
     },
     {
         path: 'lesson/:id',

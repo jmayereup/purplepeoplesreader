@@ -2,7 +2,7 @@
   @for (l of langs; track $index) {
   <a [routerLink]="['/list/', l, 'A1']" class="m-0">
     <button class="text-gray-200 bg-lbl-purple-500 pills border-blue focus:bg-blue-700 hover:bg-blue-700 "
-      [ngClass]="{'active-link': l == lang()}" (click)="db.waiting.set(true)">
+      [ngClass]="{'active-link': l == lang()}">
       {{l | uppercase }}</button>
   </a>
   }
@@ -11,11 +11,8 @@
   @for (t of tags; track $index) {
   <a [routerLink]="['/list', lang(), t]" class="m-0">
     <button class="text-gray-200 bg-lbl-purple-500 pills border-blue focus:bg-blue-700 hover:bg-blue-700"
-      [ngClass]="{'active-link': t == tag()}" (click)="db.waiting.set(true)">
+      [ngClass]="{'active-link': t == tag()}">
       {{t}}</button>
   </a>
   }
 </div>
-@if (db.waiting()) {
-<app-spinner>Loading...</app-spinner>Loading Lessons....
-}

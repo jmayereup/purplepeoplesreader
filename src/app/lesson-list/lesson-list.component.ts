@@ -31,7 +31,7 @@ export class LessonListComponent implements OnChanges {
   ngOnChanges(): void {
     this.db.language.set(this.lang());
     this.db.tag.set(this.tag());
-    this.db.fetchLessons(this.lang(), this.tag());
+    // this.db.fetchLessons(this.lang(), this.tag());
     
   }
 
