@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { DbService } from './services/db.service';
 import { LessonListComponent } from "./lesson-list/lesson-list.component";
 import { NavPillsComponent } from "./nav-pills/nav-pills.component";
@@ -13,11 +13,10 @@ import { SpinnerComponent } from "./spinner/spinner.component";
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit{
   title = 'ppr';
 
   db = inject(DbService);
-  route = inject(ActivatedRoute);
   platformId = inject(PLATFORM_ID);
   lang = this.db.language;
   tag = this.db.tag;
@@ -32,6 +31,5 @@ export class AppComponent implements OnInit {
       }
     }
   }
-  
 
 }
