@@ -6,12 +6,13 @@ import { MarkdownPipe } from 'ngx-markdown';
 import { SpeakService } from '../services/speak.service';
 import { Router } from '@angular/router';
 import { LessonFullTextComponent } from "../lesson-full-text/lesson-full-text.component";
+import { AdComponent } from '../ad-component/ad-component.component';
 
 @Component({
   selector: 'app-lesson',
   standalone: true,
   imports: [SpinnerComponent, AsyncPipe,
-    NgClass, MarkdownPipe, LessonFullTextComponent],
+    NgClass, MarkdownPipe, LessonFullTextComponent, AdComponent],
   templateUrl: './lesson.component.html',
   styleUrl: './lesson.component.css'
 })

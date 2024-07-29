@@ -1,17 +1,24 @@
 <article>
-        <section class="rounded-lg">
-            <div class="flex flex-col p-2">
-                <app-lesson-full-text [lesson]="lesson() || undefined" [langCode]="db.langCode()"></app-lesson-full-text>
+    <section class="rounded-lg">
+        <div class="flex flex-col p-2">
+            <app-lesson-full-text [lesson]="lesson() || undefined" [langCode]="db.langCode()"></app-lesson-full-text>
             <div class="flex justify-center gap-2 pb-2 mb-0">
                 <button class="button" type="button" (click)="db.previousLesson()">PREV</button>
                 <button class="button" type="button" (click)="db.nextLesson()">NEXT</button>
             </div>
+            <div class="flex flex-col items-center p-2 text-center rounded-lg">
+                @defer(on viewport) {
+                <app-ad-component adClient="ca-pub-7358177326858018" adSlot="9907518562"></app-ad-component>
+                } @placeholder { <div>Ad</div>}
+            </div>
+
             <!-- Line-By-Line -->
             <section class="p-4 rounded-lg reading">
                 <h2 class="mb-1 text-center">Line-By-Line</h2>
                 @if (isChrome()) {
-                    <div class="w-full p-2 m-1 text-left bg-yellow-200 rounded-lg" translate="yes">
-                    Chrome Users: Choose translate from the browser menu to get bilingual texts. You can click on a sentence to hear
+                <div class="w-full p-2 m-1 text-left bg-yellow-200 rounded-lg" translate="yes">
+                    Chrome Users: Choose translate from the browser menu to get bilingual texts. You can click on a
+                    sentence to hear
                     it. <br>
                     เลือกแปลจากเมนูเบราว์เซอร์เพื่อรับข้อความสองภาษา คุณสามารถคลิกที่ประโยคเพื่อฟังได้
                 </div>
@@ -19,20 +26,20 @@
                 @else {
                 <div class="w-full p-2 m-1 text-center bg-yellow-200 rounded-lg" translate="yes">
                     <div class="text-left lin">
-                        If you open this website in Chrome, you can choose translate from the browser menu to get bilingual texts.
+                        If you open this website in Chrome, you can choose translate from the browser menu to get
+                        bilingual texts.
                         <br>หากคุณเปิดเว็บไซต์นี้ใน Chrome คุณสามารถเลือกแปลจากเมนูเบราว์เซอร์เพื่อรับข้อความสองภาษาได้
                     </div>
-                    
+
                 </div>
                 }
-                <button class="w-full p-1 m-1 button" type="button"
-                    (click)="showTranslation = !showTranslation">Toggle Translations</button>
+                <button class="w-full p-1 m-1 button" type="button" (click)="showTranslation = !showTranslation">Toggle
+                    Translations</button>
                 <h2 class="m-0 font-bold text-center" translate="no">{{lesson()?.title}}</h2>
                 <div [innerHTML]="(lesson()?.contentLines || '') | markdown | async" (click)="readThis($event)"
-                    [ngClass]="showTranslation ? 'shown' : 'hide-translations'"
-                    class="w-full"></div>
-                    
-                </section>
+                    [ngClass]="showTranslation ? 'shown' : 'hide-translations'" class="w-full"></div>
+
+            </section>
         </div>
         <div class="flex justify-center gap-2 pb-2 mb-0">
             <button class="button" type="button" (click)="db.previousLesson()">PREV</button>

@@ -11,7 +11,9 @@ export const lessonResolver: ResolveFn<boolean> = async (route, state) => {
   const lessonId = route.paramMap.get('id');
   if (lessonId) {
     db.lesson.set(null);
-    await db.fetchLessons();
+    if (!db.lessons() || !db.lessons()?.length) {
+      await db.fetchLessons();
+    }
     db.filteredLessons.set(db.lessons());
     await db.fetchLesson(lessonId);
     db.waiting.set(false);

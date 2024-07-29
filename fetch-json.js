@@ -6,7 +6,7 @@ const path = require('path');
 const pb = new PocketBase('https://purplepeoplesreader.com');
 
 // Path for the JSON file
-const FILENAME = path.join(__dirname, 'public/assets/all-records.json');
+const FILENAME = path.join(__dirname, 'lessons.json');
 
 async function fetchAllRecords() {
   try {

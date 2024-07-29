@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { DbService } from './services/db.service';
 import { LessonListComponent } from "./lesson-list/lesson-list.component";
@@ -14,8 +14,9 @@ import { SpinnerComponent } from "./spinner/spinner.component";
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit{
-  title = 'ppr';
+  @ViewChild('adContainer', { static: true }) adContainer!: ElementRef;
 
+  title = 'ppr';
   db = inject(DbService);
   platformId = inject(PLATFORM_ID);
   lang = this.db.language;
@@ -31,5 +32,6 @@ export class AppComponent implements OnInit{
       }
     }
   }
+
 
 }

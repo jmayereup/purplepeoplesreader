@@ -9,8 +9,8 @@
     "serve:ssr:ppr": "node dist/ppr/server/server.mjs",
     "fetch-data": "node fetch-json.js",
     "generate-routes": "node generate-routes.js",
-    "sync": "node sync.js",
-    "build-deploy": "npm run generate-routes && ng build && npm run sync"
+    "deploy": "node sync.js",
+    "build": "npm run fetch-data && npm run generate-routes && ng build"
   },
   "private": true,
   "dependencies": {
