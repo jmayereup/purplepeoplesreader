@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { MetaService } from './meta.service';
 import { LessonsService } from './lessons.service';
 import { AuthService } from './auth.service';
+import { lastValueFrom, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -37,11 +38,14 @@ export class DbService {
   async fetchLessons(lang: string = 'English', tag: string = "A1") {
     try {
       let lessons: LessonsResponse[];
+      let filteredLessons: LessonsResponse[];
       if (!this.lessons() || !this.lessons()?.length) {
         this.waiting.set(true);
         console.log('fetching lessons');
-        // const newLessons = await lastValueFrom(this.http.get<{ items: LessonsResponse[] }>('assets/all-records.json'));
-        lessons = await this.lessonsService.fetchLessons() || [];
+        lessons = await lastValueFrom(this.http.get<{ items: LessonsResponse[] }>('assets/lessons.json').pipe(
+          map(data => data.items)
+        ));
+        // lessons = await this.lessonsService.fetchLessons() || [];
         lessons.sort((a: { title: string }, b: { title: string }) => a.title.localeCompare(b.title));
         this.lessons.set(lessons);
       } else {
@@ -55,11 +59,11 @@ export class DbService {
       this.meta.setMetaTags({ title: this.lessonTitle() || 'List', image: this.baseImage, path: this.currentPath() })
 
       // lessons = await lastValueFrom(this.http.get<any>(`assets/all-records.json`));
-      // const filteredLessons: LessonsResponse[] = lessons?.items.filter((lesson: LessonsResponse) =>
+      // filteredLessons = lessons.filter((lesson: LessonsResponse) =>
       //   lesson.language === lang && lesson.tags.toString().includes(tag) && lesson.shareable
       // ).sort((a: { created: string | number | Date; }, b: { created: string | number | Date; }) => new Date(b.created).getTime() - new Date(a.created).getTime());
 
-      const filteredLessons: LessonsResponse[] = lessons.filter((lesson: LessonsResponse) =>
+      filteredLessons = lessons.filter((lesson: LessonsResponse) =>
         lesson.language === lang && lesson.tags.toString().includes(tag) && lesson.shareable
       ) || [];
 

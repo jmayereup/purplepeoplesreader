@@ -1,10 +1,9 @@
-import { Component, inject, OnChanges } from '@angular/core';
+import { Component, inject, input, OnChanges, PLATFORM_ID } from '@angular/core';
 import { DbService } from '../services/db.service';
 import { SpinnerComponent } from "../spinner/spinner.component";
-import { AsyncPipe, NgClass } from '@angular/common';
+import { AsyncPipe, isPlatformBrowser, NgClass } from '@angular/common';
 import { MarkdownPipe } from 'ngx-markdown';
 import { SpeakService } from '../services/speak.service';
-import { Router } from '@angular/router';
 import { LessonFullTextComponent } from "../lesson-full-text/lesson-full-text.component";
 import { AdComponent } from '../ad-component/ad-component.component';
 
@@ -18,10 +17,10 @@ import { AdComponent } from '../ad-component/ad-component.component';
 })
 export class LessonComponent implements OnChanges {
 
-  // id = input<string>();
+  id = input<string>();
   db = inject(DbService);
   speakService = inject(SpeakService);
-  router = inject(Router);
+  platformId = inject(PLATFORM_ID);
   lesson = this.db.lesson;
   lessonTitle = this.lesson()?.title;
   isChrome = this.db.isChrome;
@@ -37,11 +36,9 @@ export class LessonComponent implements OnChanges {
   
   ngOnChanges() {
     console.log('lesson on changes');
-    // this.router.events.pipe(
-    //   filter(event => event instanceof NavigationEnd)
-    // ).subscribe(() => {
-    //   window.scrollTo(0, 0);
-    // });
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo(0, 0);
+    }
   }
 
 

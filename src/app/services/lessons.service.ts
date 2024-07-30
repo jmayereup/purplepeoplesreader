@@ -4,6 +4,8 @@ import { TypedPocketBase, LessonsResponse, LessonsRecord, Collections } from '..
 import { BASE } from '../shared/utils';
 import { AuthService } from './auth.service';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { lastValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +14,7 @@ export class LessonsService {
   pb: TypedPocketBase = new PocketBase('https://purplepeoplesreader.com') as TypedPocketBase;
   authService = inject(AuthService);
   platformId = inject(PLATFORM_ID);
+  http = inject(HttpClient);
   lessons = signal<LessonsResponse[]>([]);
   lesson = signal<LessonsResponse | null>(null);
 
@@ -20,12 +23,13 @@ export class LessonsService {
 
   async fetchLessons(): Promise<LessonsResponse[] | null> {
     try {
-      // if(isPlatformServer(this.platformId)) {
-      //   const lessons: {items: LessonsResponse[]} = require('../../../lessons.json')
-      //   this.lessons.set(lessons.items);
-      //   console.log('server fetch');
-      //   return lessons.items;
-      // } else if (isPlatformBrowser(this.platformId)) {
+      if(isPlatformServer(this.platformId)) {
+        // const lessons: {items: LessonsResponse[]} = require('../../../lessons.json')
+        const lessons = await lastValueFrom(this.http.get<{ items: LessonsResponse[] }>('assets/lessons.json'));
+        this.lessons.set(lessons.items);
+        console.log('server fetch');
+        return lessons.items;
+      } else if (isPlatformBrowser(this.platformId)) {
         console.log('fetching from pocketbase');
         const result = await this.pb.collection(Collections.Lessons).getFullList<LessonsResponse>({
           sort: '-created',
@@ -33,7 +37,7 @@ export class LessonsService {
         console.log('fetched');
         this.lessons.set(result);
         return result;
-      // } else return null
+      } else return null
     } catch (error) {
       console.error('Error fetching lessons', error);
       return null;
