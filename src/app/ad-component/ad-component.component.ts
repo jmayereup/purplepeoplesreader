@@ -10,6 +10,7 @@ export class AdComponent implements AfterViewInit {
   @ViewChild('adContainer', { static: true }) adContainer!: ElementRef;
   @Input() adClient!: string;
   @Input() adSlot!: string;
+  @Input() adFormat: string = 'auto';
 
   constructor(private renderer: Renderer2, private ngZone: NgZone) {}
 
@@ -30,7 +31,7 @@ export class AdComponent implements AfterViewInit {
     this.renderer.setStyle(insElement, 'display', 'block');
     this.renderer.setAttribute(insElement, 'data-ad-client', this.adClient);
     this.renderer.setAttribute(insElement, 'data-ad-slot', this.adSlot);
-    this.renderer.setAttribute(insElement, 'data-ad-format', 'auto');
+    this.renderer.setAttribute(insElement, 'data-ad-format', this.adFormat);
     this.renderer.setAttribute(insElement, 'data-full-width-responsive', 'true');
 
     const pushScript = this.renderer.createElement('script');

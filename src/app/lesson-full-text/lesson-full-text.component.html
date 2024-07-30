@@ -5,8 +5,7 @@
     }
     @else {
     <section class="p-4 mx-auto mb-2 rounded-lg reading">
-        <img class="mx-auto rounded-lg" [ngSrc]="lesson()?.imageUrl || baseImage" alt="cover image" width="400" height="400"
-            priority>
+        <img class="mx-auto rounded-lg" [src]="lesson()?.imageUrl || baseImage" alt="cover image" width="100%">
     </section>
     }
 

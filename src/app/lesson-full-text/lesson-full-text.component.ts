@@ -2,7 +2,7 @@ import { Component, inject, input } from '@angular/core';
 import { LessonsResponse } from '../shared/pocketbase-types';
 import { PlayVideoComponent } from '../play-video/play-video.component';
 import { PlayButtonComponent } from '../play-button/play-button.component';
-import { AsyncPipe, DOCUMENT, NgOptimizedImage } from '@angular/common';
+import { AsyncPipe, DOCUMENT } from '@angular/common';
 import { MarkdownPipe } from 'ngx-markdown';
 import { BASE } from '../shared/utils';
 import { PlayButtonTtsComponent } from "../play-button-tts/play-button-tts.component";
@@ -10,7 +10,7 @@ import { PlayButtonTtsComponent } from "../play-button-tts/play-button-tts.compo
 @Component({
   selector: 'app-lesson-full-text',
   standalone: true,
-  imports: [PlayVideoComponent, PlayButtonComponent, NgOptimizedImage, MarkdownPipe, AsyncPipe, PlayButtonTtsComponent],
+  imports: [PlayVideoComponent, PlayButtonComponent, MarkdownPipe, AsyncPipe, PlayButtonTtsComponent],
   templateUrl: './lesson-full-text.component.html',
   styleUrl: './lesson-full-text.component.css'
 })

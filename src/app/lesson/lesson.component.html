@@ -10,7 +10,7 @@
             <app-ad-component adClient="ca-pub-7358177326858018" adSlot="9907518562"></app-ad-component>
 
             <!-- Line-By-Line -->
-            <section class="p-4 mt-2 rounded-lg reading">
+            <div class="p-4 mt-2 rounded-lg reading">
                 <h2 class="mb-1 text-center">Line-By-Line</h2>
                 @if (isChrome()) {
                 <div class="w-full p-2 m-1 text-left bg-yellow-200 rounded-lg" translate="yes">
@@ -36,7 +36,7 @@
                 <div [innerHTML]="(lesson()?.contentLines || '') | markdown | async" (click)="readThis($event)"
                     [ngClass]="showTranslation ? 'shown' : 'hide-translations'" class="w-full"></div>
 
-            </section>
+            </div>
         </div>
         <div class="flex justify-center gap-2 pb-2 mb-0">
             <button class="button" type="button" (click)="db.previousLesson()">PREV</button>
