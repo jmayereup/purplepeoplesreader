@@ -5,12 +5,11 @@ import { stripMarkdown } from '../shared/utils';
 import { RouterLink } from '@angular/router';
 import { SpinnerComponent } from "../spinner/spinner.component";
 import { NavPillsComponent } from "../nav-pills/nav-pills.component";
-import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-lesson-list',
   standalone: true,
-  imports: [RouterLink, SpinnerComponent, NavPillsComponent, NgOptimizedImage],
+  imports: [RouterLink, SpinnerComponent, NavPillsComponent],
   templateUrl: './lesson-list.component.html',
   styleUrl: './lesson-list.component.css'
 })

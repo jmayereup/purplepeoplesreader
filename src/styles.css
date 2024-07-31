@@ -21,6 +21,10 @@
     color: var(--primary-text1, black);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
+
+  body {
+    background-color: cadetblue;
+  }
   
   section {
     background-color: var(--bg2, lightblue);
