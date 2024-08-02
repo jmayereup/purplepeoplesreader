@@ -3,8 +3,8 @@
         @for (item of lessons(); track item.id) {
             <div
             class="grid items-center self-center justify-between w-full grid-cols-8 gap-2 p-2 mx-auto rounded-md shadow-md h-28 overflow-clip bg-lbl-purple-200">
-            <img class="self-center object-cover w-32 h-24 col-span-3 mx-auto rounded-md shadow-md"
-            [src]="getImageThumbnail(item)" [routerLink]="['/lesson/', item.id]" loading="lazy" alt="thumbnail">
+            <img class="self-center object-cover col-span-3 mx-auto rounded-md shadow-md" width="96" height="96"
+            [ngSrc]="getImageThumbnail(item)" [routerLink]="['/lesson/', item.id]" loading="lazy" alt="thumbnail">
             <div class="col-span-4" [routerLink]="['/lesson/', item.id]">
                 <h4 class="py-1 m-0 overflow-y-hidden font-semibold text-purple-900">
                     {{(item.title.slice(0,40))}}</h4>
