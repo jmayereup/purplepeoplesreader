@@ -7,6 +7,7 @@ import { MetaService } from './meta.service';
 import { LessonsService } from './lessons.service';
 import { AuthService } from './auth.service';
 import { lastValueFrom, map } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class DbService {
   meta = inject(MetaService);
   lessonsService = inject(LessonsService);
   authServe = inject(AuthService);
+  document = inject(DOCUMENT);
 
   lesson = signal<LessonsResponse | null>(null);
   currentIndex = -1;
@@ -34,6 +36,8 @@ export class DbService {
   isChrome = signal<boolean>(false);
   waiting = signal<boolean>(true);
   isAuthenticated = this.authServe.isAuthenticated;
+
+  el = this.document.getElementsByTagName('html');
 
   async fetchLessons(lang: string = 'English', tag: string = "A1") {
     try {
@@ -55,6 +59,7 @@ export class DbService {
       const partialPath = this.router.url.split('?')[0];
       this.currentPath.set(this.baseUrl + partialPath);
       this.langCode.set(assignLanguageCode(lang || 'English'));
+      this.el[0].setAttribute('lang', this.langCode());
       this.lessonTitle.set(lang + ' - ' + tag + ' - The Purple Peoples Reader');
       this.meta.setMetaTags({ title: this.lessonTitle() || 'List', image: this.baseImage, path: this.currentPath() })
 
@@ -89,7 +94,8 @@ export class DbService {
         lesson.imageUrl = this.formatImageUrl() || "";
         this.lesson.set(lesson);
 
-        this.langCode.set(assignLanguageCode(lesson?.language || 'English'));
+        this.langCode.set(assignLanguageCode(this.lesson()?.language || 'English'));
+        this.el[0].setAttribute('lang', this.langCode());
         this.language.set(lesson?.language || 'English');
         this.tag.set(lesson.tags[0]);
         this.currentPath.set(this.baseUrl + this.router.url);
