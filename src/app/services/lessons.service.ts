@@ -58,14 +58,15 @@ export class LessonsService {
     }
   }
 
-  async createLesson(lessonData: LessonsRecord): Promise<LessonsResponse | void> {
+  async createLesson(lessonData: LessonsRecord): Promise<LessonsResponse | null> {
     try {
       console.log('create called', lessonData);
-      const newLesson = await this.pb.collection(Collections.Lessons).create<LessonsResponse>(lessonData);
+      const newLesson: LessonsResponse = await this.pb.collection(Collections.Lessons).create<LessonsResponse>(lessonData);
       this.lessons.set([newLesson, ...this.lessons()]);
       return newLesson;
     } catch (error) {
       console.error('Error creating lesson', error);
+      return null;
     }
   }
 

@@ -110,7 +110,7 @@ export class FormLessonComponent implements OnInit, OnDestroy {
     });
   }
 
-  addLesson(newLesson: Partial<LessonsResponse>): void {
+  addLesson(newLesson: Partial<LessonsResponse>) {
     this.lessonsService.createLesson(newLesson as LessonsResponse);
   }
 
