@@ -1,4 +1,4 @@
-<div class="grid w-full grid-cols-1 gap-1 px-2 my-0 overflow-y-auto bg-purple-100 md:grid-cols-2 3xl:grid-cols-3">
+<div class="grid w-full grid-cols-1 gap-1 px-2 my-0 overflow-y-auto bg-purple-100 sm:grid-cols-2 lg:grid-cols-3">
     @if (lessons()?.length) {
         @for (item of lessons(); track item.id) {
             <div
@@ -7,7 +7,7 @@
             [ngSrc]="getImageThumbnail(item)" [routerLink]="['/lesson/', item.id]" loading="lazy" alt="thumbnail">
             <div class="col-span-4" [routerLink]="['/lesson/', item.id]">
                 <h4 class="py-1 m-0 overflow-y-hidden font-semibold text-purple-900">
-                    {{(item.title.slice(0,40))}}</h4>
+                    {{(item.title.slice(0,36))}}</h4>
                     <!-- <p class="text-sm text-pu6ple-800 whitespace-nowrap overflow-clip">
                         {{removeMarkdown(item.content.slice(0,50))}}</p> -->
                     </div>
