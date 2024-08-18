@@ -3,7 +3,7 @@ const path = require('path');
 
 const sourceDirectory = path.resolve(__dirname, 'dist/ppr') + '/';
 const destinationDirectory = 'ppr@purplepeoplesreader.com:/opt/pb-demo/';
-const privateKeyPath = '/home/jmayer/.ssh/pbuser_key'; // Update this path to your private key
+const privateKeyPath = '/home/jmayer/.ssh/admin'; // Update this path to your private key
 
 // Function to sync directories using rsync
 function syncDirectories() {
