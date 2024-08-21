@@ -22,6 +22,12 @@ list/German/CONVERSATION
 list/German/GRAMMAR
 list/German/NON-FICTION
 list/German/VIDEO
+lesson/vm6htqvutruu975
+lesson/8ty58lslkmqiypd
+lesson/9czrkji2tzn9hm9
+lesson/bevf16ldg6qebzo
+lesson/4zz762xxz6faqdg
+lesson/szw09z9bkxujmui
 lesson/97qpaivazuxej6r
 lesson/8mi7pmect0jqf3p
 lesson/5k0ujsg0nutrh22
@@ -284,4 +290,3 @@ lesson/1qihgqqkqsk5tgd
 lesson/h6mlfsk3h5xwyjj
 lesson/sdyprvjs1ab375a
 lesson/j653mj3u2amr0ev
-lesson/9yg99yi83mfziw1
