@@ -1,3 +1,6 @@
+<div class="px-2 pt-1 -mb-1 text-purple-900">
+    <app-search [lessons]="lessons() || []"></app-search>
+</div>
 <div class="grid w-full grid-cols-1 gap-1 px-2 my-0 overflow-y-auto bg-purple-100 sm:grid-cols-2 lg:grid-cols-3">
     @if (lessons()?.length) {
         @for (item of lessons(); track item.id) {
@@ -15,7 +18,7 @@
             }
     }
     @if (!lessons()?.length) {
-        <div class="items-center justify-center w-full col-span-3 text-center text-purple-700">
+        <div class="items-center justify-center w-full col-span-3 text-center text-purple-900">
             <h1>No Lessons Available Yet</h1>
         </div>
     }
