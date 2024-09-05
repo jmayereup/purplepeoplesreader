@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, inject, OnDestroy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormFilesComponent } from '../form-files/form-files.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -10,6 +10,7 @@ import { LessonsRecord, LessonsResponse } from '../shared/pocketbase-types';
 import { AuthComponent } from "../auth/auth.component";
 import { LessonFullTextComponent } from "../lesson-full-text/lesson-full-text.component";
 import { LessonListSimpleComponent } from "../lesson-list-simple/lesson-list-simple.component";
+import { DbService } from '../services/db.service';
 
 @Component({
   selector: 'app-form-lesson',

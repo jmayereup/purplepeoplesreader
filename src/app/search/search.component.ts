@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit, output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { startWith, debounceTime, map } from 'rxjs';
 import { LessonsResponse } from '../shared/pocketbase-types';
@@ -12,11 +12,10 @@ import { DbService } from '../services/db.service';
   styleUrl: './search.component.css'
 })
 export class SearchComponent implements OnInit {
-  db = inject(DbService);
   lessons = input<LessonsResponse[]>([]);
 
   searchControl = new FormControl('');
-  filteredLessons = this.db.filteredLessons;
+  filteredLessons = output<LessonsResponse[]>();
 
 
   ngOnInit() {
@@ -24,18 +23,18 @@ export class SearchComponent implements OnInit {
       startWith(''),
       debounceTime(300), // Adding debounce
       map(term => this.filterLessons(term || ''))
-    ).subscribe(filtered => this.filteredLessons.set(filtered));
+    ).subscribe(filtered => this.filteredLessons.emit(filtered));
 
-    this.filteredLessons.set(this.lessons());
+    this.filteredLessons.emit(this.lessons() || []);
   }
 
   
 
   filterLessons(term: string): LessonsResponse[] {
     term = term.toLowerCase();
-    return this.lessons().filter(lesson =>
+    return this.lessons()?.filter(lesson =>
       lesson.title.toLowerCase().includes(term)
-    );
+    ) || [];
   }
 
 }

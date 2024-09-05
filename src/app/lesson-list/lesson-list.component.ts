@@ -21,6 +21,8 @@ export class LessonListComponent implements OnChanges {
   lang = input<string>('English');
   tag = input<string>('A1');
   lessons = this.db.filteredLessons;
+  allLessons = this.db.lessons;
+
   baseUrl = this.db.baseUrl;
 
   langNav = this.db.language;
@@ -48,6 +50,11 @@ export class LessonListComponent implements OnChanges {
 
   removeMarkdown(content: string) {
     return stripMarkdown(content);
+  }
+
+  filterLessons(filtered: LessonsResponse[]) {
+    this.lessons.set(filtered);
+
   }
 
 }

@@ -1,5 +1,5 @@
 <div class="px-2 pt-1 -mb-1 text-purple-900">
-    <app-search [lessons]="lessons() || []"></app-search>
+    <app-search [lessons]="allLessons() || []" (filteredLessons)="filterLessons($event)"></app-search>
 </div>
 <div class="grid w-full grid-cols-1 gap-1 px-2 my-0 overflow-y-auto bg-purple-100 sm:grid-cols-2 lg:grid-cols-3">
     @if (lessons()?.length) {
