@@ -20,12 +20,10 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.searchControl.valueChanges.pipe(
-      startWith(''),
       debounceTime(300), // Adding debounce
       map(term => this.filterLessons(term || ''))
     ).subscribe(filtered => this.filteredLessons.emit(filtered));
 
-    this.filteredLessons.emit(this.lessons() || []);
   }
 
   

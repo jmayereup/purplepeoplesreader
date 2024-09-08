@@ -9,7 +9,7 @@
 </div>
 <div class="flex flex-row flex-wrap justify-center gap-1 mx-auto my-1">
   @for (t of tags; track $index) {
-  <a [routerLink]="['/list', lang(), t]" class="m-0">
+  <a [routerLink]="['/list', lang() || 'English', t]" class="m-0">
     <button class="text-gray-200 bg-lbl-purple-500 pills border-blue focus:bg-blue-700 hover:bg-blue-700"
       [ngClass]="{'active-link': t == tag()}">
       {{t}}</button>

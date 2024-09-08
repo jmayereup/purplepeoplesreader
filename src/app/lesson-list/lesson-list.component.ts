@@ -34,7 +34,7 @@ export class LessonListComponent implements OnChanges {
   ngOnChanges(): void {
     this.db.language.set(this.lang());
     this.db.tag.set(this.tag());
-    // this.db.fetchLessons(this.lang(), this.tag());
+    this.db.fetchLessons(this.lang(), this.tag());
     
   }
 
@@ -54,6 +54,9 @@ export class LessonListComponent implements OnChanges {
 
   filterLessons(filtered: LessonsResponse[]) {
     this.lessons.set(filtered);
+    this.db.language.set('');
+    this.db.tag.set('');
+    this.db.router.navigate(['list','', 'search']);
 
   }
 
