@@ -49,6 +49,7 @@ export enum LessonsLanguageOptions {
 	"English" = "English",
 	"Thai" = "Thai",
 	"German" = "German",
+	"USER" = "USER"
 }
 export type LessonsRecord = {
 	content?: HTMLString
@@ -95,3 +96,9 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'lessons'): RecordService<LessonsResponse>
 	collection(idOrName: 'users'): RecordService<UsersResponse>
 }
+
+export interface UserLesson {
+	title: string;
+	lesson: string;
+	language: string;
+  }

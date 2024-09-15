@@ -33,7 +33,7 @@ export class DbService {
   langCode = signal<string>("en_US");
   tag = signal<string>("A1");
   currentPath = signal<string>(this.router.url);
-  isChrome = signal<boolean>(false);
+  // isChrome = signal<boolean>(false);
   waiting = signal<boolean>(true);
   isAuthenticated = this.authServe.isAuthenticated;
 
@@ -87,8 +87,8 @@ export class DbService {
       const lesson = this.filteredLessons()?.find(lesson => lesson.id === id) || null;
       if (lesson) {
         this.currentIndex = (this.filteredLessons()?.indexOf(lesson) || -1);
-        const formattedContentLines = addLineBreaksWithTranslatedDivs(lesson.content);
-        lesson.contentLines = formattedContentLines;
+        // const formattedContentLines = addLineBreaksWithTranslatedDivs(lesson.content);
+        // lesson.contentLines = formattedContentLines;
         this.lesson.set(lesson);
         lesson.audioUrl = this.formatAudioUrl() || "";
         lesson.imageUrl = this.formatImageUrl() || "";

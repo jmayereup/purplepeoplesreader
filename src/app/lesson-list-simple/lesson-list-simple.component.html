@@ -8,9 +8,9 @@
             class="flex flex-row items-center justify-between w-full grid-cols-8 p-1 mb-2 rounded-lg flex-nowrap odd:bg-purple-200 even:bg-slate-200">
             <span class="flex text-lg font-semibold">{{ lesson.title }}</span>
             <span class="flex flex-row flex-nowrap">
-                <button (click)="selectLesson.emit(lesson.id)"
+                <button (click)="onSelectLesson(lesson.id)"
                     class="col-span-1 px-4 py-2 ml-4 text-white bg-blue-500 rounded hover:bg-blue-600">View</button>
-                <button (click)="removeLesson.emit(lesson.id)"
+                <button (click)="onRemoveLesson(lesson.id)"
                     class="col-span-1 px-4 py-2 ml-2 text-white bg-red-500 rounded hover:bg-red-600">Delete</button>
             </span>
         </li>

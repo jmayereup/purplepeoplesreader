@@ -1,0 +1,16 @@
+<div class="p-4 mt-2 rounded-lg reading">
+    <h2 class="mb-1 text-center">Line-By-Line</h2>
+    <div class="w-full p-2 m-1 text-left bg-yellow-200 rounded-lg" translate="yes">
+        In most browsers you can choose translate from the menu to get bilingual texts. Also, you can click on a
+        sentence to hear it. However, if you opened this page from a link in a messaging app you may need to reopen it
+        in your phone's default browser or Chrome. <br>
+        ในเบราว์เซอร์ส่วนใหญ่คุณสามารถเลือกแปลจากเมนูเพื่อรับข้อความสองภาษา นอกจากนี้คุณสามารถคลิกที่
+        ประโยคที่จะได้ยิน อย่างไรก็ตามหากคุณเปิดหน้านี้จากลิงค์ในแอพส่งข้อความคุณอาจต้องเปิดใหม่ในเบราว์เซอร์หรือ Chrome
+        เริ่มต้นของโทรศัพท์
+    </div>
+    <button class="w-full p-1 m-1 button" type="button" (click)="showTranslation = !showTranslation">Toggle
+        Translations</button>
+    <h2 class="m-0 font-bold text-center" translate="no">{{lessonTitle()}}</h2>
+    <div [innerHTML]="(lessonLines || '') | markdown | async" (click)="readThis($event)"
+        [ngClass]="showTranslation ? 'shown' : 'hide-translations'" class="w-full"></div>
+</div>

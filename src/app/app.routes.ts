@@ -10,6 +10,10 @@ export const routes: Routes = [
         redirectTo: 'lesson/uh3a26d818fe08n', pathMatch: 'full'
     },
     {
+        path: 'list/USER/A1',
+        loadComponent: () => import('./form-user-lessons/form-user-lessons.component').then(m => m.FormUserLessonsComponent)
+    },
+    {
         path: 'list/:lang/:tag',
         loadComponent: () => import('./lesson-list/lesson-list.component').then(m => m.LessonListComponent),
         resolve: {

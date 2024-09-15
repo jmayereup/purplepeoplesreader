@@ -1,7 +1,6 @@
-import { inject, Injectable, Signal, signal } from '@angular/core';
+import { Injectable, Signal, signal } from '@angular/core';
 import { TypedPocketBase } from '../shared/pocketbase-types';
 import PocketBase from 'pocketbase';
-import { LessonsService } from './lessons.service';
 
 @Injectable({
   providedIn: 'root',
