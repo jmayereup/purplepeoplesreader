@@ -1,1 +1,15 @@
-<input type="text" class="w-full p-2 mb-4 border border-gray-300 rounded" placeholder="Search lessons" [formControl]="searchControl">
+<span class="flex items-center mb-4 space-x-2">
+    <input
+      type="text"
+      class="flex-grow p-2 border border-gray-300 rounded-md"
+      placeholder="Search lessons"
+      [formControl]="searchControl"
+    />
+    <button
+      [routerLink]="['/list/USER/A1']"
+      class="p-2 text-white rounded-md bg-lbl-purple-600 hover:bg-lbl-purple-400 focus:outline-none"
+    >
+      CREATE A LESSON
+    </button>
+  </span>
+  

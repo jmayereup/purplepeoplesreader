@@ -1,13 +1,13 @@
-import { Component, inject, input, OnInit, output } from '@angular/core';
+import { Component, input, OnInit, output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { startWith, debounceTime, map } from 'rxjs';
+import { debounceTime, map } from 'rxjs';
 import { LessonsResponse } from '../shared/pocketbase-types';
-import { DbService } from '../services/db.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })
