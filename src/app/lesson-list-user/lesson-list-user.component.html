@@ -2,12 +2,12 @@
 <p class="mb-4 text-sm text-gray-600">
     Note: These lessons are not saved online. You should use the same web browser each time.
 </p>
-<ul class="pl-4 space-y-2 list-disc list-inside">
+<ul class="pl-4 space-y-2 list-disc list-inside" translate="no">
     @for (lesson of lessons(); track lesson.title)
     {
         <li
             class="flex items-center justify-between w-full p-2 mb-2 rounded-lg odd:bg-purple-200 even:bg-slate-200"
-            (click)="onSelectLesson(lesson.title)"
+            (click)="onSelectLesson(lesson.title)" 
         >
             <span class="flex-grow">{{ lesson.title }}</span>
             <button
