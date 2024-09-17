@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { LANG_VALUES, TAG_VALUES } from '../shared/utils';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NgClass, NgStyle, UpperCasePipe } from '@angular/common';

@@ -2,8 +2,6 @@ import { Component, inject, OnChanges, PLATFORM_ID } from '@angular/core';
 import { DbService } from '../services/db.service';
 import { SpinnerComponent } from "../spinner/spinner.component";
 import { isPlatformBrowser } from '@angular/common';
-// import { MarkdownPipe } from 'ngx-markdown';
-// import { SpeakService } from '../services/speak.service';
 import { LessonFullTextComponent } from "../lesson-full-text/lesson-full-text.component";
 import { AdComponent } from '../ad-component/ad-component.component';
 import { LessonLblComponent } from "../lesson-lbl/lesson-lbl.component";
@@ -17,13 +15,11 @@ import { LessonLblComponent } from "../lesson-lbl/lesson-lbl.component";
 })
 export class LessonComponent implements OnChanges {
 
-  // id = input<string>();
   db = inject(DbService);
   
   platformId = inject(PLATFORM_ID);
   lesson = this.db.lesson;
   lessonTitle = this.lesson()?.title;
-  // isChrome = this.db.isChrome;
   
   baseImage = this.db.baseImage;
   languageReactorUrl = 'https://www.languagereactor.com/text';

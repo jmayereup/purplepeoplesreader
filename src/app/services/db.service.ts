@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { LessonsResponse } from '../shared/pocketbase-types';
 import { HttpClient } from '@angular/common/http';
-import { addLineBreaksWithTranslatedDivs, assignLanguageCode, BASE } from '../shared/utils';
+import { assignLanguageCode, BASE } from '../shared/utils';
 import { Router } from '@angular/router';
 import { MetaService } from './meta.service';
 import { LessonsService } from './lessons.service';

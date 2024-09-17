@@ -23,14 +23,6 @@ export class AppComponent {
   constructor() {
   }
 
-  // ngOnInit() {
-  //   if (isPlatformBrowser(this.platformId)) {
-  //     const userAgent = navigator?.userAgent?.toLowerCase();
-  //     if (userAgent?.includes('chrome')) {
-  //       this.db.isChrome.set(true);
-  //     }
-  //   }
-  // }
 
 
 }

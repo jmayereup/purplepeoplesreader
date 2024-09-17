@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-import { LessonListComponent } from './lesson-list/lesson-list.component';
-import { LessonComponent } from './lesson/lesson.component';
 import { lessonResolver } from './lesson.resolver';
 import { lessonsResolver } from './lessons.resolver';
 
