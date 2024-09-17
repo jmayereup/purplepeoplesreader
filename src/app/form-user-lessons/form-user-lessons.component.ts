@@ -5,7 +5,7 @@ import { LessonListUserComponent } from "../lesson-list-user/lesson-list-user.co
 import { DOCUMENT } from '@angular/common';
 import { LessonLblComponent } from "../lesson-lbl/lesson-lbl.component";
 import { assignLanguageCode } from '../shared/utils';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-user-lessons',
@@ -23,13 +23,15 @@ export class FormUserLessonsComponent implements OnInit {
   lessons: UserLesson[] = [];
   document = inject(DOCUMENT);
   route = inject(ActivatedRoute);
+  router = inject(Router);
 
   ngOnInit(): void {
     this.loadLessons();
-    const qParamText: string = this.route.snapshot.queryParams['text'];
-    if (qParamText) {
-      this.lesson = qParamText;
-      this.title = qParamText.slice(0,30);
+    const params = this.route.snapshot.queryParams;
+    if (params && params['text']) {
+      this.lesson = decodeURIComponent(params['text']);
+      this.title = params['title'] ? decodeURIComponent(params['title']) : this.lesson.slice(0, 30);
+      this.language = params['language'] ? params['language'] : 'English';
     }
   }
 
@@ -44,10 +46,10 @@ export class FormUserLessonsComponent implements OnInit {
     if (this.title && this.lesson) {
       const newLesson: UserLesson = { title: this.title, lesson: this.lesson, language: this.language };
       const existingLessonIndex = this.lessons.findIndex(lesson => lesson.title === newLesson.title);
-  
+
       if (existingLessonIndex !== -1) {
         const overwriteConfirmed = confirm(`A lesson with the title "${newLesson.title}" already exists. Do you want to overwrite it?`);
-  
+
         if (!overwriteConfirmed) return;
         this.lessons[existingLessonIndex] = newLesson;
       } else {
@@ -58,23 +60,34 @@ export class FormUserLessonsComponent implements OnInit {
   }
 
   loadSelectedLesson(title: string) {
-    console.log('called');
     const existingLessonIndex = this.lessons.findIndex(lesson => lesson.title === title);
     if (existingLessonIndex !== -1) {
       this.title = this.lessons[existingLessonIndex].title;
       this.lesson = this.lessons[existingLessonIndex].lesson;
       this.language = this.lessons[existingLessonIndex].language;
+
+      const queryParams = {
+        title: encodeURIComponent(this.title),
+        language: encodeURIComponent(this.language),
+        text: encodeURIComponent(this.lesson)
+      };
+        console.log(queryParams);
+        this.router.navigate([], {
+          queryParams: queryParams,
+          queryParamsHandling: 'replace'
+        });
+      }
     }
-  }
+  
 
   removeSelectedLesson(title: string): void {
     // Find the index of the lesson to be removed
     const lessonIndex = this.lessons.findIndex(lesson => lesson.title === title);
-  
+
     if (lessonIndex !== -1) {
       // Remove the lesson from the array
       this.lessons.splice(lessonIndex, 1);
-  
+
       // Update the localStorage with the modified lessons array
       localStorage.setItem('lessons', JSON.stringify(this.lessons));
     }
@@ -83,8 +96,8 @@ export class FormUserLessonsComponent implements OnInit {
     return assignLanguageCode(language)
   }
 
-  
-  
-  
+
+
+
 
 }
