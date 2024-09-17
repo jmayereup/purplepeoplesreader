@@ -5,6 +5,7 @@ import { LessonListUserComponent } from "../lesson-list-user/lesson-list-user.co
 import { DOCUMENT } from '@angular/common';
 import { LessonLblComponent } from "../lesson-lbl/lesson-lbl.component";
 import { assignLanguageCode } from '../shared/utils';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-form-user-lessons',
@@ -21,9 +22,15 @@ export class FormUserLessonsComponent implements OnInit {
   savedLesson = input<UserLesson>();
   lessons: UserLesson[] = [];
   document = inject(DOCUMENT);
+  route = inject(ActivatedRoute);
 
   ngOnInit(): void {
     this.loadLessons();
+    const qParamText: string = this.route.snapshot.queryParams['text'];
+    if (qParamText) {
+      this.lesson = qParamText;
+      this.title = qParamText.slice(0,30);
+    }
   }
 
   loadLessons(): void {

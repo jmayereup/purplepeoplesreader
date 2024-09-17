@@ -11,6 +11,10 @@ export const routes: Routes = [
     },
     {
         path: 'list/USER/A1',
+        redirectTo: 'saved', pathMatch: 'full'
+    },
+    {
+        path: 'saved',
         loadComponent: () => import('./form-user-lessons/form-user-lessons.component').then(m => m.FormUserLessonsComponent)
     },
     {
