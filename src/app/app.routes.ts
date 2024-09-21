@@ -7,9 +7,14 @@ export const routes: Routes = [
         path: '',
         redirectTo: 'lesson/uh3a26d818fe08n', pathMatch: 'full'
     },
+   
     {
         path: 'list/USER/A1',
         redirectTo: 'saved', pathMatch: 'full'
+    },
+    {
+        path: 'privacy',
+        loadComponent: () => import('./privacy/privacy.component').then(m => m.PrivacyComponent)
     },
     {
         path: 'saved',

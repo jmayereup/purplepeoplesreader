@@ -73,8 +73,7 @@ export class FormUserLessonsComponent implements OnInit {
       };
         console.log(queryParams);
         this.router.navigate([], {
-          queryParams: queryParams,
-          queryParamsHandling: 'replace'
+          queryParams: queryParams
         });
       }
     }

@@ -6,8 +6,10 @@
 
             <div class="flex justify-center gap-2 pb-2 mb-0">
                 <button class="button" type="button" (click)="db.previousLesson()">PREV</button>
+                <button class="button" type="button" (click)="scrollUp()">TOP</button>
                 <button class="button" type="button" (click)="db.nextLesson()">NEXT</button>
             </div>
+            
             <div class="block p-2">
                 <app-ad-component adClient="ca-pub-7358177326858018" adSlot="9907518562"></app-ad-component>
             </div>
@@ -18,7 +20,9 @@
         </div>
         <div class="flex justify-center gap-2 pb-2 mb-0">
             <button class="button" type="button" (click)="db.previousLesson()">PREV</button>
+            <button class="button" type="button" (click)="scrollUp()">TOP</button>
             <button class="button" type="button" (click)="db.nextLesson()">NEXT</button>
         </div>
     </section>
+
 </article>

@@ -38,6 +38,11 @@ export class LessonComponent implements OnChanges {
   }
 
 
+  scrollUp() {
+    window.scrollTo(0,0);
+  }
+
+
 
 
 }

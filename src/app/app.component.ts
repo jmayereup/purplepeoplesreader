@@ -1,5 +1,5 @@
 import { Component, ElementRef, inject, ViewChild } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { DbService } from './services/db.service';
 import { LessonListComponent } from "./lesson-list/lesson-list.component";
 import { NavPillsComponent } from "./nav-pills/nav-pills.component";
@@ -9,7 +9,7 @@ import { AdComponent } from "./ad-component/ad-component.component";
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LessonListComponent, NavPillsComponent, SpinnerComponent, AdComponent],
+  imports: [RouterOutlet, LessonListComponent, NavPillsComponent, SpinnerComponent, AdComponent, RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
