@@ -6,11 +6,12 @@ import { RouterLink } from '@angular/router';
 import { SpinnerComponent } from "../spinner/spinner.component";
 import { NavPillsComponent } from "../nav-pills/nav-pills.component";
 import { NgOptimizedImage } from '@angular/common';
+import { SearchComponent } from "../search/search.component";
 
 @Component({
   selector: 'app-lesson-list',
   standalone: true,
-  imports: [RouterLink, SpinnerComponent, NavPillsComponent, NgOptimizedImage],
+  imports: [RouterLink, SpinnerComponent, NavPillsComponent, NgOptimizedImage, SearchComponent],
   templateUrl: './lesson-list.component.html',
   styleUrl: './lesson-list.component.css'
 })
@@ -20,6 +21,8 @@ export class LessonListComponent implements OnChanges {
   lang = input<string>('English');
   tag = input<string>('A1');
   lessons = this.db.filteredLessons;
+  allLessons = this.db.lessons;
+
   baseUrl = this.db.baseUrl;
 
   langNav = this.db.language;
@@ -31,7 +34,7 @@ export class LessonListComponent implements OnChanges {
   ngOnChanges(): void {
     this.db.language.set(this.lang());
     this.db.tag.set(this.tag());
-    // this.db.fetchLessons(this.lang(), this.tag());
+    this.db.fetchLessons(this.lang(), this.tag());
     
   }
 
@@ -47,6 +50,14 @@ export class LessonListComponent implements OnChanges {
 
   removeMarkdown(content: string) {
     return stripMarkdown(content);
+  }
+
+  filterLessons(filtered: LessonsResponse[]) {
+    this.lessons.set(filtered);
+    this.db.language.set('');
+    this.db.tag.set('');
+    this.db.router.navigate(['list','', 'search']);
+
   }
 
 }

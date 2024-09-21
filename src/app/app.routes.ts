@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-import { LessonListComponent } from './lesson-list/lesson-list.component';
-import { LessonComponent } from './lesson/lesson.component';
 import { lessonResolver } from './lesson.resolver';
 import { lessonsResolver } from './lessons.resolver';
 
@@ -8,6 +6,14 @@ export const routes: Routes = [
     {
         path: '',
         redirectTo: 'lesson/uh3a26d818fe08n', pathMatch: 'full'
+    },
+    {
+        path: 'list/USER/A1',
+        redirectTo: 'saved', pathMatch: 'full'
+    },
+    {
+        path: 'saved',
+        loadComponent: () => import('./form-user-lessons/form-user-lessons.component').then(m => m.FormUserLessonsComponent)
     },
     {
         path: 'list/:lang/:tag',

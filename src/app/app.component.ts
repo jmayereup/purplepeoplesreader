@@ -1,9 +1,8 @@
-import { Component, ElementRef, inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { DbService } from './services/db.service';
 import { LessonListComponent } from "./lesson-list/lesson-list.component";
 import { NavPillsComponent } from "./nav-pills/nav-pills.component";
-import { isPlatformBrowser } from '@angular/common';
 import { SpinnerComponent } from "./spinner/spinner.component";
 import { AdComponent } from "./ad-component/ad-component.component";
 
@@ -14,25 +13,16 @@ import { AdComponent } from "./ad-component/ad-component.component";
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit{
+export class AppComponent {
   @ViewChild('adContainer', { static: true }) adContainer!: ElementRef;
 
   title = 'ppr';
   db = inject(DbService);
-  platformId = inject(PLATFORM_ID);
   lang = this.db.language;
   tag = this.db.tag;
   constructor() {
   }
 
-  ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      const userAgent = navigator?.userAgent?.toLowerCase();
-      if (userAgent?.includes('chrome')) {
-        this.db.isChrome.set(true);
-      }
-    }
-  }
 
 
 }
