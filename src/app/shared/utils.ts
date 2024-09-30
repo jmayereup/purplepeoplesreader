@@ -26,23 +26,49 @@ export function addLineBreaksWithTranslatedDivs(text: string): string {
     const cleanText = stripMarkdown(text);
 
     let result: string = cleanText.replace(/(?<!Mr|Mrs|Dr|Ms)([¿¡.?!"])\s+/g, '$1\n');
-
-    // Duplicate each div and add class/attribute
+    result = breakLongLines(result);
+    
     const translatedDivs: string[] = [];
     const originalDivs = result.split('\n');
-
+    
     originalDivs.forEach((line: string) => {
         if(line.trim().length > 0) {
             translatedDivs.push(`<div class="original" translate="no">${line}</div>`);
             translatedDivs.push(`<div class="translated" translate="yes">${line}</div>`);
         }
     });
-
-    // Join the original and translated divs
     result = translatedDivs.join('\n');
 
     return result;
 }
+
+export function breakLongLines(text: string, hardLimit: number = 120): string {
+    return text.split('\n').map(line => {
+        let result = '';
+        while (line.length > hardLimit) {
+            // Try to break at the nearest comma before the hard limit
+            let breakPoint = line.slice(0, hardLimit).lastIndexOf(',');
+            
+            // If there's no comma, break at the nearest space before the hard limit
+            if (breakPoint === -1) {
+                breakPoint = line.slice(0, hardLimit).lastIndexOf(' ');
+            }
+
+            // If a break point is found, split the line there and continue processing the rest
+            if (breakPoint !== -1) {
+                result += line.slice(0, breakPoint + 1) + '\n';
+                line = line.slice(breakPoint + 1).trim();
+            } else {
+                // If no suitable break point is found, break at the hard limit
+                result += line.slice(0, hardLimit) + '\n';
+                line = line.slice(hardLimit).trim();
+            }
+        }
+        return result + line;
+    }).join('\n');
+}
+
+
 
 
 

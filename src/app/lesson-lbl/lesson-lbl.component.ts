@@ -30,7 +30,7 @@ export class LessonLblComponent implements OnChanges {
   readThis(event: Event): void {
     const targetElement = event.target as HTMLElement;
     const closestDiv = targetElement.closest('div');
-    console.log('readthis', targetElement, closestDiv?.textContent);
+    // console.log('readthis', targetElement, closestDiv?.textContent);
   
     if(closestDiv) {
       const textContent = closestDiv.textContent?.trim() || 'No text found';
