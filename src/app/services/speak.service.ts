@@ -17,10 +17,10 @@ export class SpeakService {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(line);
 
-    const selectedVoice = await this.getMatchingVoice(this.lang());
-    if (selectedVoice) {
-      utterance.voice = selectedVoice;
-    }
+    // const selectedVoice = await this.getMatchingVoice(this.lang());
+    // if (selectedVoice) {
+    //   utterance.voice = selectedVoice;
+    // }
 
     utterance.lang = lang;
     utterance.rate = .8;
@@ -32,9 +32,16 @@ export class SpeakService {
     return voices;
   }
   
-  async getMatchingVoice(langCode: string) {
-    let voices = await this.loadVoices();
-    let voice = voices.find(voice => voice.lang.startsWith(langCode) && !voice.localService);
-    return voice
-  }
+//   async getMatchingVoice(langCode: string) {
+//     let voices = await this.loadVoices();
+//     console.log("voices", voices);
+//     let voice = voices.find(voice => voice.lang.startsWith(langCode) && !voice.localService);
+    
+//     if (!voice) {
+//         voice = voices.find(voice => voice.lang.startsWith(langCode));
+//     }
+    
+//     return voice;
+// }
+
 }

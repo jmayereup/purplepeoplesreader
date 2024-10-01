@@ -59,6 +59,15 @@ export class FormUserLessonsComponent implements OnInit {
     }
   }
 
+  async pasteLesson() {
+      try {
+        this.lesson = await navigator.clipboard.readText();
+        this.title = this.lesson.slice(0,30);
+      } catch (err) {
+        console.error('Failed to read clipboard contents: ', err);
+      }
+    }
+
   loadSelectedLesson(title: string) {
     const existingLessonIndex = this.lessons.findIndex(lesson => lesson.title === title);
     if (existingLessonIndex !== -1) {
@@ -66,18 +75,22 @@ export class FormUserLessonsComponent implements OnInit {
       this.lesson = this.lessons[existingLessonIndex].lesson;
       this.language = this.lessons[existingLessonIndex].language;
 
+    if (this.lesson.length < 50000) {
       const queryParams = {
         title: encodeURIComponent(this.title),
         language: encodeURIComponent(this.language),
         text: encodeURIComponent(this.lesson)
       };
-        console.log(queryParams);
-        this.router.navigate([], {
-          queryParams: queryParams
-        });
-      }
+      // console.log(queryParams);
+      this.router.navigate([], {
+        queryParams: queryParams
+      });
     }
-  
+
+
+    }
+  }
+
 
   removeSelectedLesson(title: string): void {
     // Find the index of the lesson to be removed
