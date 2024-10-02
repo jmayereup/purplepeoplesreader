@@ -3,24 +3,24 @@
 </div>
 <div class="grid w-full grid-cols-1 gap-1 px-2 my-0 overflow-y-auto bg-purple-100 sm:grid-cols-2 lg:grid-cols-3">
     @if (lessons()?.length) {
-        @for (item of lessons(); track item.id) {
-            <div
-            class="grid items-center self-center justify-between w-full grid-cols-8 gap-2 p-2 mx-auto rounded-md shadow-md h-28 overflow-clip bg-lbl-purple-200">
-            <img class="self-center object-cover col-span-3 mx-auto rounded-md shadow-md" width="96" height="96"
+    @for (item of lessons(); track item.id) {
+    <div
+        class="grid items-center self-center justify-between w-full grid-cols-8 gap-2 p-2 mx-auto rounded-md shadow-md h-28 overflow-clip bg-lbl-purple-200">
+        <img class="self-center object-cover col-span-3 mx-auto rounded-md shadow-md" width="96" height="96"
             [ngSrc]="getImageThumbnail(item)" [routerLink]="['/lesson/', item.id]" loading="lazy" alt="thumbnail">
-            <div class="col-span-4" [routerLink]="['/lesson/', item.id]">
-                <h4 class="py-1 m-0 overflow-y-hidden font-semibold text-purple-900">
-                    {{(item.title.slice(0,36))}}</h4>
-                    <!-- <p class="text-sm text-pu6ple-800 whitespace-nowrap overflow-clip">
+        <div class="col-span-4" [routerLink]="['/lesson/', item.id]">
+            <h4 class="px-1 my-auto font-semibold text-center text-purple-900 overflow-y-clip list-text">
+                {{ item.title }}
+            </h4>
+            <!-- <p class="text-sm text-pu6ple-800 whitespace-nowrap overflow-clip">
                         {{removeMarkdown(item.content.slice(0,50))}}</p> -->
-                    </div>
-                </div>
-            }
+        </div>
+    </div>
+    }
     }
     @if (!lessons()?.length) {
-        <div class="items-center justify-center w-full col-span-3 text-center text-purple-900">
-            <h1>No Lessons Available Yet</h1>
-        </div>
+    <div class="items-center justify-center w-full col-span-3 text-center text-purple-900">
+        <h1>No Lessons Available Yet</h1>
+    </div>
     }
 </div>
-

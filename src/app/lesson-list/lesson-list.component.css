@@ -1,3 +1,11 @@
 p   {
     margin-bottom: 0px;
 }
+
+.list-text {
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+    height: 4.5rem;
+    align-content: center;
+    font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
