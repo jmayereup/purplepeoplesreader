@@ -38,7 +38,7 @@
     font-size: smaller;
     border-radius: .25rem;
     background-color: var(--accent);
-    color: var(--primary-text);
+    color: var(--primary-text1);
   }
   
   button.clear {
@@ -56,6 +56,7 @@
     padding: .25rem .5rem;
     font-size: small;
   }
+
   
   .input {
     @apply block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg  focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300

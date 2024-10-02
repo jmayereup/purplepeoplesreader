@@ -1,13 +1,18 @@
 <div class="flex flex-col items-center">
-    <div class="w-full max-w-5xl p-1 my-0 bg-purple-100">
+    <div class="w-full max-w-5xl p-1 my-0 bg-purple-100 text-lbl-purple-900">
         <app-nav-pills></app-nav-pills>
         <router-outlet></router-outlet>
         <app-nav-pills></app-nav-pills>
-        <div class="justify-around mt-4 text-sm text-center text-lbl-purple-900">
-            <a [routerLink]="['privacy']" class="text-center">Privacy Policy</a>
-            <a href="https://chromewebstore.google.com/search/Purple%20People's%20Reader%20Helper" rel="noopener" target="_blank" class="ml-4 text-center">Chrome Extension</a>
+        <div class="flex flex-row justify-center h-20 p-1 my-2 text-sm text-center align-middle text-lbl-purple-900">
+            <img src="images/icon64.png" alt="logo featurings purple a purple monster">
+            <div class="flex flex-col gap-2 my-auto ml-4 align-middle">
+                <a [routerLink]="['privacy']">Privacy Policy</a>
+                <a href="https://chromewebstore.google.com/search/Purple%20People's%20Reader%20Helper" rel="noopener"
+                    target="_blank">Chrome Extension</a>
+            </div>
         </div>
-        <app-ad-component id="2" adClient='ca-pub-7358177326858018' adFormat="autorelaxed" adSlot="1540016910" ></app-ad-component>
+        <app-ad-component id="2" adClient='ca-pub-7358177326858018' adFormat="autorelaxed"
+            adSlot="1540016910"></app-ad-component>
 
     </div>
 </div>
