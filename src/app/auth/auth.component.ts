@@ -4,11 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { SpinnerComponent } from '../spinner/spinner.component';
 
 @Component({
-  selector: 'app-auth',
-  standalone: true,
-  imports: [FormsModule, SpinnerComponent],
-  templateUrl: './auth.component.html',
-  styleUrl: './auth.component.css'
+    selector: 'app-auth',
+    imports: [FormsModule, SpinnerComponent],
+    templateUrl: './auth.component.html',
+    styleUrl: './auth.component.css'
 })
 
 export class AuthComponent {

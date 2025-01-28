@@ -7,11 +7,10 @@ import { AdComponent } from '../ad-component/ad-component.component';
 import { LessonLblComponent } from "../lesson-lbl/lesson-lbl.component";
 
 @Component({
-  selector: 'app-lesson',
-  standalone: true,
-  imports: [SpinnerComponent, LessonFullTextComponent, AdComponent, LessonLblComponent],
-  templateUrl: './lesson.component.html',
-  styleUrl: './lesson.component.css'
+    selector: 'app-lesson',
+    imports: [SpinnerComponent, LessonFullTextComponent, AdComponent, LessonLblComponent],
+    templateUrl: './lesson.component.html',
+    styleUrl: './lesson.component.css'
 })
 export class LessonComponent implements OnChanges {
 

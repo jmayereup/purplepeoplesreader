@@ -5,11 +5,10 @@ import { NgClass, NgStyle, UpperCasePipe } from '@angular/common';
 import { DbService } from '../services/db.service';
 
 @Component({
-  selector: 'app-nav-pills',
-  standalone: true,
-  imports: [RouterLink, UpperCasePipe, NgClass, RouterLinkActive, NgStyle],
-  templateUrl: './nav-pills.component.html',
-  styleUrl: './nav-pills.component.css'
+    selector: 'app-nav-pills',
+    imports: [RouterLink, UpperCasePipe, NgClass, RouterLinkActive, NgStyle],
+    templateUrl: './nav-pills.component.html',
+    styleUrl: './nav-pills.component.css'
 })
 export class NavPillsComponent {
   tags = TAG_VALUES;

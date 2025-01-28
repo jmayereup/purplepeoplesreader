@@ -9,11 +9,10 @@ import { NgOptimizedImage } from '@angular/common';
 import { SearchComponent } from "../search/search.component";
 
 @Component({
-  selector: 'app-lesson-list',
-  standalone: true,
-  imports: [RouterLink, SpinnerComponent, NavPillsComponent, NgOptimizedImage, SearchComponent],
-  templateUrl: './lesson-list.component.html',
-  styleUrl: './lesson-list.component.css'
+    selector: 'app-lesson-list',
+    imports: [RouterLink, SpinnerComponent, NavPillsComponent, NgOptimizedImage, SearchComponent],
+    templateUrl: './lesson-list.component.html',
+    styleUrl: './lesson-list.component.css'
 })
 export class LessonListComponent implements OnChanges {
 

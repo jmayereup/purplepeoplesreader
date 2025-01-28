@@ -2,11 +2,10 @@ import { Component, input, output } from '@angular/core';
 import { UserLesson } from '../shared/pocketbase-types';
 
 @Component({
-  selector: 'app-lesson-list-user',
-  standalone: true,
-  imports: [],
-  templateUrl: './lesson-list-user.component.html',
-  styleUrl: './lesson-list-user.component.css'
+    selector: 'app-lesson-list-user',
+    imports: [],
+    templateUrl: './lesson-list-user.component.html',
+    styleUrl: './lesson-list-user.component.css'
 })
 export class LessonListUserComponent {
   

@@ -12,12 +12,11 @@ import { LessonFullTextComponent } from "../lesson-full-text/lesson-full-text.co
 import { LessonListSimpleComponent } from "../lesson-list-simple/lesson-list-simple.component";
 
 @Component({
-  selector: 'app-form-lesson',
-  standalone: true,
-  templateUrl: './form-lesson.component.html',
-  styleUrl: './form-lesson.component.css',
-  imports: [CommonModule, FormFilesComponent, ReactiveFormsModule, FormFilesComponent, 
-    LoginComponent, AuthComponent, LessonFullTextComponent, LessonListSimpleComponent]
+    selector: 'app-form-lesson',
+    templateUrl: './form-lesson.component.html',
+    styleUrl: './form-lesson.component.css',
+    imports: [CommonModule, FormFilesComponent, ReactiveFormsModule, FormFilesComponent,
+        LoginComponent, AuthComponent, LessonFullTextComponent, LessonListSimpleComponent]
 })
 export class FormLessonComponent implements OnInit, OnDestroy {
 

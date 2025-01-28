@@ -6,11 +6,10 @@ import { AsyncPipe, NgClass } from '@angular/common';
 import { addLineBreaksWithTranslatedDivs } from '../shared/utils';
 
 @Component({
-  selector: 'app-lesson-lbl',
-  standalone: true,
-  imports: [FormsModule, MarkdownPipe, AsyncPipe, NgClass],
-  templateUrl: './lesson-lbl.component.html',
-  styleUrl: './lesson-lbl.component.css'
+    selector: 'app-lesson-lbl',
+    imports: [FormsModule, MarkdownPipe, AsyncPipe, NgClass],
+    templateUrl: './lesson-lbl.component.html',
+    styleUrl: './lesson-lbl.component.css'
 })
 export class LessonLblComponent implements OnChanges {
 

@@ -7,11 +7,10 @@ import { SpinnerComponent } from "./spinner/spinner.component";
 import { AdComponent } from "./ad-component/ad-component.component";
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, LessonListComponent, NavPillsComponent, SpinnerComponent, AdComponent, RouterLink],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+    selector: 'app-root',
+    imports: [RouterOutlet, LessonListComponent, NavPillsComponent, SpinnerComponent, AdComponent, RouterLink],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css'
 })
 export class AppComponent {
   @ViewChild('adContainer', { static: true }) adContainer!: ElementRef;

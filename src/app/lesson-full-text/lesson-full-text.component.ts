@@ -8,11 +8,10 @@ import { BASE } from '../shared/utils';
 import { PlayButtonTtsComponent } from "../play-button-tts/play-button-tts.component";
 
 @Component({
-  selector: 'app-lesson-full-text',
-  standalone: true,
-  imports: [PlayVideoComponent, PlayButtonComponent, MarkdownPipe, AsyncPipe, PlayButtonTtsComponent],
-  templateUrl: './lesson-full-text.component.html',
-  styleUrl: './lesson-full-text.component.css'
+    selector: 'app-lesson-full-text',
+    imports: [PlayVideoComponent, PlayButtonComponent, MarkdownPipe, AsyncPipe, PlayButtonTtsComponent],
+    templateUrl: './lesson-full-text.component.html',
+    styleUrl: './lesson-full-text.component.css'
 })
 export class LessonFullTextComponent {
 

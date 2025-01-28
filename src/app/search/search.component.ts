@@ -5,11 +5,10 @@ import { LessonsResponse } from '../shared/pocketbase-types';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-search',
-  standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
-  templateUrl: './search.component.html',
-  styleUrl: './search.component.css'
+    selector: 'app-search',
+    imports: [ReactiveFormsModule, RouterLink],
+    templateUrl: './search.component.html',
+    styleUrl: './search.component.css'
 })
 export class SearchComponent implements OnInit {
   lessons = input<LessonsResponse[]>([]);

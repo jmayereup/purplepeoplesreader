@@ -8,11 +8,10 @@ import { assignLanguageCode } from '../shared/utils';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-form-user-lessons',
-  standalone: true,
-  imports: [FormsModule, LessonListUserComponent, LessonLblComponent],
-  templateUrl: './form-user-lessons.component.html',
-  styleUrl: './form-user-lessons.component.css'
+    selector: 'app-form-user-lessons',
+    imports: [FormsModule, LessonListUserComponent, LessonLblComponent],
+    templateUrl: './form-user-lessons.component.html',
+    styleUrl: './form-user-lessons.component.css'
 })
 export class FormUserLessonsComponent implements OnInit {
 
