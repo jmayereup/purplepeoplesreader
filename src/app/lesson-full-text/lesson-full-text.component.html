@@ -16,10 +16,10 @@
                 @if(lesson()?.audioUrl){
                 <app-play-button #playButton [audioUrl]="lesson()?.audioUrl"></app-play-button>
                 }
-                <button type="button" class="flex items-center sm:w-fit button"
-                    (click)="openLanguageReactor()">Read in Language Reactor</button>
+                <!-- <button type="button" class="flex items-center sm:w-fit button"
+                    (click)="openLanguageReactor()">Read in Language Reactor</button> -->
             </div>
-            <div id='full-text' class="full-text read-aloud" [innerHTML]="(lesson()?.content || '') | markdown | async">
+            <div id='full-text' class="overflow-y-auto full-text read-aloud max-h-80" [innerHTML]="(lesson()?.content || '') | markdown | async">
             </div>
         </div>
         <p class="mt-2 text-sm">

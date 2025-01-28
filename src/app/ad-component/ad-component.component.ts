@@ -1,4 +1,8 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, Renderer2, NgZone, Input } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, AfterViewInit, ViewChild, 
+  ElementRef, Renderer2, NgZone, 
+  Input, 
+  inject} from '@angular/core';
 
 @Component({
   selector: 'app-ad-component',
@@ -11,6 +15,8 @@ export class AdComponent implements AfterViewInit {
   @Input() adClient!: string;
   @Input() adSlot!: string;
   @Input() adFormat: string = 'auto';
+  @Input() adLayout: string = '';
+  document = inject(DOCUMENT);
 
   constructor(private renderer: Renderer2, private ngZone: NgZone) {}
 
@@ -32,13 +38,16 @@ export class AdComponent implements AfterViewInit {
     this.renderer.setAttribute(insElement, 'data-ad-client', this.adClient);
     this.renderer.setAttribute(insElement, 'data-ad-slot', this.adSlot);
     this.renderer.setAttribute(insElement, 'data-ad-format', this.adFormat);
+    this.renderer.setAttribute(insElement, 'data-ad-layout', this.adLayout);
     this.renderer.setAttribute(insElement, 'data-full-width-responsive', 'true');
 
     const pushScript = this.renderer.createElement('script');
     const text = this.renderer.createText('(adsbygoogle = window.adsbygoogle || []).push({});');
     this.renderer.appendChild(pushScript, text);
 
-    this.renderer.appendChild(this.adContainer.nativeElement, adScript);
+    if (!this.document.querySelector('script[src*="adsbygoogle.js"]')) {
+      this.renderer.appendChild(this.adContainer.nativeElement, adScript);
+    } else console.log('script already present');
     this.renderer.appendChild(this.adContainer.nativeElement, insElement);
     this.renderer.appendChild(this.adContainer.nativeElement, pushScript);
   }

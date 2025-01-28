@@ -118,7 +118,6 @@ export class DbService {
       this.currentIndex++;
       const id = this.lessons()?.[this.currentIndex].id!;
       this.router.navigate(['lesson', id]);
-      // this.fetchLesson(this.lessons()?.[this.currentIndex].id!);
     }
   }
 
@@ -127,7 +126,6 @@ export class DbService {
       this.currentIndex--;
       const id = this.lessons()?.[this.currentIndex].id!;
       this.router.navigate(['lesson', id]);
-      // this.fetchLesson(this.lessons()?.[this.currentIndex].id!);
     }
   }
 
