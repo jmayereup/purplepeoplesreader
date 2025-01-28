@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormFilesComponent } from '../form-files/form-files.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BASE, TAG_VALUES } from '../shared/utils';
-import { LoginComponent } from "../login/login.component";
 import { AuthService } from '../services/auth.service';
 import { LessonsService } from '../services/lessons.service';
 import { LessonsRecord, LessonsResponse } from '../shared/pocketbase-types';
@@ -13,10 +12,11 @@ import { LessonListSimpleComponent } from "../lesson-list-simple/lesson-list-sim
 
 @Component({
     selector: 'app-form-lesson',
+    standalone: true,
     templateUrl: './form-lesson.component.html',
     styleUrl: './form-lesson.component.css',
     imports: [CommonModule, FormFilesComponent, ReactiveFormsModule, FormFilesComponent,
-        LoginComponent, AuthComponent, LessonFullTextComponent, LessonListSimpleComponent]
+        AuthComponent, LessonFullTextComponent, LessonListSimpleComponent]
 })
 export class FormLessonComponent implements OnInit, OnDestroy {
 

@@ -5,6 +5,7 @@ import { SearchComponent } from "../search/search.component";
 
 @Component({
     selector: 'app-lesson-list-simple',
+    standalone: true,
     imports: [ReactiveFormsModule, SearchComponent],
     templateUrl: './lesson-list-simple.component.html',
     styleUrl: './lesson-list-simple.component.css'

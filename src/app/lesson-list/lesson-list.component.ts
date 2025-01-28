@@ -3,14 +3,13 @@ import { DbService } from '../services/db.service';
 import { LessonsResponse } from '../shared/pocketbase-types';
 import { stripMarkdown } from '../shared/utils';
 import { RouterLink } from '@angular/router';
-import { SpinnerComponent } from "../spinner/spinner.component";
-import { NavPillsComponent } from "../nav-pills/nav-pills.component";
 import { NgOptimizedImage } from '@angular/common';
 import { SearchComponent } from "../search/search.component";
 
 @Component({
     selector: 'app-lesson-list',
-    imports: [RouterLink, SpinnerComponent, NavPillsComponent, NgOptimizedImage, SearchComponent],
+    standalone: true,
+    imports: [RouterLink, NgOptimizedImage, SearchComponent],
     templateUrl: './lesson-list.component.html',
     styleUrl: './lesson-list.component.css'
 })

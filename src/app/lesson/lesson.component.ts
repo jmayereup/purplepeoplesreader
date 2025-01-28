@@ -1,6 +1,5 @@
 import { Component, inject, OnChanges, PLATFORM_ID } from '@angular/core';
 import { DbService } from '../services/db.service';
-import { SpinnerComponent } from "../spinner/spinner.component";
 import { isPlatformBrowser } from '@angular/common';
 import { LessonFullTextComponent } from "../lesson-full-text/lesson-full-text.component";
 import { AdComponent } from '../ad-component/ad-component.component';
@@ -8,7 +7,8 @@ import { LessonLblComponent } from "../lesson-lbl/lesson-lbl.component";
 
 @Component({
     selector: 'app-lesson',
-    imports: [SpinnerComponent, LessonFullTextComponent, AdComponent, LessonLblComponent],
+    standalone: true,
+    imports: [LessonFullTextComponent, AdComponent, LessonLblComponent],
     templateUrl: './lesson.component.html',
     styleUrl: './lesson.component.css'
 })

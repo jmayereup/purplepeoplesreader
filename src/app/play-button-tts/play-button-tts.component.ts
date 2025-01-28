@@ -3,6 +3,7 @@ import { SpeakService } from '../services/speak.service';
 
 @Component({
     selector: 'app-play-button-tts',
+    standalone: true,
     imports: [],
     templateUrl: './play-button-tts.component.html',
     styleUrl: './play-button-tts.component.css'

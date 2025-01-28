@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-form-user-lessons',
+    standalone: true,
     imports: [FormsModule, LessonListUserComponent, LessonLblComponent],
     templateUrl: './form-user-lessons.component.html',
     styleUrl: './form-user-lessons.component.css'

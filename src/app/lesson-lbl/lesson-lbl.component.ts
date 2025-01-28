@@ -7,6 +7,7 @@ import { addLineBreaksWithTranslatedDivs } from '../shared/utils';
 
 @Component({
     selector: 'app-lesson-lbl',
+    standalone: true,
     imports: [FormsModule, MarkdownPipe, AsyncPipe, NgClass],
     templateUrl: './lesson-lbl.component.html',
     styleUrl: './lesson-lbl.component.css'

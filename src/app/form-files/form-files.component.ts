@@ -5,6 +5,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-form-files',
+    standalone: true,
     imports: [CommonModule, ReactiveFormsModule],
     templateUrl: './form-files.component.html',
     styleUrl: './form-files.component.css'

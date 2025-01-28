@@ -3,6 +3,7 @@ import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-play-video',
+    standalone: true,
     imports: [],
     templateUrl: './play-video.component.html',
     styleUrl: './play-video.component.css'

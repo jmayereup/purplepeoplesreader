@@ -1,15 +1,16 @@
 import { Component, input } from '@angular/core';
 import { LessonsResponse } from '../shared/pocketbase-types';
 import { PlayVideoComponent } from '../play-video/play-video.component';
-import { PlayButtonComponent } from '../play-button/play-button.component';
 import { AsyncPipe } from '@angular/common';
 import { MarkdownPipe } from 'ngx-markdown';
 import { BASE } from '../shared/utils';
 import { PlayButtonTtsComponent } from "../play-button-tts/play-button-tts.component";
+import { PlayButtonComponent } from '../play-button/play-button.component';
 
 @Component({
     selector: 'app-lesson-full-text',
-    imports: [PlayVideoComponent, PlayButtonComponent, MarkdownPipe, AsyncPipe, PlayButtonTtsComponent],
+    standalone: true,
+    imports: [PlayVideoComponent, MarkdownPipe, AsyncPipe, PlayButtonComponent],
     templateUrl: './lesson-full-text.component.html',
     styleUrl: './lesson-full-text.component.css'
 })

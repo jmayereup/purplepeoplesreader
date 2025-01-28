@@ -3,6 +3,7 @@ import { UserLesson } from '../shared/pocketbase-types';
 
 @Component({
     selector: 'app-lesson-list-user',
+    standalone: true,
     imports: [],
     templateUrl: './lesson-list-user.component.html',
     styleUrl: './lesson-list-user.component.css'

@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { LANG_VALUES, TAG_VALUES } from '../shared/utils';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { NgClass, NgStyle, UpperCasePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { NgClass, UpperCasePipe } from '@angular/common';
 import { DbService } from '../services/db.service';
 
 @Component({
     selector: 'app-nav-pills',
-    imports: [RouterLink, UpperCasePipe, NgClass, RouterLinkActive, NgStyle],
+    standalone: true,
+    imports: [RouterLink, UpperCasePipe, NgClass],
     templateUrl: './nav-pills.component.html',
     styleUrl: './nav-pills.component.css'
 })
